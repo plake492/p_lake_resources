@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 const webpackConfig = {
   entry: {
@@ -24,13 +24,13 @@ const webpackConfig = {
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
-  // Disable for now to allow React and ReactDOM to work with the current config
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'react-redux': 'ReactRedux',
-  },
+  // // Disable for now to allow React and ReactDOM to work with the current config
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  //   'react-redux': 'ReactRedux',
+  // },
   watch: false,
-};
+}
 
-module.exports = webpackConfig;
+module.exports = webpackConfig

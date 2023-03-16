@@ -10,9 +10,7 @@
     "plugin:react/jsx-runtime"
   ],
   "parser": "@babel/eslint-parser",
-  "plugins": [
-    "@babel"
-  ],
+  "plugins": ["@babel"],
   "parserOptions": {
     "ecmaVersion": 9,
     "sourceType": "module",
@@ -32,27 +30,13 @@
   "rules": {
     "block-spacing": "error",
     "brace-style": "error",
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
-    "eol-last": [
-      "error",
-      "always"
-    ],
-    "eqeqeq": [
-      "error",
-      "smart"
-    ],
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": ["error", "always"],
+    "eqeqeq": ["error", "smart"],
     "jsx-first-prop-new-line": "off",
-    "jsx-quotes": [
-      "error",
-      "prefer-double"
-    ],
+    "jsx-quotes": ["error", "prefer-double"],
     "keyword-spacing": "error",
-    "no-multi-spaces": [
-      "error"
-    ],
+    "no-multi-spaces": ["error"],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -67,10 +51,7 @@
       }
     ],
     "object-curly-newline": "off",
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
+    "object-curly-spacing": ["error", "always"],
     "prefer-const": [
       "warn",
       {
@@ -81,7 +62,7 @@
     "prefer-destructuring": "off",
     "quotes": [
       "error",
-      "double",
+      "single",
       {
         "allowTemplateLiterals": true,
         "avoidEscape": true
@@ -94,10 +75,7 @@
         "checkAttributes": true
       }
     ],
-    "semi": [
-      "error",
-      "never"
-    ],
+    "semi": ["error", "never"],
     "space-before-blocks": "error",
     "space-before-function-paren": [
       "error",
@@ -111,11 +89,7 @@
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error",
-          "info"
-        ]
+        "allow": ["warn", "error", "info"]
       }
     ],
     "no-restricted-globals": "off",
