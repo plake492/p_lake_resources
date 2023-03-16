@@ -65,3 +65,20 @@
   opacity: 0;
   transition: opacity 1s;
 }
+
+.test__bg {
+  background-color: #000;
+  color: #ddd;
+}
+
+.active {
+  background-color: #5a0e66;
+}
+
+.cool {
+  background-color: #0d5988;
+}
+
+.test__bg-alt--modifier {
+  background-color: #843f0a;
+}

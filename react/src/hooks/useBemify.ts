@@ -1,11 +1,7 @@
 import { useMemo } from 'react'
 
-const isStr = (str: any): boolean => typeof str === 'string'
-const isArr = (arr: any): boolean => Array.isArray(arr)
-
-// This is a FUNction emphasis on the "fun"
 const bemify = (block: string) => {
-  // OMG are we going to use closures????
+  // Return a closure
   return (element: string, ...classes: string[]) => {
     // Check this out... we combine the block and element or return the block itself
     const combined = element ? `${block}__${element}` : block
@@ -13,34 +9,39 @@ const bemify = (block: string) => {
     const formedClasses =
       classes && classes.length
         ? classes
-            .map((c: string) => {
-              // make sure there is no funny business
+            .map((c: any) => {
               if (!c) {
-                return null
+                return ''
               }
 
-              let className: string = isStr(c) ? c : ''
-
               // Initialize the base classname
+              let className = c
 
-              // // Check if c is a conditional array
-              // if (className && isArr(className)) {
-              //   const [condition, activeClass, fallbackClass] = c
-              //   if (condition) {
-              //     className = activeClass || (isStr(condition) ? condition : '')
-              //   } else {
-              //     className =
-              //       fallbackClass || (isStr(fallbackClass) ? fallbackClass : '')
-              //   }
-              // }
+              // Check if c is a conditional array
+              if (className && Array.isArray(className)) {
+                const [condition, activeClass, fallbackClass]: [
+                  boolean | string,
+                  string,
+                  string | null
+                ] = c
+
+                if (condition) {
+                  className =
+                    activeClass ||
+                    (typeof condition === 'string' ? condition : '')
+                } else {
+                  className =
+                    fallbackClass ||
+                    (typeof fallbackClass === 'string' ? fallbackClass : '')
+                }
+              }
 
               // Ensure that classname is always a string
-              if (!isStr(className)) className = ''
+              if (typeof className !== 'string') className = ''
 
               // Finally Check for a modifier class
               if (className.startsWith('--')) className = combined + className
 
-              // Then we obviosly return the className otherwise what are we even doing???
               return className
             })
             .filter((c) => !!c)

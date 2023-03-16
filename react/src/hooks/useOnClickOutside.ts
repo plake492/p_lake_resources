@@ -1,14 +1,14 @@
 import { useEffect, MutableRefObject } from 'react'
 
 interface PropTypes {
-  reference: MutableRefObject<HTMLElement>
   handler: Function
+  reference: MutableRefObject<HTMLElement>
   exception?: MutableRefObject<HTMLElement> | undefined
 }
 
 export const useOnClickOutside = ({
-  reference,
   handler,
+  reference,
   exception,
 }: PropTypes) => {
   useEffect(() => {

@@ -11,7 +11,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
-    static: './dist',
+    port: 9000,
   },
   module: {
     rules: [
