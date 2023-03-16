@@ -16,18 +16,23 @@
     "html-webpack-plugin": "^5.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.59.3",
+    "sass-loader": "^13.2.0",
     "style-loader": "^3.3.2",
     "svg-sprite-loader": "^6.0.11",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.5",
+    "url-loader": "^4.1.1",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.12.0"
   },
   "dependencies": {
+    "@plake492/t_css_utils": "^1.0.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/react-transition-group": "^4.4.5",
+    "react-hot-loader": "^4.13.1",
     "react-transition-group": "^4.4.5"
   }
 }

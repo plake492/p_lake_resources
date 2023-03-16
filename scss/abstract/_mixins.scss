@@ -1,0 +1,83 @@
+@mixin flex-center() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+@mixin absolute-center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin psuedo-element-centered($before-after: 'before', $placement: 'top') {
+  position: relative;
+
+  &::#{$before-after} {
+    content: '';
+    position: absolute;
+    left: 0;
+    #{$placement}: 0;
+    width: 100%;
+    height: 100%;
+    @content;
+  }
+}
+
+@mixin no-drag-select {
+  // Disable all of that dragging nonsense
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none; // iOS Safari
+  -webkit-user-select: none; // Safari
+  -khtml-user-select: none; // Konqueror HTML
+  -moz-user-select: none; // Old versions of Firefox
+  -ms-user-select: none; // Internet Explorer/Edge
+  user-select: none; // Non-prefixed version, currently
+}
+
+@mixin no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin clamp(
+  $property,
+  $min-size,
+  $scaler,
+  $max-size,
+  $min-size-left: false,
+  $scaler-left: false,
+  $max-size-left: false
+) {
+  @if $min-size-left == false {
+    #{$property}: $max-size;
+    #{$property}: #{'min(max(#{$min-size}, #{$scaler}), #{$max-size})'};
+    #{$property}: clamp($min-size, $scaler, $max-size);
+  } @else if $min-size-left == 0 or $min-size-left == auto {
+    #{$property}: $max-size $min-size-left;
+    #{$property}: #{'min(max(#{$min-size}, #{$scaler}), #{$max-size})'}
+      $min-size-left;
+    #{$property}: clamp($min-size, $scaler, $max-size) $min-size-left;
+  } @else {
+    #{$property}: $max-size $min-size-left;
+    #{$property}: #{'min(max(#{$min-size}, #{$scaler}), #{$max-size})'}
+      #{'min(max(#{$min-size-left}, #{$scaler-left}), #{$max-size-left})'};
+    #{$property}: clamp($min-size, $scaler, $max-size)
+      clamp($min-size-left, $scaler-left, $max-size-left);
+  }
+}

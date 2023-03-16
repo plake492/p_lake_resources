@@ -1,0 +1,8 @@
+@import './abstract/mixins';
+
+body {
+  --bg-color: #8ba4b1;
+  --text-color: #ededed;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}

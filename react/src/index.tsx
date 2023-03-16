@@ -1,7 +1,12 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import App from './app'
+import * as ReactDOMClient from 'react-dom/client'
+import App from './App'
 import './assets/images/icons.svg'
-import './assets/css/main.css'
+import '../node_modules/@plake492/t_css_utils/src/index.scss'
+import '../../scss/index.scss'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const container = document.getElementById('root')
+
+const root = ReactDOMClient.createRoot(container)
+
+root.render(<App />)

@@ -12,6 +12,8 @@ module.exports = {
   },
   devServer: {
     port: 9000,
+    open: true,
+    hot: true,
   },
   module: {
     rules: [
@@ -26,8 +28,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.svg$/i,
@@ -52,6 +54,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      hash: true,
     }),
     new SpriteLoaderPlugin(),
   ],

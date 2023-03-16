@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 const bemify = (block: string) => {
   // Return a closure
   return (element: string, ...classes: string[]) => {
-    // Check this out... we combine the block and element or return the block itself
+    // Combine the block and element or return the block itself
     const combined = element ? `${block}__${element}` : block
 
     const formedClasses =
