@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 import { checkForAnyTypes } from '../../utils/detectReactComponents'
+import FadeInComponent from '../BaseComponents/FadeInComponent'
 import SvgSymbol from '../BaseComponents/SvgSymbol'
 
 interface InputPropTypes {
@@ -50,9 +51,9 @@ interface InputPropTypes {
   onChange?: React.ChangeEventHandler
   onBlur?: React.FocusEventHandler
   shouldAutoFocus?: boolean
-  prependedIcon?: string
+  prependedIcon?: string | JSX.Element
   prependedOnClick?: React.MouseEventHandler
-  appendedIcon?: string
+  appendedIcon?: string | JSX.Element
   appendedOnClick?: React.MouseEventHandler
   prependedIconSize?: { width: string; height: string }
   appendedIconSize?: { width: string; height: string }
@@ -104,6 +105,7 @@ export default function Input({
         [isSuccess, 'success']
       )}
       style={{
+        /* Option to set absolute width */
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
@@ -119,12 +121,19 @@ export default function Input({
       </div>
       <div className={bem('container', [isReadOnly, 'readonly'])}>
         {prependedIcon ? (
-          <SvgSymbol
-            classes={bem('prepended-icon', [!!prependedOnClick, '--clickable'])}
-            onClick={prependedOnClick}
-            icon={prependedIcon}
-            {...prependedIconSize}
-          />
+          checkForAnyTypes(prependedIcon) ? (
+            prependedIcon
+          ) : (
+            <SvgSymbol
+              classes={bem('prepended-icon', [
+                !!prependedOnClick,
+                '--clickable',
+              ])}
+              onClick={prependedOnClick}
+              icon={prependedIcon as string}
+              {...prependedIconSize}
+            />
+          )
         ) : null}
         <input
           className={bem('field')}
@@ -147,19 +156,23 @@ export default function Input({
           onBlur={onBlur}
         />
         {appendedIcon ? (
-          <SvgSymbol
-            classes={bem('appended-icon', [!!appendedOnClick, '--clickable'])}
-            onClick={appendedOnClick}
-            icon={appendedIcon}
-            {...appendedIconSize}
-          />
+          checkForAnyTypes(appendedIcon) ? (
+            appendedIcon
+          ) : (
+            <SvgSymbol
+              classes={bem('appended-icon', [!!appendedOnClick, '--clickable'])}
+              onClick={appendedOnClick}
+              icon={appendedIcon as string}
+              {...appendedIconSize}
+            />
+          )
         ) : null}
       </div>
-      {message ? (
+      <FadeInComponent trigger={!!message} timeout={100}>
         <div className={bem('message')}>
           {checkForAnyTypes(message) ? message : <span>{message}</span>}
         </div>
-      ) : null}
+      </FadeInComponent>
     </div>
   )
 }

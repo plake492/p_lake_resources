@@ -1,4 +1,5 @@
 import * as React from 'react'
+import SvgSymbol from './components/BaseComponents/SvgSymbol'
 import Input from './components/FormComponents/Input'
 
 export default function App() {
@@ -62,8 +63,16 @@ export default function App() {
             id="confirm-password"
             placeholder="**********"
             appendedIcon="eye-closed"
-            wrapperClasses="mb-xl"
             isBlock
+          />
+          <Input
+            type="number"
+            label="Count"
+            id="count"
+            placeholder="0"
+            wrapperClasses="mb-xl"
+            min={8}
+            max={18}
           />
           <button type="submit">Submit</button>
         </form>

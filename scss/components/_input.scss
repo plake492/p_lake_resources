@@ -4,16 +4,26 @@
   }
 }
 
+input[type='number'] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
 .input {
   --input-width: 300px;
   --input-border-radius: 8px;
-  --input-border-color: var(--bg-violet-30);
-  --input-error-color: #bb3434;
   --input-background-color: #00000000;
-  --input-success-color: #50ba36;
-  --input-text-color: #dedede;
+  --input-border-color: var(--bg-violet-30);
+  --input-error-color: hsl(0, 56%, 47%);
+  --input-success-color: hsl(108, 55%, 47%);
+  --input-text-color: hsl(0, 0%, 87%);
+  --input-placeholder-color: hsl(0, 0%, 75%);
   --input-message-color: var(--input-text-color);
-  --input-placeholder-color: #bfbfbf;
   --input-border-width: 3px;
   --input-padding-y: #{calc($space-xs)};
   --input-padding-x: #{$space-md};
@@ -68,6 +78,7 @@
     justify-content: space-between;
     gap: $space-sm;
     background-color: var(--input-background-color);
+    transition: border 100ms ease-in-out;
 
     &:focus-within:not(.readonly) {
       --input-border-color: var(--bg-violet-60);
