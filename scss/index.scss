@@ -6,6 +6,7 @@
 
 :root {
   --form-container-width: #{rem(780)};
+  --form-gutter-width: #{$space-md};
 }
 
 body {
@@ -42,12 +43,10 @@ button {
     @extend .shadow-1;
     transform: translate(0, 0);
   }
-}
 
-.form-container {
-  display: block;
-  max-width: var(--form-container-width);
-  margin: 0 auto;
+  &:disabled {
+    --border-color: var(--bg-grey-40);
+  }
 }
 
 .fade-transition {

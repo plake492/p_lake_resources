@@ -35,7 +35,7 @@ export const isCompositeTypeElement = function (element: any): boolean {
  * @param value any type, but most useful for checking if somthing is a react element of some kind
  * @returns boolean
  */
-export const checkForAnyTypes = function (value: any): boolean {
+export const checkIfAnyReactComponentType = function (value: any): boolean {
   return (
     isClassComponent(value) ||
     isFunctionComponent(value) ||

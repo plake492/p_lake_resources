@@ -1,6 +1,8 @@
-.form-container {
+.form {
   .input:not(.block) {
-    --input-width: #{calc(var(--form-container-width) / 2 - $space-md)};
+    --input-width: #{calc(
+        var(--form-container-width) / 2 - var(--form-gutter-width) / 2
+      )};
   }
 }
 
@@ -17,12 +19,13 @@ input[type='number']::-webkit-outer-spin-button {
 .input {
   --input-width: 300px;
   --input-border-radius: 8px;
-  --input-background-color: #00000000;
+  --input-background-color: var(--bg-color);
   --input-border-color: var(--bg-violet-30);
   --input-error-color: hsl(0, 56%, 47%);
   --input-success-color: hsl(108, 55%, 47%);
   --input-text-color: hsl(0, 0%, 87%);
-  --input-placeholder-color: hsl(0, 0%, 75%);
+  --input-label-color: hsl(0, 0%, 87%);
+  --input-placeholder-color: hsl(0, 0%, 60%);
   --input-message-color: var(--input-text-color);
   --input-border-width: 3px;
   --input-padding-y: #{calc($space-xs)};
@@ -33,9 +36,10 @@ input[type='number']::-webkit-outer-spin-button {
   --input-line-hight-ratio: 1.75;
 
   position: relative;
-  margin: 0 $space-sm $space-lg;
+  margin-bottom: $space-sm;
   color: var(--input-text-color);
   display: inline-block;
+  flex-basis: var(--input-width);
 
   &.block {
     display: block;
@@ -50,7 +54,7 @@ input[type='number']::-webkit-outer-spin-button {
 
   &.error {
     --input-border-color: var(--input-error-color);
-    --input-message-color: var(--input-error-color);
+    --input-label-color: var(--input-error-color);
   }
 
   &.success {
@@ -59,18 +63,16 @@ input[type='number']::-webkit-outer-spin-button {
   }
 
   &__label {
-    label {
-      font-size: var(--input-label-font-size);
-      line-height: calc(
-        var(--input-label-font-size) * var(--input-line-hight-ratio)
-      );
-    }
+    font-size: var(--input-label-font-size);
+    line-height: calc(
+      var(--input-label-font-size) * var(--input-line-hight-ratio)
+    );
+    color: var(--input-label-color);
   }
 
   &__container {
     display: inline-block;
     border: var(--input-border-color) var(--input-border-width) solid;
-    width: var(--input-width);
     border-radius: var(--input-border-radius);
     padding: var(--input-padding-y) var(--input-padding-x);
     display: flex;
@@ -79,6 +81,8 @@ input[type='number']::-webkit-outer-spin-button {
     gap: $space-sm;
     background-color: var(--input-background-color);
     transition: border 100ms ease-in-out;
+    position: relative;
+    z-index: 1;
 
     &:focus-within:not(.readonly) {
       --input-border-color: var(--bg-violet-60);
@@ -86,6 +90,11 @@ input[type='number']::-webkit-outer-spin-button {
       @extend .box-shadow;
       @extend .shadow-1;
       @extend .shadow-white;
+
+      &.error {
+        --input-border-color: var(--bg-red-40);
+        @extend .shadow-red;
+      }
     }
   }
 
@@ -121,13 +130,23 @@ input[type='number']::-webkit-outer-spin-button {
   }
 
   &__message {
+    position: relative;
     font-size: var(--input-message-font-size);
     line-height: calc(
       var(--input-message-font-size) * var(--input-line-hight-ratio)
     );
     color: var(--input-message-color);
-    position: absolute;
-    top: 100%;
-    right: 0;
+    min-width: max-content;
+    text-align: end;
+    @extend .bg-violet-20;
+
+    top: calc($space-md * -1);
+    padding-top: calc($space-sm + $space-md);
+    padding-left: $space-md;
+    padding-right: $space-md;
+    padding-bottom: $space-sm;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    z-index: 0;
   }
 }

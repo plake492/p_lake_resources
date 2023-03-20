@@ -1,0 +1,1 @@
+export const validFormComponentChildren = ['Input']

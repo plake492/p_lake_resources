@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
-import { checkForAnyTypes } from '../../utils/detectReactComponents'
+import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 import FadeInComponent from '../BaseComponents/FadeInComponent'
+
 import SvgSymbol from '../BaseComponents/SvgSymbol'
 
-interface InputPropTypes {
+export interface InputPropTypes {
   type:
     | 'button'
     | 'checkbox'
@@ -34,7 +35,7 @@ interface InputPropTypes {
   placeholder?: string
   ariaLabel?: string
   wrapperClasses?: string
-  message?: string | JSX.Element
+  message?: string | JSX.Element | string[]
   maxlength?: number
   min?: number
   max?: number
@@ -51,12 +52,17 @@ interface InputPropTypes {
   onChange?: React.ChangeEventHandler
   onBlur?: React.FocusEventHandler
   shouldAutoFocus?: boolean
+  shouldHideStatus?: boolean
   prependedIcon?: string | JSX.Element
   prependedOnClick?: React.MouseEventHandler
   appendedIcon?: string | JSX.Element
   appendedOnClick?: React.MouseEventHandler
   prependedIconSize?: { width: string; height: string }
   appendedIconSize?: { width: string; height: string }
+  shouldValidate?: boolean
+  isValid?: boolean
+  validationType?: 'email' | 'password' | 'text' | Function
+  children?: React.ReactElement
 }
 
 export default function Input({
@@ -84,14 +90,27 @@ export default function Input({
   onChange,
   onBlur,
   shouldAutoFocus,
+  shouldHideStatus,
   prependedIcon,
   prependedOnClick,
   appendedIcon,
   appendedOnClick,
   prependedIconSize = { width: '20', height: '20' },
   appendedIconSize = { width: '20', height: '20' },
+  isValid,
+  children,
 }: InputPropTypes): JSX.Element {
   const bem: Function = useBemify('input')
+  const labelIsReactEl = checkIfAnyReactComponentType(label)
+  const hasValidChildren =
+    Array.isArray(children) && children.some((child) => !!child)
+
+  const [showChildMessage, setShowChildMessage] = React.useState(false)
+
+  React.useEffect(
+    () => setShowChildMessage(hasValidChildren),
+    [hasValidChildren]
+  )
 
   return (
     <div
@@ -101,27 +120,31 @@ export default function Input({
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],
-        [hasError, 'error'],
-        [isSuccess, 'success']
+        [!shouldHideStatus && (hasError || !isValid), 'error'],
+        [!shouldHideStatus && isSuccess, 'success']
       )}
       style={{
         /* Option to set absolute width */
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      <div className={bem('label')}>
-        {checkForAnyTypes(label) ? (
-          label
-        ) : (
-          <label htmlFor={id}>
-            {isRequired ? <span>*</span> : null}
-            {label}
-          </label>
+      {labelIsReactEl ? (
+        label
+      ) : (
+        <label className={bem('label')} htmlFor={id}>
+          {isRequired ? <span>*</span> : null}
+          {label}
+        </label>
+      )}
+      <div
+        className={bem(
+          'container',
+          [isReadOnly, 'readonly'],
+          [hasError || !isValid, 'error']
         )}
-      </div>
-      <div className={bem('container', [isReadOnly, 'readonly'])}>
+      >
         {prependedIcon ? (
-          checkForAnyTypes(prependedIcon) ? (
+          checkIfAnyReactComponentType(prependedIcon) ? (
             prependedIcon
           ) : (
             <SvgSymbol
@@ -151,12 +174,18 @@ export default function Input({
           required={isRequired}
           autoFocus={shouldAutoFocus}
           autoComplete={autocomplete}
-          onClick={onClick}
-          onChange={onChange}
-          onBlur={onBlur}
+          onClick={(e: React.MouseEvent<HTMLInputElement>) =>
+            onClick && onClick(e)
+          }
+          onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+            onBlur && onBlur(e)
+          }
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange && onChange(e)
+          }
         />
         {appendedIcon ? (
-          checkForAnyTypes(appendedIcon) ? (
+          checkIfAnyReactComponentType(appendedIcon) ? (
             appendedIcon
           ) : (
             <SvgSymbol
@@ -168,11 +197,25 @@ export default function Input({
           )
         ) : null}
       </div>
-      <FadeInComponent trigger={!!message} timeout={100}>
-        <div className={bem('message')}>
-          {checkForAnyTypes(message) ? message : <span>{message}</span>}
+
+      {!!message || hasValidChildren ? (
+        <div
+          className={
+            !checkIfAnyReactComponentType(message) ? bem('message') : null
+          }
+        >
+          {message && checkIfAnyReactComponentType(message) ? (
+            message
+          ) : Array.isArray(message) ? (
+            message.map((text, index) => <div key={text + index}>{text}</div>)
+          ) : (
+            <span>{message}</span>
+          )}
+          <FadeInComponent trigger={showChildMessage}>
+            <span>{children}</span>
+          </FadeInComponent>
         </div>
-      </FadeInComponent>
+      ) : null}
     </div>
   )
 }

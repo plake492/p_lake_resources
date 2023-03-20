@@ -1,27 +1,29 @@
 import * as React from 'react'
-import { useRef, useEffect, ReactNode } from 'react'
 import FadeInComponent from './FadeInComponent'
 import SvgSymbol from './SvgSymbol'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { useBemify } from '../../hooks/useBemify'
 import { usePortal } from '../../hooks/usePortal'
 
-interface ModalTypes {
+interface ModalPropTypes {
   trigger: boolean
   setTrigger: Function
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export default function openModal({
   trigger,
   setTrigger,
   children,
-}: ModalTypes) {
-  const modalRef = useRef()
+}: ModalPropTypes) {
+  // Create a ref for tracking onClickOutside
+  const modalRef = React.useRef()
 
-  useEffect(() => {
-    if (trigger) document.body.classList.add('body-is-fixed')
-
+  React.useEffect(() => {
+    // TODO Move this class addition to a style addition
+    if (trigger) {
+      document.body.classList.add('body-is-fixed')
+    }
     return () => document.body.classList.remove('body-is-fixed')
   }, [trigger])
 
