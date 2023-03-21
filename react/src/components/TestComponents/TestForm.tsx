@@ -32,6 +32,7 @@ export default function TestForm(): JSX.Element {
     _: React.FormEvent<HTMLFormElement>,
     success: boolean
   ): void => {
+    console.log('success ==>', success)
     alert(success ? 'Form success submitted!' : 'Error on form')
   }
 
@@ -109,7 +110,7 @@ export default function TestForm(): JSX.Element {
           }
           validationType={(v: string) => /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v)}
         />
-        <Input
+        {/* <Input
           label="Date of Birth"
           type="text"
           id="bday"
@@ -124,7 +125,7 @@ export default function TestForm(): JSX.Element {
               v
             )
           }
-        />
+        /> */}
         <Input
           wrapperClasses=""
           type={showOldPassword ? 'text' : 'password'}
@@ -255,7 +256,7 @@ export default function TestForm(): JSX.Element {
           isDisabled
           message="Deal with it"
         />
-        <Checkbox
+        {/* <Checkbox
           id="checkbox-two"
           label={
             <div className="border border-rounded px-md py-sm bg-red-30">
@@ -267,7 +268,7 @@ export default function TestForm(): JSX.Element {
           value={checkedTwo}
           onChange={() => setCheckedTwo((p) => !p)}
           isRequired
-        />
+        /> */}
 
         <div className="mt-xl"></div>
       </Form>

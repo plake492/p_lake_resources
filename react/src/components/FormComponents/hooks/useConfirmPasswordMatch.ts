@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { forceArray } from '../../../utils/helpers'
 
 interface IdValueProps {
   id: string
@@ -10,9 +11,11 @@ export const useConfirmPasswordMatch = ({
   children,
   excludeFieldFromConfirmPassword,
 }: {
-  children: React.ReactElement[]
+  children: React.ReactElement[] | React.ReactElement
   excludeFieldFromConfirmPassword: string | undefined
 }) => {
+  const elements: React.ReactElement[] = forceArray(children)
+
   // ****************************** STATE ****************************** //
   /**  Memoizing this prevents any type change to
    * text (common for show password options)
@@ -23,7 +26,7 @@ export const useConfirmPasswordMatch = ({
     string | React.JSXElementConstructor<any>
   >[] = React.useMemo(
     () =>
-      children.filter(
+      elements.filter(
         (el) =>
           el.props.type === 'password' &&
           el.props.id !== excludeFieldFromConfirmPassword

@@ -4,41 +4,7 @@ import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 
 import SvgSymbol from '../BaseComponents/SvgSymbol'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-
-export interface InputPropTypes {
-  label: string | JSX.Element
-  id: string
-  value?: string | number
-  placeholder?: string
-  ariaLabel?: string
-  wrapperClasses?: string
-  message?: string | JSX.Element | string[]
-  autocomplete?: 'off' | 'on'
-  width?: string
-  isRequired?: boolean
-  isBlock?: boolean
-  isReadOnly?: boolean
-  isDisabled?: boolean
-  isSuccess?: boolean
-  hasError?: boolean
-  onClick?: React.MouseEventHandler
-  onChange?: React.ChangeEventHandler
-  onBlur?: React.FocusEventHandler
-  shouldAutoFocus?: boolean
-  shouldHideStatus?: boolean
-  prependedIcon?: string | JSX.Element
-  prependedOnClick?: React.MouseEventHandler
-  appendedIcon?: string | JSX.Element
-  appendedOnClick?: React.MouseEventHandler
-  prependedIconSize?: { width: string; height: string }
-  appendedIconSize?: { width: string; height: string }
-  shouldValidate?: boolean
-  isValid?: boolean
-  validationType?: 'email' | 'password' | 'text' | Function
-  children?: React.ReactElement
-  rows?: number
-  formGroupId?: string
-}
+import { TextAreaPropTypes } from './types'
 
 export default function Textarea({
   label,
@@ -61,17 +27,11 @@ export default function Textarea({
   onBlur,
   shouldAutoFocus,
   shouldHideStatus,
-  prependedIcon,
-  prependedOnClick,
-  appendedIcon,
-  appendedOnClick,
-  prependedIconSize = { width: '20', height: '20' },
-  appendedIconSize = { width: '20', height: '20' },
   isValid,
   children,
   rows = 6,
   formGroupId,
-}: InputPropTypes): JSX.Element {
+}: TextAreaPropTypes): JSX.Element {
   const bem: Function = useBemify('textarea')
   const labelIsReactEl = checkIfAnyReactComponentType(label)
   const Messqages = useFormFieldMessages({ children, message, bem })
@@ -108,21 +68,6 @@ export default function Textarea({
           [hasError || !isValid, 'error']
         )}
       >
-        {prependedIcon ? (
-          checkIfAnyReactComponentType(prependedIcon) ? (
-            prependedIcon
-          ) : (
-            <SvgSymbol
-              classes={bem('prepended-icon', [
-                !!prependedOnClick,
-                '--clickable',
-              ])}
-              onClick={prependedOnClick}
-              icon={prependedIcon as string}
-              {...prependedIconSize}
-            />
-          )
-        ) : null}
         <textarea
           className={bem('field')}
           id={textareaId}
@@ -145,18 +90,6 @@ export default function Textarea({
             onChange && onChange(e)
           }
         />
-        {appendedIcon ? (
-          checkIfAnyReactComponentType(appendedIcon) ? (
-            appendedIcon
-          ) : (
-            <SvgSymbol
-              classes={bem('appended-icon', [!!appendedOnClick, '--clickable'])}
-              onClick={appendedOnClick}
-              icon={appendedIcon as string}
-              {...appendedIconSize}
-            />
-          )
-        ) : null}
         {isSuccess ? (
           <div
             className={bem('success')}

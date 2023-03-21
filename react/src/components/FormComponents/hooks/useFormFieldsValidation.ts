@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { forceArray } from '../../../utils/helpers'
 import { formValidation } from '../utils/formValidation'
 
 interface IdValueProps {
@@ -9,15 +10,17 @@ interface IdValueProps {
 export const useFormFieldsValidation = ({
   children,
 }: {
-  children: React.ReactElement[]
+  children: React.ReactElement[] | React.ReactElement
 }) => {
+  const elements: React.ReactElement[] = forceArray(children)
+
   // Find the required children of the form
   const requiredElements: React.ReactElement<
     any,
     string | React.JSXElementConstructor<any>
   >[] = React.useMemo(
     () =>
-      children.filter((el) => el.props.isRequired || el.props.shouldValidate),
+      elements.filter((el) => el.props.isRequired || el.props.shouldValidate),
     []
   )
 
@@ -25,6 +28,9 @@ export const useFormFieldsValidation = ({
     [key: string]: { [key: string]: string | number | null | boolean }
   }>({})
 
+  React.useEffect(() => {
+    console.log('formItemValues ==>', formItemValues)
+  }, [formItemValues])
   React.useEffect(() => {
     if (requiredElements && requiredElements.length > 0) {
       setFormItemValues(
@@ -45,12 +51,12 @@ export const useFormFieldsValidation = ({
 
   const elementsTracked = Object.values(formItemValues)
 
-  const missingRequiredValue = elementsTracked
-    .filter(({ isRequired }) => isRequired)
-    .some(({ value }) => !value)
+  const missingRequiredValue: boolean = elementsTracked
+    .filter(({ isRequired }: { isRequired: boolean }) => isRequired)
+    .some(({ value }: { value: string | number | boolean }) => !value)
 
-  const containesValidationError = elementsTracked.some(
-    ({ isValid }) => !isValid
+  const containesValidationError: boolean = elementsTracked.some(
+    ({ isValid }: { isValid: boolean }) => !isValid
   )
 
   const updateRequiredFieldValue = ({ id, value }: IdValueProps): void => {
@@ -62,7 +68,7 @@ export const useFormFieldsValidation = ({
       // Update the value prop
       setFormItemValues((prev: { [key: string]: {} }) => ({
         ...prev,
-        [id]: { value },
+        [id]: { ...prev[id], value },
       }))
     }
   }

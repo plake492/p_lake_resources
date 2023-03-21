@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Test from './components/TestComponents'
 import TestForm from './components/TestComponents/TestForm'
+import TestFormRadios from './components/TestComponents/TestFormRadios'
 
 export default function App() {
   return (
@@ -9,8 +10,13 @@ export default function App() {
         <TestForm />
       </div>
       <div className="container py-xxl">
-        <Test />
+        <div className="bg-black-10 py-xxl">
+          <TestFormRadios />
+        </div>
       </div>
+      {/* <div className="container py-xxl">
+        <Test />
+      </div> */}
     </div>
   )
 }

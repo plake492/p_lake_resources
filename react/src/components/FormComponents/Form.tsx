@@ -1,42 +1,16 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 import { isDOMTypeElement } from '../../utils/detectReactComponents'
+import { forceArray } from '../../utils/helpers'
 import {
   IsIvalidErrorMessage,
   PasswordMatchErrorMessage,
   RequiredFieldErrorMessage,
 } from './FormMessages'
-
 import { useConfirmPasswordMatch } from './hooks/useConfirmPasswordMatch'
 import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
-import { InputPropTypes } from './Input'
+import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
-
-interface FormPropTypes {
-  /**
-   *
-   * A group of form elements
-   * @TODO Create TextArea, Select, Option, Radio
-   */
-  children: React.ReactElement[]
-  onSubmit: Function
-  hasError?: boolean
-  isSuccess?: boolean
-  noValidate?: boolean
-  wrapperClasses?: string
-  disableBtnError?: boolean
-  disableSuccessIndicators?: boolean
-  formId?: string
-  autoComplete?: 'on' | 'off'
-  /**
-   *
-   * A form id's with a password field that should be excluded from the
-   * password confirmation check, this would most commonly apply
-   * to a form contianing (Old | Previous) password, New password, and
-   * Confirm new Password fields, where the (Old | Previous) password would be excluded
-   */
-  excludeFieldFromConfirmPassword?: string | undefined
-}
 
 export default function Form({
   children,
@@ -94,6 +68,12 @@ export default function Form({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
     setFormSubmitionAttemp(true)
+    console.log(
+      '  missingRequiredValue || containesValidationError || passwordMatchError ==>',
+      missingRequiredValue,
+      containesValidationError,
+      passwordMatchError
+    )
 
     const formIsInvalid =
       missingRequiredValue || containesValidationError || passwordMatchError
@@ -102,6 +82,8 @@ export default function Form({
 
     onSubmit(event, !formIsInvalid)
   }
+
+  const elements: React.ReactElement[] = forceArray(children)
 
   return (
     <form
@@ -112,7 +94,7 @@ export default function Form({
       autoComplete={autoComplete}
     >
       <>
-        {children.map((el: JSX.Element, index: number) => {
+        {elements.map((el: JSX.Element, index: number) => {
           const {
             id,
             value,
@@ -151,19 +133,24 @@ export default function Form({
             updatePasswordValue({ id, value })
           }
 
+          let isValid: boolean = true
           // ************** VALIDATON **************//
           if (isRequired || shouldValidate) {
             updateRequiredFieldValue({ id, value })
+
+            isValid = checkFieldValidation({
+              id,
+              value,
+              validationType,
+              isTouched,
+              shouldValidate,
+              isRequired,
+            })
           }
 
-          const isValid = checkFieldValidation({
-            id,
-            value,
-            validationType,
-            isTouched,
-            shouldValidate,
-            isRequired,
-          })
+          if (formSubmissionAttempted) {
+            console.log('id:::isValid ==>', id, ':::', isValid)
+          }
 
           const handleOnBlur = () => {
             setIsTouched(true)
@@ -212,7 +199,9 @@ export default function Form({
               : { isValid }),
           }
 
-          const messageLabel = !type ? 'Field' : label
+          // This will avoid using long labels for the error messages
+          const messageLabel =
+            !type || type === 'checkbox' || type === 'radio' ? 'Field' : label
 
           const newChildren = [
             !isValid ? <IsIvalidErrorMessage label={messageLabel} /> : null,

@@ -4,67 +4,68 @@ import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 
 import SvgSymbol from '../BaseComponents/SvgSymbol'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { InputPropTypes } from './types'
 
-export interface InputPropTypes {
-  type:
-    | 'button'
-    | 'checkbox'
-    | 'color'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'file'
-    | 'hidden'
-    | 'image'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
-    | 'search'
-    | 'submit'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week'
-  label: string | JSX.Element
-  id: string
-  value?: string | number
-  placeholder?: string
-  ariaLabel?: string
-  wrapperClasses?: string
-  message?: string | JSX.Element | string[]
-  maxlength?: number
-  min?: number
-  max?: number
-  pattern?: string
-  autocomplete?: 'off' | 'on'
-  width?: string
-  isRequired?: boolean
-  isBlock?: boolean
-  isReadOnly?: boolean
-  isDisabled?: boolean
-  isSuccess?: boolean
-  hasError?: boolean
-  onClick?: React.MouseEventHandler
-  onChange?: React.ChangeEventHandler
-  onBlur?: React.FocusEventHandler
-  shouldAutoFocus?: boolean
-  shouldHideStatus?: boolean
-  prependedIcon?: string | JSX.Element
-  prependedOnClick?: React.MouseEventHandler
-  appendedIcon?: string | JSX.Element
-  appendedOnClick?: React.MouseEventHandler
-  prependedIconSize?: { width: string; height: string }
-  appendedIconSize?: { width: string; height: string }
-  shouldValidate?: boolean
-  isValid?: boolean
-  validationType?: 'email' | 'password' | 'text' | Function
-  children?: React.ReactElement
-  formGroupId?: string
-}
+// export interface InputPropTypes {
+//   type:
+//     | 'button'
+//     | 'checkbox'
+//     | 'color'
+//     | 'date'
+//     | 'datetime-local'
+//     | 'email'
+//     | 'file'
+//     | 'hidden'
+//     | 'image'
+//     | 'month'
+//     | 'number'
+//     | 'password'
+//     | 'radio'
+//     | 'range'
+//     | 'reset'
+//     | 'search'
+//     | 'submit'
+//     | 'tel'
+//     | 'text'
+//     | 'time'
+//     | 'url'
+//     | 'week'
+//   label: string | JSX.Element
+//   id: string
+//   value?: string | number
+//   placeholder?: string
+//   ariaLabel?: string
+//   wrapperClasses?: string
+//   message?: string | JSX.Element | string[]
+//   maxlength?: number
+//   min?: number
+//   max?: number
+//   pattern?: string
+//   autocomplete?: 'off' | 'on'
+//   width?: string
+//   isRequired?: boolean
+//   isBlock?: boolean
+//   isReadOnly?: boolean
+//   isDisabled?: boolean
+//   isSuccess?: boolean
+//   hasError?: boolean
+//   onClick?: React.MouseEventHandler
+//   onChange?: React.ChangeEventHandler
+//   onBlur?: React.FocusEventHandler
+//   shouldAutoFocus?: boolean
+//   shouldHideStatus?: boolean
+//   prependedIcon?: string | JSX.Element
+//   prependedOnClick?: React.MouseEventHandler
+//   appendedIcon?: string | JSX.Element
+//   appendedOnClick?: React.MouseEventHandler
+//   prependedIconSize?: { width: string; height: string }
+//   appendedIconSize?: { width: string; height: string }
+//   shouldValidate?: boolean
+//   isValid?: boolean
+//   validationType?: 'email' | 'password' | 'text' | Function
+//   children?: React.ReactElement
+//   formGroupId?: string
+// }
 
 export default function Input({
   label,
