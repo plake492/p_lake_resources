@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { formValidation } from '../../../utils/formValidation'
+import { formValidation } from '../utils/formValidation'
 
 interface IdValueProps {
   id: string
@@ -126,7 +126,9 @@ export const useFormFieldsValidation = ({
         }))
       }
 
-      return isValid
+      // This will prevent both the isRequired and isInvalid error
+      // from showing at the same time if a required input is empty after touch
+      return isRequired && !value ? true : isValid
     }
     return true
   }

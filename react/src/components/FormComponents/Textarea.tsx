@@ -6,29 +6,6 @@ import SvgSymbol from '../BaseComponents/SvgSymbol'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 
 export interface InputPropTypes {
-  type:
-    | 'button'
-    | 'checkbox'
-    | 'color'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'file'
-    | 'hidden'
-    | 'image'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
-    | 'search'
-    | 'submit'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week'
   label: string | JSX.Element
   id: string
   value?: string | number
@@ -36,10 +13,6 @@ export interface InputPropTypes {
   ariaLabel?: string
   wrapperClasses?: string
   message?: string | JSX.Element | string[]
-  maxlength?: number
-  min?: number
-  max?: number
-  pattern?: string
   autocomplete?: 'off' | 'on'
   width?: string
   isRequired?: boolean
@@ -63,22 +36,18 @@ export interface InputPropTypes {
   isValid?: boolean
   validationType?: 'email' | 'password' | 'text' | Function
   children?: React.ReactElement
+  rows?: number
   formGroupId?: string
 }
 
-export default function Input({
+export default function Textarea({
   label,
-  type,
   id,
   value,
   placeholder,
   ariaLabel,
   wrapperClasses,
   message,
-  maxlength,
-  min,
-  max,
-  pattern,
   autocomplete,
   width,
   isRequired,
@@ -100,12 +69,13 @@ export default function Input({
   appendedIconSize = { width: '20', height: '20' },
   isValid,
   children,
+  rows = 6,
   formGroupId,
 }: InputPropTypes): JSX.Element {
-  const bem: Function = useBemify('input')
+  const bem: Function = useBemify('textarea')
   const labelIsReactEl = checkIfAnyReactComponentType(label)
-  const messages = useFormFieldMessages({ children, message, bem })
-  const inputId = formGroupId ? `${formGroupId}__${id}` : id
+  const Messqages = useFormFieldMessages({ children, message, bem })
+  const textareaId = formGroupId ? `${formGroupId}__${id}` : id
 
   return (
     <div
@@ -126,7 +96,7 @@ export default function Input({
       {labelIsReactEl ? (
         label
       ) : (
-        <label className={bem('label')} htmlFor={inputId}>
+        <label className={bem('label')} htmlFor={textareaId}>
           {isRequired ? <span>*</span> : null}
           {label}
         </label>
@@ -153,29 +123,25 @@ export default function Input({
             />
           )
         ) : null}
-        <input
+        <textarea
           className={bem('field')}
-          type={type}
-          id={inputId}
+          id={textareaId}
           aria-label={ariaLabel || placeholder}
           placeholder={placeholder}
           readOnly={isReadOnly}
           disabled={isDisabled}
           value={value}
-          maxLength={maxlength}
-          min={min}
-          max={max}
-          pattern={pattern}
           required={isRequired}
           autoFocus={shouldAutoFocus}
           autoComplete={autocomplete}
-          onClick={(e: React.MouseEvent<HTMLInputElement>) =>
+          rows={rows}
+          onClick={(e: React.MouseEvent<HTMLTextAreaElement>) =>
             onClick && onClick(e)
           }
-          onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+          onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) =>
             onBlur && onBlur(e)
           }
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             onChange && onChange(e)
           }
         />
@@ -191,7 +157,7 @@ export default function Input({
             />
           )
         ) : null}
-        {messages && isSuccess ? (
+        {isSuccess ? (
           <div
             className={bem('success')}
             style={{ color: 'var(--bg-green-20)' }}
@@ -205,8 +171,7 @@ export default function Input({
           </div>
         ) : null}
       </div>
-
-      {messages}
+      {Messqages}
     </div>
   )
 }

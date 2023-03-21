@@ -1,1 +1,8 @@
-export const validFormComponentChildren = ['Input']
+export const validFormComponentChildren = [
+  'Input',
+  'Checkbox',
+  'RadioButtons',
+  'Textarea',
+  'Datepicker',
+  'FileUpload',
+]

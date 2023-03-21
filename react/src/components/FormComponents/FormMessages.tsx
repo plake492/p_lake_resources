@@ -5,7 +5,7 @@ import SvgSymbol from '../BaseComponents/SvgSymbol'
 const MessageWrapper = function ({ children }: { children: React.ReactNode }) {
   return (
     <span
-      className="d-flex gap-sm align-items-center justify-content-end"
+      className="d-flex gap-sm align-items-center"
       style={{ color: 'var(--bg-red-30)' }}
     >
       <SvgSymbol icon="error" width="16" height="16" viewBox="0 0 25 25" />

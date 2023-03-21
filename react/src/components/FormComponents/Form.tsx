@@ -24,6 +24,10 @@ interface FormPropTypes {
   isSuccess?: boolean
   noValidate?: boolean
   wrapperClasses?: string
+  disableBtnError?: boolean
+  disableSuccessIndicators?: boolean
+  formId?: string
+  autoComplete?: 'on' | 'off'
   /**
    *
    * A form id's with a password field that should be excluded from the
@@ -40,7 +44,14 @@ export default function Form({
   noValidate,
   excludeFieldFromConfirmPassword,
   wrapperClasses,
+  disableBtnError,
+  disableSuccessIndicators,
+  formId,
+  autoComplete = 'off',
 }: FormPropTypes): JSX.Element {
+  // * CUSTOM HOOKS * //
+
+  // Handles password matching
   const {
     passwordMatchError,
     handlePasswordMatchOnBlur,
@@ -50,6 +61,7 @@ export default function Form({
     passwordIDs,
   } = useConfirmPasswordMatch({ children, excludeFieldFromConfirmPassword })
 
+  // Handles input and form validation
   const {
     missingRequiredValue,
     updateRequiredFieldValue,
@@ -60,9 +72,20 @@ export default function Form({
 
   const bem = useBemify('form')
 
+  const [formError, setFormError] = React.useState<boolean>(false)
   const [formSubmissionAttempted, setFormSubmitionAttemp] =
     React.useState<boolean>(false)
-  const [formError, setFormError] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    if (formError) {
+      setFormError(
+        missingRequiredValue || containesValidationError || passwordMatchError
+      )
+    }
+  }, [containesValidationError, passwordMatchError])
+
+  const reactId = React.useId()
+  const formGroupId = formId ? formId + reactId : reactId
 
   /**
    * Validate the child prop requiremnts.
@@ -85,6 +108,8 @@ export default function Form({
       className={bem('', wrapperClasses)}
       onSubmit={handleSubmit}
       noValidate={noValidate}
+      id={formGroupId}
+      autoComplete={autoComplete}
     >
       <>
         {children.map((el: JSX.Element, index: number) => {
@@ -92,6 +117,7 @@ export default function Form({
             id,
             value,
             label,
+            type,
             isRequired,
             shouldValidate,
             hasError,
@@ -99,7 +125,7 @@ export default function Form({
             onBlur,
             validationType,
           }: InputPropTypes = el.props
-          console.log('value ==>', value)
+
           /**
            * If child is not a react component,
            * or if it's not on the list of
@@ -154,34 +180,45 @@ export default function Form({
             !formItemValues[id].value
 
           const props = {
-            // Pass error state into children that do not contain a value
             onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
               e.stopPropagation()
               handleOnBlur()
               onBlur && onBlur(e)
             },
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-              onChange(e)
               if (checkIfPasswordMatchIsNeeded({ id })) {
                 handlePasswordsMatch({ id, value: e.target.value })
               }
+              onChange && onChange(e)
             },
+            isSuccess:
+              !disableSuccessIndicators && isTouched && value && isValid,
+            formGroupId,
             // For required fields with no value, pass an error state
             ...(isRequired && !value ? { hasError: formError } : {}),
+            // Handle Password specific props
             ...(checkIfPasswordMatchIsNeeded({ id })
               ? {
                   hasError:
                     hasError || passwordMatchError || (!value && formError),
                   isValid: isValid && !passwordMatchError,
+                  isSuccess:
+                    !disableSuccessIndicators &&
+                    isTouched &&
+                    value &&
+                    isValid &&
+                    !passwordMatchError,
                 }
               : { isValid }),
           }
 
+          const messageLabel = !type ? 'Field' : label
+
           const newChildren = [
-            !isValid ? <IsIvalidErrorMessage label={label} /> : null,
+            !isValid ? <IsIvalidErrorMessage label={messageLabel} /> : null,
 
             requiredFieldError ? (
-              <RequiredFieldErrorMessage label={label} />
+              <RequiredFieldErrorMessage label={messageLabel} />
             ) : null,
             /**
              * This assumes that the confirm password field
@@ -198,8 +235,15 @@ export default function Form({
             </React.Fragment>
           )
         })}
+
         <div className={bem('btn-wrapper')}>
-          <button className={bem('submit-btn')} type="submit">
+          <button
+            className={bem('submit-btn', [
+              formError && !disableBtnError,
+              'error',
+            ])}
+            type="submit"
+          >
             Submit
           </button>
         </div>
