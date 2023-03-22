@@ -1,15 +1,8 @@
 import * as React from 'react'
-import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
-import { forceArray } from '../../utils/helpers'
+import { checkIfAnyReactComponentType } from '../../../utils/detectReactComponents'
+import { forceArray } from '../../../utils/helpers'
 
-// interface Props {
-//   children: React.ReactElement[] | React.ReactElement | string
-//   isRequired?: boolean
-//   el?: keyof JSX.IntrinsicElements
-// }
-
-// TODO add prop types
-export default function FieldLabel(props: any) {
+export default function FieldLabel(props: { [key: string]: any }) {
   // Remove any non DOM attributes from the props before spreading
   const { children, el, isRequired, ...rest } = props
 

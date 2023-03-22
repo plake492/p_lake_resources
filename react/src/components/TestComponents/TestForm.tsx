@@ -7,11 +7,7 @@ import Textarea from '../FormComponents/Textarea'
 import RadioButtons from '../FormComponents/RadioButtons'
 import Select from '../FormComponents/Select'
 
-const radioGroup = [
-  { id: 'value-1', label: 'red' },
-  { id: 'value-2', label: 'blue' },
-  { id: 'value-3', label: 'green' },
-]
+const radioGroup = [{ label: 'red' }, { label: 'blue' }, { label: 'green' }]
 
 const radioGroupTwo = [
   { id: 'value-1', label: 'Jane' },
@@ -25,7 +21,8 @@ export default function TestForm(): JSX.Element {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false)
   const [test, setTest] = React.useState('')
-  const [favoriteColor, setFavoriteColor] = React.useState(null)
+  const [favoriteColor, setFavoriteColor] = React.useState<string | null>(null)
+  const [gf, setGf] = React.useState(null)
   const [message, setMessage] = React.useState('')
 
   const [formFields, setFormFields] = React.useState({
@@ -65,7 +62,15 @@ export default function TestForm(): JSX.Element {
         }
         formLabel="FORM TIME"
       >
-        <Select label="Pick a car" isRequired></Select>
+        <Select
+          id="select"
+          label="Pick a color"
+          isRequired
+          options={radioGroup}
+          placeholder="pick a color"
+          onChange={(v: string): void => setFavoriteColor(v)}
+          value={favoriteColor}
+        />
         <Input
           label="First Name"
           type="text"
@@ -73,9 +78,7 @@ export default function TestForm(): JSX.Element {
           placeholder="John"
           value={formFields.firstName}
           isRequired
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('firstName', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('firstName', v)}
         />
         <Input
           label="Last Name"
@@ -84,9 +87,7 @@ export default function TestForm(): JSX.Element {
           placeholder="Snow"
           value={formFields.lastName}
           isRequired
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('lastName', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('lastName', v)}
         />
         <Input
           label="Address"
@@ -95,9 +96,7 @@ export default function TestForm(): JSX.Element {
           placeholder="1234 Park Place"
           value={formFields.address}
           isRequired
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('address', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('address', v)}
         />
         <Input
           label="Address Line 2"
@@ -105,9 +104,7 @@ export default function TestForm(): JSX.Element {
           id="address-line2"
           placeholder="APT 2"
           value={formFields.addressTwo}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('addressTwo', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('addressTwo', v)}
         />
         <Input
           label="Postal Code"
@@ -116,9 +113,7 @@ export default function TestForm(): JSX.Element {
           placeholder="12345"
           isRequired
           value={formFields.zipcode}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('zipcode', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('zipcode', v)}
           validationType={(v: string) => /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v)}
         />
 
@@ -136,9 +131,7 @@ export default function TestForm(): JSX.Element {
           ]}
           isRequired
           validationType="password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('password', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('password', v)}
         />
         <Input
           label="Confirm Password"
@@ -151,9 +144,7 @@ export default function TestForm(): JSX.Element {
           isBlock
           isRequired
           validationType="password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('passwordConfirm', e.target.value)
-          }
+          onChange={(v: string) => updateFormItem('passwordConfirm', v)}
         />
 
         <Input
@@ -172,10 +163,7 @@ export default function TestForm(): JSX.Element {
               Custom Label
             </p>
           }
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setTest(e.target.value)
-          }
-          appendedIcon={<p className="text-xs mb-none">I'm Appended</p>}
+          onChange={(v: string) => setTest(v)}
           shouldValidate
           validationType={(v: string) => v === 'TEST'}
           message={[
@@ -191,9 +179,7 @@ export default function TestForm(): JSX.Element {
           shouldValidate
           validationType={(v: string) => v.length > 100}
           value={message}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setMessage(e.target.value)
-          }
+          onChange={(v: string) => setMessage(v)}
           isRequired
           isBlock
           message={[
@@ -201,20 +187,16 @@ export default function TestForm(): JSX.Element {
             `Number of characters: ${message.length.toString()}`,
           ]}
         />
+
         <RadioButtons
-          label="Select your Michal Scott GF"
+          label="Select your girlfriend"
           options={radioGroupTwo}
-          id="gf"
-          isDisabled={true}
-        />
-        <RadioButtons
-          label="Select your favorite color"
-          value={favoriteColor}
-          onChange={(e: any) => setFavoriteColor(e.target.value)}
-          options={radioGroup}
+          value={gf}
           isRequired
-          id="favorite-color"
+          onChange={(v: boolean) => setGf(v)}
+          id="gf"
         />
+
         <Checkbox
           id="checkbox"
           label="Check me or else this form will not work. You don't want to check me? Well then find a different form"

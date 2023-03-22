@@ -26,7 +26,7 @@ namespace FormTypes {
     excludeFieldFromConfirmPassword?: string | undefined
   }
 
-  export interface FormElementTypes {
+  export interface FormElementTypes<E> {
     label: string | JSX.Element
     id: string
     placeholder?: string
@@ -39,15 +39,16 @@ namespace FormTypes {
     isDisabled?: boolean
     isSuccess?: boolean
     hasError?: boolean
-    onClick?: React.MouseEventHandler
-    onBlur?: React.FocusEventHandler
+    onClick?: Function
+    onChange?: Function
+    onBlur?: React.FocusEventHandler<E>
     shouldAutoFocus?: boolean
     shouldHideStatus?: boolean
     children?: React.ReactElement
     formGroupId?: string
   }
 
-  export interface InputPropTypes extends FormElementTypes {
+  export interface InputPropTypes extends FormElementTypes<HTMLInputElement> {
     type:
       | 'button'
       | 'checkbox'
@@ -73,7 +74,6 @@ namespace FormTypes {
       | 'week'
     wrapperClasses?: string
     value?: string | number
-    onChange?: React.ChangeEventHandler
     maxlength?: number
     min?: number
     max?: number
@@ -92,10 +92,10 @@ namespace FormTypes {
     validationType?: 'email' | 'password' | 'text' | Function
   }
 
-  export interface TextAreaPropTypes extends FormElementTypes {
+  export interface TextAreaPropTypes
+    extends FormElementTypes<HTMLTextAreaElement> {
     wrapperClasses?: string
     value?: string | number
-    onChange?: React.ChangeEventHandler
     maxlength?: number
     autocomplete?: 'off' | 'on'
     width?: string
@@ -106,18 +106,19 @@ namespace FormTypes {
     rows?: number
   }
 
-  export interface CheckboxPropTypes extends FormElementTypes {
+  export interface CheckboxPropTypes
+    extends FormElementTypes<HTMLInputElement> {
     type?: 'checkbox'
     value?: boolean
     onChange?: React.ChangeEventHandler
     isBlock?: boolean
   }
 
-  export interface RadioButtonsPropTypes extends FormElementTypes {
+  export interface RadioButtonsPropTypes
+    extends FormElementTypes<HTMLInputElement> {
     value?: string | number | undefined
     options?: { [key: string]: string | number }[]
     isVertical?: boolean
-    onChange?: React.FormEventHandler
   }
 
   export interface RadioPropTypes {
@@ -129,5 +130,31 @@ namespace FormTypes {
     formGroupId?: string
     isDisabled?: boolean
     type?: 'radio'
+    onChange?: Function
+  }
+
+  export interface SelectPropTypes extends FormElementTypes<HTMLSelectElement> {
+    name?: string
+    wrapperClasses?: string
+    isBlock?: boolean
+    isDisabled?: boolean
+    isReadOnly?: boolean
+    shouldHideStatus?: boolean
+    hasError?: boolean
+    isSuccess?: boolean
+    isRequired?: boolean
+    width?: string
+    options?: OptionPropTypes[]
+    placeholder?: string
+    removePlaceholder?: boolean
+    value?: string
+  }
+
+  export interface OptionPropTypes {
+    label: string
+    value?: string
+    disabled?: boolean
+    selected?: boolean
+    isPlaceholder?: boolean
   }
 }

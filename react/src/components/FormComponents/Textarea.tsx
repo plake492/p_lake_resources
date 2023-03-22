@@ -1,18 +1,20 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
-import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 
 import SvgSymbol from '../BaseComponents/SvgSymbol'
-import FieldLabel from './FieldLabel'
+import FieldLabel from './helperComponents/FieldLabel'
+import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { formEvents } from './utils/formEvents'
 
 export default function Textarea({
-  label,
   id,
+  label,
   value,
   placeholder,
   ariaLabel,
   wrapperClasses,
+  formGroupId,
   message,
   autocomplete,
   width,
@@ -30,11 +32,21 @@ export default function Textarea({
   isValid,
   children,
   rows = 6,
-  formGroupId,
 }: FormTypes.TextAreaPropTypes): JSX.Element {
+  // Set up function for handling styles
   const bem: Function = useBemify('textarea')
-  const Messqages = useFormFieldMessages({ children, message, bem })
-  const textareaId = formGroupId ? `${formGroupId}__${id}` : id
+
+  // Get messages as needed
+  const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
+
+  // Set up id with reference to form
+  const textareaId: string = formGroupId ? `${formGroupId}__${id}` : id
+
+  const events = formEvents<HTMLTextAreaElement>({
+    onChange,
+    onClick,
+    onBlur,
+  })
 
   return (
     <div
@@ -78,31 +90,14 @@ export default function Textarea({
           autoFocus={shouldAutoFocus}
           autoComplete={autocomplete}
           rows={rows}
-          onClick={(e: React.MouseEvent<HTMLTextAreaElement>) =>
-            onClick && onClick(e)
-          }
-          onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) =>
-            onBlur && onBlur(e)
-          }
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            onChange && onChange(e)
-          }
+          {...events}
         />
-        {isSuccess ? (
-          <div
-            className={bem('success')}
-            style={{ color: 'var(--bg-green-20)' }}
-          >
-            <SvgSymbol
-              icon="success"
-              width="24"
-              height="24"
-              viewBox="0 0 25 25"
-            />
-          </div>
-        ) : null}
+        <SuccessIcon
+          className={bem('success')}
+          isSuccess={messages && isSuccess}
+        />
       </div>
-      {Messqages}
+      {messages}
     </div>
   )
 }

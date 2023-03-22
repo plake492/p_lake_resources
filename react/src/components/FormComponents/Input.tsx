@@ -3,22 +3,21 @@ import { useBemify } from '../../hooks/useBemify'
 import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 
 import SvgSymbol from '../BaseComponents/SvgSymbol'
-import FieldLabel from './FieldLabel'
+import FieldLabel from './helperComponents/FieldLabel'
+import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { formEvents } from './utils/formEvents'
 
 export default function Input({
-  label,
-  type,
   id,
+  label,
   value,
   placeholder,
   ariaLabel,
+  type,
   wrapperClasses,
+  formGroupId,
   message,
-  maxlength,
-  min,
-  max,
-  pattern,
   autocomplete,
   width,
   isRequired,
@@ -27,24 +26,34 @@ export default function Input({
   isDisabled,
   isSuccess,
   hasError,
+  shouldAutoFocus,
+  shouldHideStatus,
+  isValid,
   onClick,
   onChange,
   onBlur,
-  shouldAutoFocus,
-  shouldHideStatus,
+  children,
+  maxlength,
+  min,
+  max,
+  pattern,
   prependedIcon,
   prependedOnClick,
   appendedIcon,
   appendedOnClick,
   prependedIconSize = { width: '20', height: '20' },
   appendedIconSize = { width: '20', height: '20' },
-  isValid,
-  children,
-  formGroupId,
 }: FormTypes.InputPropTypes): JSX.Element {
+  // Set up function for handling styles
   const bem: Function = useBemify('input')
-  const messages = useFormFieldMessages({ children, message, bem })
-  const inputId = formGroupId ? `${formGroupId}__${id}` : id
+
+  // Get messages as needed
+  const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
+
+  // Set up id with reference to form
+  const inputId: string = formGroupId ? `${formGroupId}__${id}` : id
+
+  const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
 
   return (
     <div
@@ -62,7 +71,11 @@ export default function Input({
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      <FieldLabel className={bem('label')} htmlFor={inputId}>
+      <FieldLabel
+        className={bem('label')}
+        htmlFor={inputId}
+        isRequired={isRequired}
+      >
         {label}
       </FieldLabel>
       <div
@@ -91,7 +104,7 @@ export default function Input({
           className={bem('field')}
           type={type}
           id={inputId}
-          aria-label={ariaLabel || placeholder}
+          aria-label={ariaLabel ?? placeholder}
           placeholder={placeholder}
           readOnly={isReadOnly}
           disabled={isDisabled}
@@ -103,15 +116,7 @@ export default function Input({
           required={isRequired}
           autoFocus={shouldAutoFocus}
           autoComplete={autocomplete}
-          onClick={(e: React.MouseEvent<HTMLInputElement>) =>
-            onClick && onClick(e)
-          }
-          onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
-            onBlur && onBlur(e)
-          }
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onChange && onChange(e)
-          }
+          {...events}
         />
         {appendedIcon ? (
           checkIfAnyReactComponentType(appendedIcon) ? (
@@ -125,21 +130,11 @@ export default function Input({
             />
           )
         ) : null}
-        {messages && isSuccess ? (
-          <div
-            className={bem('success')}
-            style={{ color: 'var(--bg-green-20)' }}
-          >
-            <SvgSymbol
-              icon="success"
-              width="24"
-              height="24"
-              viewBox="0 0 25 25"
-            />
-          </div>
-        ) : null}
+        <SuccessIcon
+          className={bem('success')}
+          isSuccess={messages && isSuccess}
+        />
       </div>
-
       {messages}
     </div>
   )

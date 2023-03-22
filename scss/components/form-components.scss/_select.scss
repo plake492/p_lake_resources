@@ -97,7 +97,7 @@
       var(--select-field-font-size) * var(--select-line-hight-ratio)
     );
 
-    @include input-placeholder {
+    &--unselected {
       color: var(--select-placeholder-color);
     }
 

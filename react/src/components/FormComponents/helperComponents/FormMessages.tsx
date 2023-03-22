@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
-import SvgSymbol from '../BaseComponents/SvgSymbol'
+import { checkIfAnyReactComponentType } from '../../../utils/detectReactComponents'
+import SvgSymbol from '../../BaseComponents/SvgSymbol'
 
 const MessageWrapper = function ({ children }: { children: React.ReactNode }) {
   return (
