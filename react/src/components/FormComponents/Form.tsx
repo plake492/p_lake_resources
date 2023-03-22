@@ -9,7 +9,6 @@ import {
 } from './FormMessages'
 import { useConfirmPasswordMatch } from './hooks/useConfirmPasswordMatch'
 import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
-import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
 
 export default function Form({
@@ -22,7 +21,7 @@ export default function Form({
   disableSuccessIndicators,
   formId,
   autoComplete = 'off',
-}: FormPropTypes): JSX.Element {
+}: FormTypes.FormPropTypes): JSX.Element {
   // * CUSTOM HOOKS * //
 
   // Handles password matching
@@ -106,7 +105,7 @@ export default function Form({
             onChange,
             onBlur,
             validationType,
-          }: InputPropTypes = el.props
+          }: FormTypes.InputPropTypes = el.props
 
           /**
            * If child is not a react component,
@@ -179,7 +178,9 @@ export default function Form({
               onChange && onChange(e)
             },
             isSuccess:
-              !disableSuccessIndicators && isTouched && value && isValid,
+              !disableSuccessIndicators &&
+              ((isTouched && !!value) || !!value) &&
+              isValid,
             formGroupId,
             // For required fields with no value, pass an error state
             ...(isRequired && !value ? { hasError: formError } : {}),
@@ -191,8 +192,7 @@ export default function Form({
                   isValid: isValid && !passwordMatchError,
                   isSuccess:
                     !disableSuccessIndicators &&
-                    isTouched &&
-                    value &&
+                    ((isTouched && !!value) || !!value) &&
                     isValid &&
                     !passwordMatchError,
                 }

@@ -4,15 +4,27 @@ import Input from '../FormComponents/Input'
 import Checkbox from '../FormComponents/Checkbox'
 import Tooltip from '../BaseComponents/Tooltip'
 import Textarea from '../FormComponents/Textarea'
+import RadioButtons from '../FormComponents/RadioButtons'
+
+const radioGroup = [
+  { id: 'value-1', label: 'red' },
+  { id: 'value-2', label: 'blue' },
+  { id: 'value-3', label: 'green' },
+]
+
+const radioGroupTwo = [
+  { id: 'value-1', label: 'Jane' },
+  { id: 'value-2', label: 'Holly' },
+  { id: 'value-3', label: 'Donna' },
+  { id: 'value-4', label: 'Heleen' },
+  { id: 'value-5', label: 'Carol' },
+]
 
 export default function TestForm(): JSX.Element {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false)
-  const [showOldPassword, setShowOldPassword] = React.useState(false)
-  const [oldPassword, setOldPassword] = React.useState('')
   const [test, setTest] = React.useState('')
-  const [counter, setCounter] = React.useState(0)
-  const [checkedTwo, setCheckedTwo] = React.useState(false)
+  const [favoriteColor, setFavoriteColor] = React.useState(null)
   const [message, setMessage] = React.useState('')
 
   const [formFields, setFormFields] = React.useState({
@@ -46,7 +58,7 @@ export default function TestForm(): JSX.Element {
       <Form
         noValidate
         excludeFieldFromConfirmPassword="old-password"
-        disableSuccessIndicators
+        // disableSuccessIndicators
         formId="test-form"
         onSubmit={(event: React.FormEvent<HTMLFormElement>, success: boolean) =>
           onSubmit(event, success)
@@ -110,41 +122,7 @@ export default function TestForm(): JSX.Element {
           }
           validationType={(v: string) => /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v)}
         />
-        {/* <Input
-          label="Date of Birth"
-          type="text"
-          id="bday"
-          placeholder="04/07/1993"
-          isRequired
-          value={formFields.dob}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateFormItem('dob', e.target.value)
-          }
-          validationType={(v: string): boolean =>
-            /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(
-              v
-            )
-          }
-        /> */}
-        <Input
-          wrapperClasses=""
-          type={showOldPassword ? 'text' : 'password'}
-          label="Old Password"
-          id="old-password"
-          value={oldPassword}
-          placeholder="**********"
-          appendedIcon={`eye-${showOldPassword ? 'open' : 'closed'}`}
-          appendedOnClick={() => setShowOldPassword((p) => !p)}
-          isBlock
-          isRequired
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setOldPassword(e.target.value)
-          }
-        />
 
-        <div className="border-top w-100 mt-md py-md">
-          <p>Now create a new password</p>
-        </div>
         <Input
           label="Password"
           type={showPassword ? 'text' : 'password'}
@@ -156,14 +134,12 @@ export default function TestForm(): JSX.Element {
           isBlock
           message={[
             "Password should 4 characters long, it's gonna be really secure!",
-            !oldPassword && "I'm disabled because there's no Old Password",
           ]}
           isRequired
           validationType="password"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             updateFormItem('password', e.target.value)
           }
-          isDisabled={!oldPassword}
         />
         <Input
           label="Confirm Password"
@@ -180,13 +156,6 @@ export default function TestForm(): JSX.Element {
             updateFormItem('passwordConfirm', e.target.value)
           }
         />
-
-        <div className="bg-black-20 p-md border-rounded my-md">
-          <p>
-            We can add non form elements as well. These will simply be copied
-            and passed on.
-          </p>
-        </div>
 
         <Input
           type="text"
@@ -215,20 +184,7 @@ export default function TestForm(): JSX.Element {
             'This input is not required, but will be validated if there is an input',
           ]}
         />
-        <Input
-          label="Counter"
-          id="counter"
-          type="number"
-          placeholder="0"
-          shouldValidate
-          validationType={(v: string) => !!v && parseInt(v) > 88}
-          value={counter || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setCounter(parseInt(e.target.value))
-          }
-          isRequired
-          message="Must be greater than 88"
-        />
+
         <Textarea
           label="Big Text"
           id="text-area"
@@ -241,7 +197,24 @@ export default function TestForm(): JSX.Element {
           }
           isRequired
           isBlock
-          message={`Number of characters: ${message.length.toString()}`}
+          message={[
+            'Must container at least 100 characters',
+            `Number of characters: ${message.length.toString()}`,
+          ]}
+        />
+        <RadioButtons
+          label="Select your Michal Scott GF"
+          options={radioGroupTwo}
+          id="gf"
+          isDisabled={true}
+        />
+        <RadioButtons
+          label="Select your favorite color"
+          value={favoriteColor}
+          onChange={(e: any) => setFavoriteColor(e.target.value)}
+          options={radioGroup}
+          isRequired
+          id="favorite-color"
         />
         <Checkbox
           id="checkbox"
@@ -250,25 +223,6 @@ export default function TestForm(): JSX.Element {
           onChange={() => updateFormItem('checked', !formFields.checked)}
           isRequired
         />
-        <Checkbox
-          id="checkbox-disabled"
-          label="I'm disabled... obviously"
-          isDisabled
-          message="Deal with it"
-        />
-        {/* <Checkbox
-          id="checkbox-two"
-          label={
-            <div className="border border-rounded px-md py-sm bg-red-30">
-              <label htmlFor="checkbox-two">
-                I'm a custom label and I also need to be clicked
-              </label>
-            </div>
-          }
-          value={checkedTwo}
-          onChange={() => setCheckedTwo((p) => !p)}
-          isRequired
-        /> */}
 
         <div className="mt-xl"></div>
       </Form>

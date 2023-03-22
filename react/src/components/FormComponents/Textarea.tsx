@@ -3,8 +3,8 @@ import { useBemify } from '../../hooks/useBemify'
 import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 
 import SvgSymbol from '../BaseComponents/SvgSymbol'
+import FieldLabel from './FieldLabel'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { TextAreaPropTypes } from './types'
 
 export default function Textarea({
   label,
@@ -31,9 +31,8 @@ export default function Textarea({
   children,
   rows = 6,
   formGroupId,
-}: TextAreaPropTypes): JSX.Element {
+}: FormTypes.TextAreaPropTypes): JSX.Element {
   const bem: Function = useBemify('textarea')
-  const labelIsReactEl = checkIfAnyReactComponentType(label)
   const Messqages = useFormFieldMessages({ children, message, bem })
   const textareaId = formGroupId ? `${formGroupId}__${id}` : id
 
@@ -53,14 +52,13 @@ export default function Textarea({
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      {labelIsReactEl ? (
-        label
-      ) : (
-        <label className={bem('label')} htmlFor={textareaId}>
-          {isRequired ? <span>*</span> : null}
-          {label}
-        </label>
-      )}
+      <FieldLabel
+        className={bem('label')}
+        htmlFor={textareaId}
+        isRequired={isRequired}
+      >
+        {label}
+      </FieldLabel>
       <div
         className={bem(
           'container',

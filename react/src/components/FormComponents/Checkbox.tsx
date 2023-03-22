@@ -1,31 +1,7 @@
 import * as React from 'react'
+import FieldLabel from './FieldLabel'
 import { useBemify } from '../../hooks/useBemify'
-import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-
-interface CheckboxPropTypes {
-  label: string | React.ReactElement
-  id: string
-  value?: boolean
-  placeholder?: string
-  type?: 'checkbox'
-  ariaLabel?: string
-  wrapperClasses?: string
-  message?: string | JSX.Element | string[]
-  isRequired?: boolean
-  isBlock?: boolean
-  isReadOnly?: boolean
-  isDisabled?: boolean
-  isSuccess?: boolean
-  hasError?: boolean
-  onClick?: React.MouseEventHandler
-  onChange?: React.ChangeEventHandler
-  onBlur?: React.FocusEventHandler
-  shouldAutoFocus?: boolean
-  shouldHideStatus?: boolean
-  children?: React.ReactElement
-  formGroupId?: string
-}
 
 export default function Checkbox({
   label,
@@ -47,10 +23,9 @@ export default function Checkbox({
   shouldHideStatus,
   children,
   formGroupId,
-}: CheckboxPropTypes) {
+}: FormTypes.CheckboxPropTypes) {
   const bem = useBemify('checkbox')
-  const labelIsReactEl = checkIfAnyReactComponentType(label)
-  const Messages = useFormFieldMessages({
+  const messages = useFormFieldMessages({
     message,
     children,
     bem,
@@ -91,22 +66,12 @@ export default function Checkbox({
         />
         <div className={bem('box')}></div>
       </div>
-      {labelIsReactEl ? (
-        <span className={bem('label')}>
+      <div className={bem('label')}>
+        <FieldLabel htmlFor={checkboxId} isRequired={isRequired} type="BUTT">
           {label}
-          {Messages}
-        </span>
-      ) : (
-        <>
-          <div className={bem('label')}>
-            <label htmlFor={checkboxId}>
-              {isRequired ? <span>*</span> : null}
-              {label}
-              {Messages}
-            </label>
-          </div>
-        </>
-      )}
+          {messages}
+        </FieldLabel>
+      </div>
     </div>
   )
 }

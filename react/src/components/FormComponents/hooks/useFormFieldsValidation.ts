@@ -29,9 +29,6 @@ export const useFormFieldsValidation = ({
   }>({})
 
   React.useEffect(() => {
-    console.log('formItemValues ==>', formItemValues)
-  }, [formItemValues])
-  React.useEffect(() => {
     if (requiredElements && requiredElements.length > 0) {
       setFormItemValues(
         requiredElements.reduce(
