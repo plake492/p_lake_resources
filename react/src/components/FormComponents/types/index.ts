@@ -14,6 +14,7 @@ namespace FormTypes {
     disableBtnError?: boolean
     disableSuccessIndicators?: boolean
     formId?: string
+    formLabel?: string | JSX.Element
     autoComplete?: 'on' | 'off'
     /**
      *

@@ -87,13 +87,6 @@
     }
   }
 
-  &__prepended-icon,
-  &__appended-icon {
-    &--clickable {
-      cursor: pointer;
-    }
-  }
-
   &__field {
     background-color: unset;
     border: none;

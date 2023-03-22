@@ -5,6 +5,7 @@ import Checkbox from '../FormComponents/Checkbox'
 import Tooltip from '../BaseComponents/Tooltip'
 import Textarea from '../FormComponents/Textarea'
 import RadioButtons from '../FormComponents/RadioButtons'
+import Select from '../FormComponents/Select'
 
 const radioGroup = [
   { id: 'value-1', label: 'red' },
@@ -58,15 +59,13 @@ export default function TestForm(): JSX.Element {
       <Form
         noValidate
         excludeFieldFromConfirmPassword="old-password"
-        // disableSuccessIndicators
         formId="test-form"
         onSubmit={(event: React.FormEvent<HTMLFormElement>, success: boolean) =>
           onSubmit(event, success)
         }
+        formLabel="FORM TIME"
       >
-        <p className="h4 w-100 text-center">
-          <u>A Form</u>
-        </p>
+        <Select label="Pick a car" isRequired></Select>
         <Input
           label="First Name"
           type="text"

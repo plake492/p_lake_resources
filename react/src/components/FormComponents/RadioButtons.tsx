@@ -29,7 +29,6 @@ const Radio = function ({
           id={radioButtonId}
           name={name}
           value={radioValue}
-          // checked={checked === radioValue}
           defaultChecked={checked === radioValue}
           disabled={isDisabled}
         />
@@ -78,7 +77,6 @@ export default function RadioButtons({
         [isDisabled, 'disabled'],
         [isSuccess, 'success']
       )}
-      onChange={onChange}
     >
       <div className={bem('label')}>
         <FieldLabel isRequired={isRequired} el="p">
@@ -86,7 +84,10 @@ export default function RadioButtons({
         </FieldLabel>
       </div>
       {messages}
-      <div className={bem('radios', [isVertical, '--vertical'])}>
+      <div
+        onChange={onChange}
+        className={bem('radios', [isVertical, '--vertical'])}
+      >
         {options.map(({ id, label, value }: any) => (
           <Radio
             key={id}

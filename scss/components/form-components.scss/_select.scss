@@ -1,0 +1,145 @@
+.form {
+  .select:not(.block) {
+    --select-width: #{calc(
+        var(--form-container-width) / 2 - var(--form-gutter-width) / 2
+      )};
+  }
+}
+
+.select {
+  --select-width: 300px;
+  --select-border-radius: 8px;
+  --select-background-color: var(--bg-color);
+  --select-border-color: var(--bg-violet-30);
+  --select-error-color: hsl(0, 56%, 47%);
+  --select-success-color: hsl(108, 55%, 47%);
+  --select-text-color: hsl(0, 0%, 87%);
+  --select-label-color: hsl(0, 0%, 87%);
+  --select-placeholder-color: hsl(0, 0%, 60%);
+  --select-message-color: var(--select-text-color);
+  --select-border-width: 3px;
+  --select-padding-y: #{calc($space-sm)};
+  --select-padding-x: #{$space-md};
+  --select-label-font-size: #{rem(14)};
+  --select-field-font-size: #{rem(18)};
+  --select-message-font-size: #{rem(14)};
+  --select-line-hight-ratio: 1.75;
+
+  position: relative;
+  margin-bottom: $space-sm;
+  color: var(--select-text-color);
+  flex-basis: var(--select-width);
+
+  &.block {
+    display: block;
+    --select-width: 100%;
+  }
+
+  &.disabled {
+    --select-border-color: var(--bg-grey-60);
+    --select-text-color: hsl(0, 0%, 57%);
+    --select-placeholder-color: hsl(0, 0%, 47%);
+  }
+
+  &.success {
+    --select-border-color: var(--select-success-color);
+  }
+
+  &.error {
+    --select-border-color: var(--select-error-color);
+    --select-label-color: var(--select-error-color);
+  }
+
+  &__label {
+    height: var(--form-field-label-height, initial);
+    font-size: var(--select-label-font-size);
+    line-height: calc(
+      var(--select-label-font-size) * var(--select-line-hight-ratio)
+    );
+    color: var(--select-label-color);
+  }
+
+  &__container {
+    display: inline-block;
+    border: var(--select-border-color) var(--select-border-width) solid;
+    border-radius: var(--select-border-radius);
+    padding: var(--select-padding-y) var(--select-padding-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-sm;
+    background-color: var(--select-background-color);
+    transition: border 100ms ease-in-out;
+    position: relative;
+    z-index: 1;
+
+    &:focus-within:not(.readonly) {
+      --select-border-color: var(--bg-violet-60);
+      // TODO Move these to local props
+      @extend .box-shadow;
+      @extend .shadow-1;
+      @extend .shadow-white;
+
+      &.error {
+        --select-border-color: var(--bg-red-40);
+        @extend .shadow-red;
+      }
+    }
+  }
+
+  &__field {
+    background-color: unset;
+    border: none;
+    font-size: var(--select-field-font-size);
+    flex: 1;
+    color: var(--select-text-color);
+    line-height: calc(
+      var(--select-field-font-size) * var(--select-line-hight-ratio)
+    );
+
+    @include input-placeholder {
+      color: var(--select-placeholder-color);
+    }
+
+    @include remove-auto-complete-style {
+      -webkit-text-fill-color: var(--select-text-color);
+    }
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__message {
+    position: relative;
+    font-size: var(--select-message-font-size);
+    line-height: calc(
+      var(--select-message-font-size) * var(--select-line-hight-ratio)
+    );
+    color: var(--select-message-color);
+    min-width: max-content;
+    @extend .bg-violet-20;
+
+    top: calc($space-md * -1);
+    padding-top: calc($space-sm + $space-md);
+    padding-left: $space-md;
+    padding-right: $space-md;
+    padding-bottom: $space-sm;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    z-index: 0;
+  }
+
+  &__success {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: $space-md;
+    bottom: -0.66rem;
+    transform: translateY(100%);
+  }
+}
