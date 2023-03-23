@@ -8,7 +8,7 @@ export default function FieldLabel(props: { [key: string]: any }) {
 
   const Component: keyof JSX.IntrinsicElements = el ?? 'label'
 
-  const childrenAsArray: any[] = forceArray(children)
+  const childrenAsArray: (string | React.ReactElement)[] = forceArray(children)
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function FieldLabel(props: { [key: string]: any }) {
               child
             ) : (
               <Component {...rest}>
-                {!!child && isRequired ? <span>*</span> : null}
+                {isRequired && <span>*</span>}
                 {child}
               </Component>
             )}

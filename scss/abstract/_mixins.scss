@@ -101,3 +101,24 @@
     transition: background-color 5000s ease-in-out 0s;
   }
 }
+
+@mixin form-field-vars($prefix) {
+  --#{$prefix}-field-font-size: var(--form-field-font-size);
+  --#{$prefix}-field-line-height-size: var(--form-field-line-height);
+  --#{$prefix}-field-padding-y: var(--form-field-padding-x);
+  --#{$prefix}-field-padding-x: var(--form-field-padding-y);
+
+  --#{$prefix}-field-background-color: var(--form-field-background-color);
+  --#{$prefix}-field-text-color: var(--form-field-text-color);
+  --#{$prefix}-field-placeholder-text-color: var(
+    --form-field-placeholder-text-color
+  );
+
+  --#{$prefix}-field-border-color: var(--form-field-border-color);
+  --#{$prefix}-field-border-width: var(--form-field-border-width);
+  --#{$prefix}-field-border-style: var(--form-field-border-style);
+  --#{$prefix}-field-border-radius: var(--form-field-border-radius);
+
+  --#{$prefix}-label-font-size: var(--form-label-font-size);
+  --#{$prefix}-label-font-size: var(--form-label-line-height);
+}

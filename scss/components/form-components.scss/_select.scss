@@ -1,86 +1,81 @@
-.form {
-  .select:not(.block) {
-    --select-width: #{calc(
-        var(--form-container-width) / 2 - var(--form-gutter-width) / 2
-      )};
-  }
-}
-
 .select {
-  --select-width: 300px;
-  --select-border-radius: 8px;
-  --select-background-color: var(--bg-color);
-  --select-border-color: var(--bg-violet-30);
-  --select-error-color: hsl(0, 56%, 47%);
-  --select-success-color: hsl(108, 55%, 47%);
-  --select-text-color: hsl(0, 0%, 87%);
-  --select-label-color: hsl(0, 0%, 87%);
-  --select-placeholder-color: hsl(0, 0%, 60%);
-  --select-message-color: var(--select-text-color);
-  --select-border-width: 3px;
-  --select-padding-y: #{calc($space-sm)};
-  --select-padding-x: #{$space-md};
-  --select-label-font-size: #{rem(14)};
-  --select-field-font-size: #{rem(18)};
-  --select-message-font-size: #{rem(14)};
-  --select-line-hight-ratio: 1.75;
+  --select-field-margin-bottom: var(--form-field-margin-bottom);
+  --select-field-font-size: var(--form-field-font-size);
+  --select-field-line-height-size: var(--form-field-line-height);
+  --select-field-padding-y: var(--form-field-padding-x);
+  --select-field-padding-x: var(--form-field-padding-y);
+
+  --select-field-background-color: var(--form-field-background-color);
+  --select-field-text-color: var(--form-field-text-color);
+  --select-field-placeholder-text-color: var(
+    --form-field-placeholder-text-color
+  );
+
+  --select-field-border-color: var(--form-field-border-color);
+  --select-field-border-width: var(--form-field-border-width);
+  --select-field-border-style: var(--form-field-border-style);
+  --select-field-border-radius: var(--form-field-border-radius);
+
+  --select-label-font-size: var(--form-label-font-size);
+  --select-label-line-height: var(--form-label-line-height);
+  --select-label-height: var(--form-label-height);
+
+  --select-field-shadow-focus: var(--form-field-shadow-focus);
+
+  --select-error-color: var(--form-error-color);
+  --select-success-color: var(--form-success-color);
+
+  --select-disabled-text-color: var(--form-disabled-text-color);
+  --select-disabled-border-color: var(--form-disabled-border-color);
+  --select-disabled-placeholder-color: var(--form-disabled-placeholder-color);
 
   position: relative;
-  margin-bottom: $space-sm;
-  color: var(--select-text-color);
-  flex-basis: var(--select-width);
+  margin-bottom: var(--select-field-margin-bottom);
+  color: var(--select-field-text-color);
 
-  &.block {
-    display: block;
-    --select-width: 100%;
-  }
+  // &.block {
+  //   display: block;
+  //   --select-width: 100%;
+  // }
 
-  &.disabled {
-    --select-border-color: var(--bg-grey-60);
-    --select-text-color: hsl(0, 0%, 57%);
-    --select-placeholder-color: hsl(0, 0%, 47%);
-  }
-
-  &.success {
-    --select-border-color: var(--select-success-color);
-  }
-
-  &.error {
-    --select-border-color: var(--select-error-color);
-    --select-label-color: var(--select-error-color);
-  }
+  @include field-modifiers(select);
 
   &__label {
-    height: var(--form-field-label-height, initial);
+    display: block;
     font-size: var(--select-label-font-size);
-    line-height: calc(
-      var(--select-label-font-size) * var(--select-line-hight-ratio)
-    );
+    line-height: var(--select-label-line-height);
+    height: var(--select-label-height);
     color: var(--select-label-color);
   }
 
   &__container {
-    display: inline-block;
-    border: var(--select-border-color) var(--select-border-width) solid;
-    border-radius: var(--select-border-radius);
-    padding: var(--select-padding-y) var(--select-padding-x);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: $space-sm;
-    background-color: var(--select-background-color);
-    transition: border 100ms ease-in-out;
+    gap: rem(8);
+    cursor: pointer;
+
+    background-color: var(--select-field-background-color);
+    border-color: var(--select-field-border-color);
+    border-width: var(--select-field-border-width);
+    border-style: var(--select-field-border-style);
+    border-radius: var(--select-field-border-radius);
+    padding-left: var(--select-field-padding-x);
+    padding-right: var(--select-field-padding-x);
+    padding-top: var(--select-field-padding-y);
+    padding-bottom: var(--select-field-padding-y);
+
+    overflow: hidden;
+    transition: all 100ms ease-in-out;
     position: relative;
     z-index: 1;
 
     &:focus-within:not(.readonly) {
-      --select-border-color: var(--bg-violet-60);
-      // TODO Move these to local props
-      @extend .box-shadow;
-      @extend .shadow-1;
-      @extend .shadow-white;
+      --select-field-border-color: var(--form-field-border-color-focus);
+      box-shadow: var(--select-field-shadow-focus);
 
       &.error {
+        // TODO Move these to local props
         --select-border-color: var(--bg-red-40);
         @extend .shadow-red;
       }
@@ -90,19 +85,18 @@
   &__field {
     background-color: unset;
     border: none;
+    cursor: pointer;
     font-size: var(--select-field-font-size);
+    line-height: var(--select-field-font-size);
+    color: var(--select-field-text-color);
     flex: 1;
-    color: var(--select-text-color);
-    line-height: calc(
-      var(--select-field-font-size) * var(--select-line-hight-ratio)
-    );
 
     &--unselected {
-      color: var(--select-placeholder-color);
+      color: var(--select-field-placeholder-text-color);
     }
 
     @include remove-auto-complete-style {
-      -webkit-text-fill-color: var(--select-text-color);
+      -webkit-text-fill-color: var(--select-field-text-color);
     }
 
     &:focus {
@@ -113,21 +107,26 @@
 
   &__message {
     position: relative;
-    font-size: var(--select-message-font-size);
-    line-height: calc(
-      var(--select-message-font-size) * var(--select-line-hight-ratio)
-    );
-    color: var(--select-message-color);
+    // TODO make message vars
+    color: var(--select-field-text-color);
+    font-size: var(--select-field-font-size);
+    line-height: var(--select-field-font-size);
+    background-color: var(--select-field-background-color);
+
     min-width: max-content;
-    @extend .bg-violet-20;
 
     top: calc($space-md * -1);
-    padding-top: calc($space-sm + $space-md);
-    padding-left: $space-md;
-    padding-right: $space-md;
-    padding-bottom: $space-sm;
-    border-bottom-right-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+    padding-top: calc(var(--select-field-padding-y) * 3);
+    padding-bottom: var(--select-field-padding-y);
+    padding-left: var(--select-field-padding-x);
+    padding-right: var(--select-field-padding-x);
+
+    border-color: var(--select-field-border-color);
+    border-width: var(--select-field-border-width);
+    border-style: var(--select-field-border-style);
+
+    border-bottom-right-radius: var(--select-field-border-radius);
+    border-bottom-left-radius: var(--select-field-border-radius);
     z-index: 0;
   }
 

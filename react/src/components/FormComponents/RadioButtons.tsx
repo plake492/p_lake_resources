@@ -3,6 +3,7 @@ import { useBemify } from '../../hooks/useBemify'
 import FieldLabel from './helperComponents/FieldLabel'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { formEvents } from './utils/formEvents'
+import { RadioButtonsPropTypes, RadioPropTypes } from './types'
 
 const Radio = function ({
   name,
@@ -12,9 +13,9 @@ const Radio = function ({
   checked,
   formGroupId,
   isDisabled,
-  onChange,
+  events,
   type = 'radio',
-}: FormTypes.RadioPropTypes): JSX.Element {
+}: RadioPropTypes): JSX.Element {
   // If no value is provided, the label will also be the value
   const radioValue: string | number = value ?? label
 
@@ -33,9 +34,7 @@ const Radio = function ({
           value={radioValue}
           defaultChecked={checked === radioValue}
           disabled={isDisabled}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onChange && onChange((e.target as HTMLInputElement).value)
-          }
+          {...events}
         />
         <div className={bem('circle')}></div>
       </div>
@@ -65,7 +64,7 @@ export default function RadioButtons({
   onClick,
   onBlur,
   children,
-}: FormTypes.RadioButtonsPropTypes): JSX.Element {
+}: RadioButtonsPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('radio-buttons')
 
@@ -84,7 +83,11 @@ export default function RadioButtons({
   // recieve a value prop to this child component
   const checked: string | number | undefined = value
 
-  const events = formEvents({ onChange, onClick, onBlur })
+  const events = formEvents<HTMLInputElement>({
+    onChange,
+    onClick,
+    onBlur,
+  })
 
   return (
     <fieldset
@@ -111,7 +114,7 @@ export default function RadioButtons({
             checked={checked}
             formGroupId={formGroupId}
             isDisabled={isDisabled}
-            {...formEvents}
+            events={events}
           />
         ))}
       </div>

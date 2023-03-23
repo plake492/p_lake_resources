@@ -1,0 +1,20 @@
+@mixin field-modifiers($prefix) {
+  &.disabled {
+    --#{$prefix}-field-text-color: var(--#{$prefix}-disabled-text-color);
+    --#{$prefix}-field-border-color: var(--#{$prefix}-disabled-border-color);
+    --#{$prefix}-field-placeholder-color: var(
+      --#{$prefix}-disabled-placeholder-color
+    );
+  }
+
+  &.success {
+    --#{$prefix}-field-border-color: var(--#{$prefix}-success-color);
+  }
+
+  &.error {
+    --#{$prefix}-field-border-color: var(--#{$prefix}-error-color);
+    --#{$prefix}-label-color: var(--#{$prefix}-error-color);
+  }
+
+  @content;
+}

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 import FieldLabel from './helperComponents/FieldLabel'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { OptionPropTypes, SelectPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
 
 const Option = function ({
@@ -9,7 +10,7 @@ const Option = function ({
   label,
   disabled,
   selected,
-}: FormTypes.OptionPropTypes): JSX.Element {
+}: OptionPropTypes): JSX.Element {
   return (
     <option disabled={disabled} value={value ?? label} selected={selected}>
       {label}
@@ -38,9 +39,11 @@ export default function Select({
   onClick,
   onBlur,
   children,
-  removePlaceholder,
   options,
-}: FormTypes.SelectPropTypes) {
+  removePlaceholder,
+  breakpoint,
+  col = 12,
+}: SelectPropTypes) {
   // Set up function for handling styles
   const bem: Function = useBemify('select')
 
@@ -50,13 +53,17 @@ export default function Select({
   // Set up id with reference to form
   const selectId: string = formGroupId ? `${formGroupId}__${id}` : id
 
+  const columnClass: string = !!breakpoint
+    ? `col-${breakpoint}-${col}`
+    : `col-${col}`
+
   // Give the placeholder a standard format
   const formatPlaceholder: string = placeholder
     ? `--${placeholder.replace(/-/g, '')}--`
     : '--select option--'
 
   // Add a placeholder option unless disabled
-  const optionsList: FormTypes.OptionPropTypes[] = !removePlaceholder
+  const optionsList: OptionPropTypes[] = !removePlaceholder
     ? [{ label: formatPlaceholder, value: '', isPlaceholder: true }, ...options]
     : options
 
@@ -81,6 +88,7 @@ export default function Select({
     <fieldset
       className={bem(
         '',
+        columnClass,
         wrapperClasses,
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
@@ -110,7 +118,7 @@ export default function Select({
           {...events}
         >
           {optionsList.map(
-            (option: FormTypes.OptionPropTypes, index: number): JSX.Element => (
+            (option: OptionPropTypes, index: number): JSX.Element => (
               <Option
                 key={option.label + index}
                 disabled={option.isPlaceholder && !!value}

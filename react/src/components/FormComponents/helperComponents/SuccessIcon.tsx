@@ -19,7 +19,7 @@ export default function SuccessIcon({
   height = '24px',
 }: SuccessIconPropTypes) {
   return isSuccess ? (
-    <div className={className} style={{ color: 'var(--bg-green-20)' }}>
+    <div className={className}>
       <SvgSymbol icon={icon} width={width} height={height} viewBox={viewBox} />
     </div>
   ) : null

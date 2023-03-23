@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 
-import SvgSymbol from '../BaseComponents/SvgSymbol'
 import FieldLabel from './helperComponents/FieldLabel'
 import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { TextAreaPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
 
 export default function Textarea({
@@ -32,7 +32,7 @@ export default function Textarea({
   isValid,
   children,
   rows = 6,
-}: FormTypes.TextAreaPropTypes): JSX.Element {
+}: TextAreaPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('textarea')
 

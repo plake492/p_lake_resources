@@ -3,6 +3,7 @@ import FieldLabel from './helperComponents/FieldLabel'
 import { useBemify } from '../../hooks/useBemify'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { formEvents } from './utils/formEvents'
+import { CheckboxPropTypes } from './types'
 
 export default function Checkbox({
   id,
@@ -25,8 +26,10 @@ export default function Checkbox({
   onChange,
   onBlur,
   children,
+  breakpoint,
+  col,
   type = 'checkbox',
-}: FormTypes.CheckboxPropTypes) {
+}: CheckboxPropTypes) {
   // Set up function for handling styles
   const bem: Function = useBemify('checkbox')
 
@@ -43,11 +46,19 @@ export default function Checkbox({
 
   const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
 
+  const colClass =
+    col && breakpoint
+      ? `col-${breakpoint}-${col}`
+      : col
+      ? `col-${col}`
+      : 'col-12'
+
   return (
     <div
       className={bem(
         '',
         wrapperClasses,
+        colClass,
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],

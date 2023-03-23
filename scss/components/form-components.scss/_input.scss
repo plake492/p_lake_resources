@@ -1,96 +1,82 @@
-.form {
-  .input:not(.block) {
-    --input-width: #{calc(
-        var(--form-container-width) / 2 - var(--form-gutter-width) / 2
-      )};
-  }
-}
-
-input[type='number'] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
-
 .input {
-  --input-width: 300px;
-  --input-border-radius: 8px;
-  --input-background-color: var(--bg-color);
-  --input-border-color: var(--bg-violet-30);
-  --input-error-color: hsl(0, 56%, 47%);
-  --input-success-color: hsl(108, 55%, 47%);
-  --input-text-color: hsl(0, 0%, 87%);
-  --input-label-color: hsl(0, 0%, 87%);
-  --input-placeholder-color: hsl(0, 0%, 60%);
-  --input-message-color: var(--input-text-color);
-  --input-border-width: 3px;
-  --input-padding-y: #{calc($space-xs)};
-  --input-padding-x: #{$space-md};
-  --input-label-font-size: #{rem(14)};
-  --input-field-font-size: #{rem(18)};
-  --input-message-font-size: #{rem(14)};
-  --input-line-hight-ratio: 1.75;
+  // Field
+  --input-field-margin-bottom: var(--form-field-margin-bottom);
+  --input-field-font-size: var(--form-field-font-size);
+  --input-field-line-height-size: var(--form-field-line-height);
+  --input-field-padding-y: var(--form-field-padding-x);
+  --input-field-padding-x: var(--form-field-padding-y);
+  --input-field-background-color: var(--form-field-background-color);
+  --input-field-text-color: var(--form-field-text-color);
+  --input-field-placeholder-text-color: var(
+    --form-field-placeholder-text-color
+  );
+  --input-field-border-color: var(--form-field-border-color);
+  --input-field-border-width: var(--form-field-border-width);
+  --input-field-border-style: var(--form-field-border-style);
+  --input-field-border-radius: var(--form-field-border-radius);
+  --input-field-shadow-focus: var(--form-field-shadow-focus);
+
+  // Label
+  --input-label-font-size: var(--form-label-font-size);
+  --input-label-line-height: var(--form-label-line-height);
+  --input-label-height: var(--form-label-height);
+  // Status
+  --input-error-color: var(--form-error-color);
+  --input-success-color: var(--form-success-color);
+  // Disabled
+  --input-disabled-text-color: var(--form-disabled-text-color);
+  --input-disabled-border-color: var(--form-disabled-border-color);
+  --input-disabled-placeholder-color: var(--form-disabled-placeholder-color);
 
   position: relative;
-  margin-bottom: $space-sm;
-  color: var(--input-text-color);
-  flex-basis: var(--input-width);
+  margin-bottom: var(--input-field-margin-bottom);
+  color: var(--input-field-text-color);
 
-  &.block {
-    display: block;
-    --input-width: 100%;
-  }
+  // &.block {
+  //   display: block;
+  //   --input-width: 100%;
+  // }
 
-  &.disabled {
-    --input-border-color: var(--bg-grey-60);
-    --input-text-color: hsl(0, 0%, 57%);
-    --input-placeholder-color: hsl(0, 0%, 47%);
-  }
-
-  &.success {
-    --input-border-color: var(--input-success-color);
-  }
-
-  &.error {
-    --input-border-color: var(--input-error-color);
-    --input-label-color: var(--input-error-color);
-  }
+  @include field-modifiers(input);
 
   &__label {
-    height: var(--form-field-label-height, initial);
+    display: block;
     font-size: var(--input-label-font-size);
-    line-height: calc(
-      var(--input-label-font-size) * var(--input-line-hight-ratio)
-    );
+    line-height: var(--input-label-line-height);
+    height: var(--input-label-height);
     color: var(--input-label-color);
   }
 
   &__container {
-    display: inline-block;
-    border: var(--input-border-color) var(--input-border-width) solid;
-    border-radius: var(--input-border-radius);
-    padding: var(--input-padding-y) var(--input-padding-x);
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: $space-sm;
-    background-color: var(--input-background-color);
-    transition: border 100ms ease-in-out;
+    gap: rem(8);
+
+    background-color: var(--input-field-background-color);
+    border-color: var(--input-field-border-color);
+    border-width: var(--input-field-border-width);
+    border-style: var(--input-field-border-style);
+    border-radius: var(--input-field-border-radius);
+    padding-left: var(--input-field-padding-x);
+    padding-right: var(--input-field-padding-x);
+    padding-top: var(--input-field-padding-y);
+    padding-bottom: var(--input-field-padding-y);
+
+    overflow: scroll;
+    transition: all 100ms ease-in-out;
     position: relative;
     z-index: 1;
 
+    @include no-scrollbar;
+
     &:focus-within:not(.readonly) {
-      --input-border-color: var(--bg-violet-60);
-      // TODO Move these to local props
-      @extend .box-shadow;
-      @extend .shadow-1;
-      @extend .shadow-white;
+      --input-field-border-color: var(--form-field-border-color-focus);
+      box-shadow: var(--input-field-shadow-focus);
 
       &.error {
+        // TODO Move these to local props
         --input-border-color: var(--bg-red-40);
         @extend .shadow-red;
       }
@@ -105,21 +91,20 @@ input[type='number']::-webkit-outer-spin-button {
   }
 
   &__field {
+    font-size: var(--input-field-font-size);
+    line-height: var(--input-field-font-size);
     background-color: unset;
     border: none;
-    font-size: var(--input-field-font-size);
     flex: 1;
-    color: var(--input-text-color);
-    line-height: calc(
-      var(--input-field-font-size) * var(--input-line-hight-ratio)
-    );
+    color: var(--input-field-text-color);
+    overflow: hidden;
 
     @include input-placeholder {
-      color: var(--input-placeholder-color);
+      color: var(--input-field-placeholder-text-color);
     }
 
     @include remove-auto-complete-style {
-      -webkit-text-fill-color: var(--input-text-color);
+      -webkit-text-fill-color: var(--input-field-text-color);
     }
 
     &:focus {
@@ -130,25 +115,31 @@ input[type='number']::-webkit-outer-spin-button {
 
   &__message {
     position: relative;
-    font-size: var(--input-message-font-size);
-    line-height: calc(
-      var(--input-message-font-size) * var(--input-line-hight-ratio)
-    );
-    color: var(--input-message-color);
+    // TODO make message vars
+    color: var(--input-field-text-color);
+    font-size: var(--input-field-font-size);
+    line-height: var(--input-field-font-size);
+    background-color: var(--input-field-background-color);
+
     min-width: max-content;
-    @extend .bg-violet-20;
 
     top: calc($space-md * -1);
-    padding-top: calc($space-sm + $space-md);
-    padding-left: $space-md;
-    padding-right: $space-md;
-    padding-bottom: $space-sm;
-    border-bottom-right-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+    padding-top: calc(var(--input-field-padding-y) * 3);
+    padding-bottom: var(--input-field-padding-y);
+    padding-left: var(--input-field-padding-x);
+    padding-right: var(--input-field-padding-x);
+
+    border-color: var(--input-field-border-color);
+    border-width: var(--input-field-border-width);
+    border-style: var(--input-field-border-style);
+
+    border-bottom-right-radius: var(--input-field-border-radius);
+    border-bottom-left-radius: var(--input-field-border-radius);
     z-index: 0;
   }
 
   &__success {
+    color: var(--input-success-color);
     position: absolute;
     width: 24px;
     height: 24px;
@@ -156,7 +147,7 @@ input[type='number']::-webkit-outer-spin-button {
     justify-content: center;
     align-items: center;
     right: $space-md;
-    bottom: -0.66rem;
+    bottom: -5px;
     transform: translateY(100%);
   }
 }

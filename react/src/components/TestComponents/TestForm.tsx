@@ -57,10 +57,11 @@ export default function TestForm(): JSX.Element {
         noValidate
         excludeFieldFromConfirmPassword="old-password"
         formId="test-form"
+        formLabel="FORM TIME"
+        gap="md"
         onSubmit={(event: React.FormEvent<HTMLFormElement>, success: boolean) =>
           onSubmit(event, success)
         }
-        formLabel="FORM TIME"
       >
         <Select
           id="select"
@@ -70,6 +71,7 @@ export default function TestForm(): JSX.Element {
           placeholder="pick a color"
           onChange={(v: string): void => setFavoriteColor(v)}
           value={favoriteColor}
+          col={2}
         />
         <Input
           label="First Name"
@@ -79,6 +81,7 @@ export default function TestForm(): JSX.Element {
           value={formFields.firstName}
           isRequired
           onChange={(v: string) => updateFormItem('firstName', v)}
+          col={5}
         />
         <Input
           label="Last Name"
@@ -88,6 +91,7 @@ export default function TestForm(): JSX.Element {
           value={formFields.lastName}
           isRequired
           onChange={(v: string) => updateFormItem('lastName', v)}
+          col={5}
         />
         <Input
           label="Address"
@@ -97,8 +101,9 @@ export default function TestForm(): JSX.Element {
           value={formFields.address}
           isRequired
           onChange={(v: string) => updateFormItem('address', v)}
+          // col={2}
         />
-        <Input
+        {/* <Input
           label="Address Line 2"
           type="text"
           id="address-line2"
@@ -187,6 +192,7 @@ export default function TestForm(): JSX.Element {
             `Number of characters: ${message.length.toString()}`,
           ]}
         />
+         */}
 
         <RadioButtons
           label="Select your girlfriend"

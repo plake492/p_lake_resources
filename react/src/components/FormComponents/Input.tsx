@@ -6,7 +6,9 @@ import SvgSymbol from '../BaseComponents/SvgSymbol'
 import FieldLabel from './helperComponents/FieldLabel'
 import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { InputPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
+import { setStyles } from './utils/styleVars'
 
 export default function Input({
   id,
@@ -14,12 +16,10 @@ export default function Input({
   value,
   placeholder,
   ariaLabel,
-  type,
   wrapperClasses,
   formGroupId,
   message,
   autocomplete,
-  width,
   isRequired,
   isBlock,
   isReadOnly,
@@ -33,6 +33,7 @@ export default function Input({
   onChange,
   onBlur,
   children,
+  type,
   maxlength,
   min,
   max,
@@ -43,7 +44,10 @@ export default function Input({
   appendedOnClick,
   prependedIconSize = { width: '20', height: '20' },
   appendedIconSize = { width: '20', height: '20' },
-}: FormTypes.InputPropTypes): JSX.Element {
+  breakpoint,
+  col = 12,
+  styleConfig,
+}: InputPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('input')
 
@@ -53,12 +57,19 @@ export default function Input({
   // Set up id with reference to form
   const inputId: string = formGroupId ? `${formGroupId}__${id}` : id
 
+  const columnClass: string = !!breakpoint
+    ? `col-${breakpoint}-${col}`
+    : `col-${col}`
+
   const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
+
+  const styles = !!styleConfig && setStyles(styleConfig)
 
   return (
     <div
       className={bem(
         '',
+        columnClass,
         wrapperClasses,
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
@@ -68,7 +79,7 @@ export default function Input({
       )}
       style={{
         /* Option to set absolute width */
-        ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
+        ...(!!styleConfig ? (styles as React.CSSProperties) : {}),
       }}
     >
       <FieldLabel
