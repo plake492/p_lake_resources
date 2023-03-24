@@ -1,0 +1,138 @@
+@mixin no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+// Update Placeholder text
+@mixin input-placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+@mixin remove-auto-complete-style {
+  &:autofill,
+  &:autofill:hover,
+  &:autofill:focus,
+  /* Change autocomplete styles in WebKit */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    @content; /* should add: -webkit-text-fill-color: <color> */
+    border: none;
+    -webkit-box-shadow: 0 0 0px 1000px #00000000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+@mixin field-modifiers($prefix, $style-borders: true) {
+  &.disabled {
+    --#{$prefix}-field-text-color: var(--#{$prefix}-disabled-text-color);
+
+    --#{$prefix}-field-placeholder-color: var(
+      --#{$prefix}-disabled-placeholder-color
+    );
+    --#{$prefix}-field-border-color: var(--#{$prefix}-disabled-border-color);
+  }
+
+  &.success {
+    @if $style-borders {
+      --#{$prefix}-field-border-color: var(--#{$prefix}-success-color);
+    }
+  }
+
+  &.error {
+    @if $style-borders {
+      --#{$prefix}-field-border-color: var(--#{$prefix}-error-color);
+    }
+    --#{$prefix}-label-color: var(--#{$prefix}-error-color);
+  }
+
+  @content;
+}
+
+@mixin focus-state($prefix) {
+  --#{$prefix}-field-border-color: var(--#{$prefix}-field-border-color-focus);
+  box-shadow: var(--#{$prefix}-field-shadow);
+  outline-color: var(--#{$prefix}-field-border-color);
+  outline-width: var(--#{$prefix}-field-border-width);
+  outline-style: var(--#{$prefix}-field-border-style);
+
+  @content;
+}
+
+@mixin base-field-vars($prefix) {
+  --#{$prefix}-margin-bottom: var(--form-field-margin-bottom);
+
+  --#{$prefix}-field-background-color: var(--form-field-background-color);
+  --#{$prefix}-field-border-color: var(--form-field-border-color);
+  --#{$prefix}-field-border-width: var(--form-field-border-width);
+  --#{$prefix}-field-border-style: var(--form-field-border-style);
+  --#{$prefix}-field-border-color-focus: var(--form-field-border-color-focus);
+  --#{$prefix}-field-placeholder-text-color: var(
+    --form-field-placeholder-text-color
+  );
+
+  --#{$prefix}-shadow-color: var(--form-shadow-color);
+  --#{$prefix}-shadow-spread: var(--form-shadow-spread);
+  --#{$prefix}-field-shadow: var(--form-shadow-spread) var(--form-shadow-color);
+
+  // Label
+  --#{$prefix}-label-font-size: var(--form-label-font-size);
+  --#{$prefix}-label-line-height: var(--form-label-line-height);
+  --#{$prefix}-label-height: var(--form-label-height);
+  --#{$prefix}-label-color: var(--form-label-color);
+
+  // Status
+  --#{$prefix}-error-color: var(--form-error-color);
+  --#{$prefix}-success-color: var(--form-success-color);
+
+  // Disabled
+  --#{$prefix}-disabled-text-color: var(--form-disabled-text-color);
+  --#{$prefix}-disabled-border-color: var(--form-disabled-border-color);
+  --#{$prefix}-disabled-placeholder-color: var(
+    --form-disabled-placeholder-color
+  );
+
+  @content;
+}
+
+@mixin field-vars-with-text($prefix) {
+  --#{$prefix}-field-font-size: var(--form-field-font-size);
+  --#{$prefix}-field-line-height: var(--form-field-line-height);
+
+  --#{$prefix}-field-padding-y: var(--form-field-padding-y);
+  --#{$prefix}-field-padding-x: var(--form-field-padding-x);
+
+  --#{$prefix}-field-border-radius: var(--form-field-border-radius);
+  --#{$prefix}-field-text-color: var(--form-field-text-color);
+}
+
+@mixin field-vars-with-button($prefix) {
+  --#{$prefix}-checked-opacity: 0;
+  --#{$prefix}-field-width: var(--form-#{$prefix}-btn-width);
+  --#{$prefix}-field-height: var(--form-#{$prefix}-btn-height);
+  --#{$prefix}-field-border-radius: var(--form-#{$prefix}-btn-border-radius);
+}

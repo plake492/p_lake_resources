@@ -1,3 +1,5 @@
+import '../../assets/scss/form-components/index.scss'
+
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 import { isDOMTypeElement } from '../../utils/detectReactComponents'

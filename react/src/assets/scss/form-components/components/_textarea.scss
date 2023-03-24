@@ -1,0 +1,110 @@
+$prefix: textarea;
+
+.textarea {
+  @include base-field-vars($prefix);
+  @include field-vars-with-text($prefix);
+  @include field-modifiers($prefix);
+
+  position: relative;
+  margin-bottom: var(--textarea-margin-bottom);
+  color: var(--textarea-field-text-color);
+
+  &__label {
+    display: block;
+    font-size: var(--textarea-label-font-size);
+    line-height: var(--textarea-label-line-height);
+    height: var(--textarea-label-height);
+    color: var(--textarea-label-color);
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(8);
+
+    background-color: var(--textarea-field-background-color);
+    border-color: var(--textarea-field-border-color);
+    border-width: var(--textarea-field-border-width);
+    border-style: var(--textarea-field-border-style);
+    border-radius: var(--textarea-field-border-radius);
+    padding-left: var(--textarea-field-padding-x);
+    padding-right: var(--textarea-field-padding-x);
+    padding-top: var(--textarea-field-padding-y);
+    padding-bottom: var(--textarea-field-padding-y);
+
+    overflow: scroll;
+    transition: all 100ms ease-in-out;
+    position: relative;
+    z-index: 1;
+
+    @include no-scrollbar;
+
+    &:focus-within:not(.readonly) {
+      @include focus-state(textarea);
+    }
+  }
+
+  &__field {
+    font-size: var(--textarea-field-font-size);
+    line-height: var(--textarea-field-font-size);
+    background-color: unset;
+    border: none;
+    flex: 1;
+    color: var(--textarea-field-text-color);
+    overflow: hidden;
+    resize: none;
+
+    @include input-placeholder {
+      color: var(--textarea-field-placeholder-text-color);
+    }
+
+    @include remove-auto-complete-style {
+      -webkit-text-fill-color: var(--textarea-field-text-color);
+    }
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__message {
+    position: relative;
+    // TODO make message vars
+    color: var(--textarea-field-text-color);
+    font-size: var(--textarea-field-font-size);
+    line-height: var(--textarea-field-font-size);
+    background-color: var(--textarea-field-background-color);
+
+    min-width: max-content;
+
+    top: -1rem;
+    padding-top: calc(var(--textarea-field-padding-y) * 3);
+    padding-bottom: var(--textarea-field-padding-y);
+    padding-left: var(--textarea-field-padding-x);
+    padding-right: var(--textarea-field-padding-x);
+
+    border-color: var(--textarea-field-border-color);
+    border-width: var(--textarea-field-border-width);
+    border-style: var(--textarea-field-border-style);
+
+    border-bottom-right-radius: var(--textarea-field-border-radius);
+    border-bottom-left-radius: var(--textarea-field-border-radius);
+    z-index: 0;
+  }
+
+  &__success {
+    color: var(--textarea-success-color);
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -1rem;
+    bottom: -5px;
+    transform: translateY(100%);
+  }
+}

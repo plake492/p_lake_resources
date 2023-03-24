@@ -1,0 +1,25 @@
+$prefix: input;
+
+.input {
+  @include base-field-vars($prefix);
+  @include field-vars-with-text($prefix);
+  @include field-modifiers(input);
+  @include field-as-box-wtih-text(input);
+
+  &__container {
+    @include no-scrollbar;
+  }
+
+  &__prepended-icon,
+  &__appended-icon {
+    &--clickable {
+      cursor: pointer;
+    }
+  }
+
+  &__field {
+    @include input-placeholder {
+      color: var(--input-field-placeholder-text-color);
+    }
+  }
+}

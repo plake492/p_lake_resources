@@ -32,6 +32,8 @@ export default function Textarea({
   isValid,
   children,
   rows = 6,
+  breakpoint,
+  col = 12,
 }: TextAreaPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('textarea')
@@ -41,6 +43,10 @@ export default function Textarea({
 
   // Set up id with reference to form
   const textareaId: string = formGroupId ? `${formGroupId}__${id}` : id
+
+  const columnClass: string = !!breakpoint
+    ? `col-${breakpoint}-${col}`
+    : `col-${col}`
 
   const events = formEvents<HTMLTextAreaElement>({
     onChange,
@@ -53,6 +59,7 @@ export default function Textarea({
       className={bem(
         '',
         wrapperClasses,
+        columnClass,
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],

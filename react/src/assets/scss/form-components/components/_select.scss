@@ -1,0 +1,16 @@
+$prefix: select;
+
+.select {
+  @include base-field-vars($prefix);
+  @include field-vars-with-text($prefix);
+  @include field-modifiers(select);
+  @include field-as-box-wtih-text(select);
+
+  &__container {
+    cursor: pointer;
+
+    &--unselected {
+      color: var(--select-field-placeholder-text-color);
+    }
+  }
+}

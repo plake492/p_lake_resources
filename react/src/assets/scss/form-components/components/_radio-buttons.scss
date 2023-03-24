@@ -1,0 +1,33 @@
+$prefix: radio;
+
+.radio-buttons {
+  @include base-field-vars($prefix);
+  @include field-vars-with-button($prefix);
+  @include field-modifiers(radio, false);
+
+  position: relative;
+  margin-bottom: var(--radio-margin-bottom);
+
+  &__radios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &--vertical {
+      flex-direction: column;
+    }
+  }
+
+  &__label {
+    margin-bottom: 1rem;
+    color: var(--radio-label-color);
+  }
+
+  .radio {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    @include field-as-button($prefix, circle);
+  }
+}

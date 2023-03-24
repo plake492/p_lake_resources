@@ -175,7 +175,7 @@ export default function TestForm(): JSX.Element {
             `This inputs validation is set to 'value === "TEST"'`,
             'This input is not required, but will be validated if there is an input',
           ]}
-        />
+        /> */}
 
         <Textarea
           label="Big Text"
@@ -187,12 +187,12 @@ export default function TestForm(): JSX.Element {
           onChange={(v: string) => setMessage(v)}
           isRequired
           isBlock
+          col={9}
           message={[
             'Must container at least 100 characters',
             `Number of characters: ${message.length.toString()}`,
           ]}
         />
-         */}
 
         <RadioButtons
           label="Select your girlfriend"

@@ -1,0 +1,165 @@
+@mixin field-as-button($prefix, $btn-type) {
+  &__field-wrapper {
+    position: relative;
+    width: var(--#{$prefix}-field-width);
+    height: var(--#{$prefix}-field-height);
+  }
+  &__field {
+    cursor: pointer;
+    position: absolute;
+    width: var(--#{$prefix}-field-width);
+    height: var(--#{$prefix}-field-height);
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+
+    &:focus {
+      + .#{$prefix}__#{$btn-type} {
+        @include focus-state($prefix);
+      }
+    }
+
+    &:checked {
+      + .#{$prefix}__#{$btn-type} {
+        --#{$prefix}-checked-opacity: 1;
+        background-color: #000000; // TODO make a css var
+        transition: background-color 300ms ease-in-out;
+      }
+    }
+  }
+
+  &__#{$btn-type} {
+    position: absolute;
+    width: var(--#{$prefix}-field-width);
+    height: var(--#{$prefix}-field-height);
+    background-color: var(--#{$prefix}-field-background-color);
+    border-color: var(--#{$prefix}-field-border-color);
+    border-width: var(--#{$prefix}-field-border-width);
+    border-style: var(--#{$prefix}-field-border-style);
+    border-radius: var(--#{$prefix}-field-border-radius);
+    z-index: 0;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(var(--#{$prefix}-field-width) / 2);
+      height: calc(var(--#{$prefix}-field-height) / 2);
+      background-color: var(--#{$prefix}-success-color);
+      border-radius: var(--#{$prefix}-field-border-radius);
+      opacity: var(--#{$prefix}-checked-opacity);
+      transition: opacity 300ms ease-in-out;
+      z-index: 1;
+    }
+  }
+
+  &__label {
+    position: relative;
+    width: fit-content;
+    margin-right: var(--#{$prefix}-field-widthwidth);
+    color: var(--#{$prefix}-label-color);
+    font-size: var(--#{$prefix}-label-font-size);
+    line-height: var(--#{$prefix}-label-line-height);
+  }
+}
+
+@mixin field-as-box-wtih-text($prefix) {
+  position: relative;
+  margin-bottom: var(--#{$prefix}-margin-bottom);
+  color: var(--#{$prefix}-field-text-color);
+
+  &__label {
+    display: block;
+    font-size: var(--#{$prefix}-label-font-size);
+    line-height: var(--#{$prefix}-label-line-height);
+    height: var(--#{$prefix}-label-height);
+    color: var(--#{$prefix}-label-color);
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(8);
+
+    background-color: var(--#{$prefix}-field-background-color);
+    border-color: var(--#{$prefix}-field-border-color);
+    border-width: var(--#{$prefix}-field-border-width);
+    border-style: var(--#{$prefix}-field-border-style);
+    border-radius: var(--#{$prefix}-field-border-radius);
+    padding-left: var(--#{$prefix}-field-padding-x);
+    padding-right: var(--#{$prefix}-field-padding-x);
+    padding-top: var(--#{$prefix}-field-padding-y);
+    padding-bottom: var(--#{$prefix}-field-padding-y);
+
+    overflow: scroll;
+    transition: all 100ms ease-in-out;
+    position: relative;
+    z-index: 1;
+
+    &:focus-within:not(.readonly) {
+      @include focus-state($prefix);
+    }
+  }
+
+  &__field {
+    font-size: var(--#{$prefix}-field-font-size);
+    line-height: var(--#{$prefix}-field-line-height);
+    color: var(--#{$prefix}-field-text-color);
+    background-color: unset;
+    border: none;
+    overflow: hidden;
+    flex: 1;
+
+    @include remove-auto-complete-style {
+      -webkit-text-fill-color: var(--#{$prefix}-field-text-color);
+    }
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+
+  &__message {
+    // TODO make message vars
+    position: relative;
+    color: var(--#{$prefix}-field-text-color);
+    font-size: var(--#{$prefix}-field-font-size);
+    line-height: var(--#{$prefix}-field-font-size);
+    background-color: var(--#{$prefix}-field-background-color);
+
+    min-width: max-content;
+
+    top: -1rem;
+    padding-top: calc(var(--#{$prefix}-field-padding-y) * 3);
+    padding-bottom: var(--#{$prefix}-field-padding-y);
+    padding-left: var(--#{$prefix}-field-padding-x);
+    padding-right: var(--#{$prefix}-field-padding-x);
+
+    border-color: var(--#{$prefix}-field-border-color);
+    border-width: var(--#{$prefix}-field-border-width);
+    border-style: var(--#{$prefix}-field-border-style);
+
+    border-bottom-right-radius: var(--#{$prefix}-field-border-radius);
+    border-bottom-left-radius: var(--#{$prefix}-field-border-radius);
+    z-index: 0;
+  }
+
+  // TODO Fix this
+  &__success {
+    color: var(--#{$prefix}-success-color);
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -1rem;
+    bottom: -5px;
+    transform: translateY(100%);
+  }
+}
