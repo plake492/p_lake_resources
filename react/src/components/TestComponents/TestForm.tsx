@@ -10,11 +10,9 @@ import Select from '../FormComponents/Select'
 const radioGroup = [{ label: 'red' }, { label: 'blue' }, { label: 'green' }]
 
 const radioGroupTwo = [
-  { id: 'value-1', label: 'Jane' },
-  { id: 'value-2', label: 'Holly' },
-  { id: 'value-3', label: 'Donna' },
-  { id: 'value-4', label: 'Heleen' },
-  { id: 'value-5', label: 'Carol' },
+  { id: 'value-1', label: 'Blade Runner' },
+  { id: 'value-2', label: 'The Matrix' },
+  { id: 'value-3', label: 'Equilibrium' },
 ]
 
 export default function TestForm(): JSX.Element {
@@ -22,7 +20,7 @@ export default function TestForm(): JSX.Element {
   const [showPasswordConfirm, setShowPasswordConfirm] = React.useState(false)
   const [test, setTest] = React.useState('')
   const [favoriteColor, setFavoriteColor] = React.useState<string | null>(null)
-  const [gf, setGf] = React.useState(null)
+  const [movies, setGf] = React.useState(null)
   const [message, setMessage] = React.useState('')
 
   const [formFields, setFormFields] = React.useState({
@@ -52,12 +50,12 @@ export default function TestForm(): JSX.Element {
   ): void => setFormFields((prev) => ({ ...prev, [key]: value }))
 
   return (
-    <div className="bg-black-30 border-rounded py-xl">
+    <div className="bg-black-30 border-rounded p-lg">
       <Form
         noValidate
         excludeFieldFromConfirmPassword="old-password"
         formId="test-form"
-        formLabel="FORM TIME"
+        formLabel={<h4>FORM TIME</h4>}
         gap="md"
         onSubmit={(event: React.FormEvent<HTMLFormElement>, success: boolean) =>
           onSubmit(event, success)
@@ -65,10 +63,9 @@ export default function TestForm(): JSX.Element {
       >
         <Select
           id="select"
-          label="Pick a color"
-          isRequired
+          label="Color"
           options={radioGroup}
-          placeholder="pick a color"
+          placeholder="color"
           onChange={(v: string): void => setFavoriteColor(v)}
           value={favoriteColor}
           col={2}
@@ -186,8 +183,6 @@ export default function TestForm(): JSX.Element {
           value={message}
           onChange={(v: string) => setMessage(v)}
           isRequired
-          isBlock
-          col={9}
           message={[
             'Must container at least 100 characters',
             `Number of characters: ${message.length.toString()}`,
@@ -195,12 +190,12 @@ export default function TestForm(): JSX.Element {
         />
 
         <RadioButtons
-          label="Select your girlfriend"
+          label="Select the best movie"
           options={radioGroupTwo}
-          value={gf}
+          value={movies}
           isRequired
           onChange={(v: boolean) => setGf(v)}
-          id="gf"
+          id="movies"
         />
 
         <Checkbox
@@ -210,8 +205,6 @@ export default function TestForm(): JSX.Element {
           onChange={() => updateFormItem('checked', !formFields.checked)}
           isRequired
         />
-
-        <div className="mt-xl"></div>
       </Form>
     </div>
   )

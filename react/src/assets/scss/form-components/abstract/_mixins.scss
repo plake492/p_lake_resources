@@ -128,6 +128,8 @@
 
   --#{$prefix}-field-border-radius: var(--form-field-border-radius);
   --#{$prefix}-field-text-color: var(--form-field-text-color);
+
+  --#{$prefix}-field-height: var(--form-field-height);
 }
 
 @mixin field-vars-with-button($prefix) {

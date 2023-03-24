@@ -8,9 +8,9 @@ $prefix: select;
 
   &__container {
     cursor: pointer;
+  }
 
-    &--unselected {
-      color: var(--select-field-placeholder-text-color);
-    }
+  &__field--unselected {
+    color: var(--select-field-placeholder-text-color);
   }
 }

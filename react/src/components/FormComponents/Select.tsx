@@ -58,9 +58,7 @@ export default function Select({
     : `col-${col}`
 
   // Give the placeholder a standard format
-  const formatPlaceholder: string = placeholder
-    ? `--${placeholder.replace(/-/g, '')}--`
-    : '--select option--'
+  const formatPlaceholder: string = placeholder ?? '--select--'
 
   // Add a placeholder option unless disabled
   const optionsList: OptionPropTypes[] = !removePlaceholder
@@ -85,7 +83,7 @@ export default function Select({
   })
 
   return (
-    <fieldset
+    <div
       className={bem(
         '',
         columnClass,
@@ -101,34 +99,40 @@ export default function Select({
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      <FieldLabel className={bem('label')} isRequired={isRequired} el="legend">
-        {label}
-      </FieldLabel>
-      <div
-        className={bem(
-          'container',
-          [isReadOnly, 'readonly'],
-          [hasError, 'error']
-        )}
-      >
-        <select
-          id={selectId}
-          name={name ?? id}
-          className={bem('field', [!value, '--unselected'])}
-          {...events}
+      <fieldset>
+        <FieldLabel
+          className={bem('label')}
+          isRequired={isRequired}
+          el="legend"
         >
-          {optionsList.map(
-            (option: OptionPropTypes, index: number): JSX.Element => (
-              <Option
-                key={option.label + index}
-                disabled={option.isPlaceholder && !!value}
-                {...option}
-              />
-            )
+          {label}
+        </FieldLabel>
+        <div
+          className={bem(
+            'container',
+            [isReadOnly, 'readonly'],
+            [hasError, 'error']
           )}
-        </select>
-      </div>
-      {messages}
-    </fieldset>
+        >
+          <select
+            id={selectId}
+            name={name ?? id}
+            className={bem('field', [!value, '--unselected'])}
+            {...events}
+          >
+            {optionsList.map(
+              (option: OptionPropTypes, index: number): JSX.Element => (
+                <Option
+                  key={option.label + index}
+                  disabled={option.isPlaceholder && !!value}
+                  {...option}
+                />
+              )
+            )}
+          </select>
+        </div>
+        {messages}
+      </fieldset>
+    </div>
   )
 }

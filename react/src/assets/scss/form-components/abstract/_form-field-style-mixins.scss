@@ -109,6 +109,7 @@
     font-size: var(--#{$prefix}-field-font-size);
     line-height: var(--#{$prefix}-field-line-height);
     color: var(--#{$prefix}-field-text-color);
+    height: var(--#{$prefix}-field-height);
     background-color: unset;
     border: none;
     overflow: hidden;
