@@ -4,6 +4,7 @@ import FieldLabel from './helperComponents/FieldLabel'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { formEvents } from './utils/formEvents'
 import { RadioButtonsPropTypes, RadioPropTypes } from './types'
+import SuccessIcon from './helperComponents/SuccessIcon'
 
 const Radio = function ({
   name,
@@ -118,7 +119,10 @@ export default function RadioButtons({
           />
         ))}
       </div>
-      {messages}
+      <div className={bem('message-wrapper')}>
+        <SuccessIcon className={bem('success')} isSuccess={isSuccess} />
+        {messages}
+      </div>
     </fieldset>
   )
 }

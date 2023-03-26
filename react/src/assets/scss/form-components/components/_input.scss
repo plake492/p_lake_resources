@@ -3,8 +3,9 @@ $prefix: input;
 .input {
   @include base-field-vars($prefix);
   @include field-vars-with-text($prefix);
-  @include field-modifiers(input);
-  @include field-as-box-wtih-text(input);
+  @include field-modifiers($prefix);
+  @include field-as-box-wtih-text($prefix);
+  @include message-styles($prefix);
 
   &__container {
     @include no-scrollbar;

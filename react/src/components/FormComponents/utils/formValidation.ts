@@ -1,10 +1,10 @@
-export interface formValidationTypes {
+export interface FormValidationTypes {
   text: Function
   email: RegExp
   password: RegExp
 }
 
-export const formValidation: formValidationTypes = {
+export const formValidation: FormValidationTypes = {
   email:
     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
 

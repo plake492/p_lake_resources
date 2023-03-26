@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { forceArray } from '../../../utils/helpers'
-import { formValidation } from '../utils/formValidation'
+import { InputTypes } from '../types'
+import { formValidation, FormValidationTypes } from '../utils/formValidation'
 
 interface IdValueProps {
   id: string
@@ -77,6 +78,7 @@ export const useFormFieldsValidation = ({
     isTouched,
     shouldValidate,
     isRequired,
+    type,
   }: {
     id: string
     value: string | number | Function
@@ -84,16 +86,17 @@ export const useFormFieldsValidation = ({
     isTouched: boolean
     shouldValidate: boolean
     isRequired: boolean
+    type: InputTypes
   }): boolean => {
     // Avoid loading a form in an error state by setting isValid to defualt to true
     let isValid: boolean = true
 
-    let validation: 'email' | 'text' | 'password' | Function =
-      validationType || 'text'
+    let validation: InputTypes | Function =
+      validationType || (type in formValidation && type) || 'text'
 
     if (isTouched && (shouldValidate || isRequired)) {
       // Run a validation check on the input
-      let validationTest: Function | RegExp
+      let validationTest: RegExp | Function
 
       if (validation instanceof Function) {
         // If validation passed to input is a function, set the test to that function
@@ -101,9 +104,7 @@ export const useFormFieldsValidation = ({
       } else {
         // If the validation is a string, then find the matching test from the
         // formValidation obj
-        validationTest = formValidation[
-          validation as 'email' | 'text' | 'password'
-        ] as RegExp | Function
+        validationTest = formValidation[validation as keyof FormValidationTypes]
       }
 
       if (validationTest instanceof RegExp) {

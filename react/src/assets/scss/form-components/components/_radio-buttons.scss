@@ -3,7 +3,8 @@ $prefix: radio;
 .radio-buttons {
   @include base-field-vars($prefix);
   @include field-vars-with-button($prefix);
-  @include field-modifiers(radio, false);
+  @include field-modifiers($prefix, false);
+  @include message-styles($prefix);
 
   position: relative;
   margin-bottom: var(--radio-margin-bottom);

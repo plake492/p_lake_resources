@@ -1,0 +1,126 @@
+/* DARK THEMES COLORS */
+$dark-shadow-color: #dddddd33;
+$dark-field-background: #444444;
+$dark-field-text-color: #eeeeee;
+$dark-field-border-color: #dddddd;
+$dark-field-placeholder-text-color: #eeeeee;
+$dark-field-border-color-focus: #ffffff;
+$dark-message-background: #444444;
+$dark-message-text-color: #eeeeee;
+$dark-message-border-color: #dddddd;
+$dark-label-text-color: #eeeeee;
+
+$dark-disabled-text-color: #7a4c4c;
+$dark-disabled-border-color: #9a9a9a;
+$dark-disabled-placeholder-color: #ff0000;
+
+$dark-error-color: #ea3e3e;
+$dark-success-color: #44ea3e;
+
+/* LIGHT THEMES COLORS */
+$light-shadow-color: #22222233;
+$light-field-background: #eeeeee;
+$light-field-text-color: #222222;
+$light-field-border-color: #222222;
+$light-field-placeholder-text-color: #222222aa;
+$light-field-border-color-focus: #000000;
+$light-message-background: #eeeeee;
+$light-message-text-color: #222222;
+$light-message-border-color: #222222;
+$light-label-text-color: #222222;
+
+$light-disabled-text-color: #555555;
+$light-disabled-border-color: #555555;
+$light-disabled-placeholder-color: #ff0000aa;
+
+$light-error-color: #ff0031;
+$light-success-color: #61ff00;
+
+$form-color-vars-dark-and-light: (
+  shadow-color: (
+    dark: $dark-shadow-color,
+    light: $light-shadow-color,
+  ),
+  field-background-color: (
+    dark: $dark-field-background,
+    light: $light-field-background,
+  ),
+  field-text-color: (
+    dark: $dark-field-text-color,
+    light: $light-field-text-color,
+  ),
+  field-border-color: (
+    dark: $dark-field-border-color,
+    light: $light-field-border-color,
+  ),
+  field-placeholder-text-color: (
+    dark: $dark-field-placeholder-text-color,
+    light: $light-field-placeholder-text-color,
+  ),
+  field-border-color-focus: (
+    dark: $dark-field-border-color-focus,
+    light: $light-field-border-color-focus,
+  ),
+  message-background-color: (
+    dark: $dark-message-background,
+    light: $light-message-background,
+  ),
+  message-text-color: (
+    dark: $dark-message-text-color,
+    light: $light-message-text-color,
+  ),
+  message-border-color: (
+    dark: $dark-message-border-color,
+    light: $light-message-border-color,
+  ),
+  label-text-color: (
+    dark: $dark-label-text-color,
+    light: $light-label-text-color,
+  ),
+  disabled-text-color: (
+    dark: $dark-disabled-text-color,
+    light: $light-disabled-text-color,
+  ),
+  disabled-border-color: (
+    dark: $dark-disabled-border-color,
+    light: $light-disabled-border-color,
+  ),
+  disabled-placeholder-color: (
+    dark: $dark-disabled-placeholder-color,
+    light: $light-disabled-placeholder-color,
+  ),
+  error-color: (
+    dark: $dark-error-color,
+    light: $light-error-color,
+  ),
+  success-color: (
+    dark: $dark-success-color,
+    light: $light-success-color,
+  ),
+);
+/**/
+$shadow-spread: 0rem 0rem 0.75rem 0.125rem;
+$field-border-width: 1px;
+$field-border-style: solid;
+$field-border-radius: 4px;
+
+$line-height-ratio: 1.5;
+
+$field-font-size: #{rem(22)};
+$field-padding-x: #{rem(12)};
+$field-padding-y: #{rem(16)};
+$field-margin-bottom: #{rem(24)};
+$field-height: #{rem(28)};
+
+$form-display-vars: (
+  shadow-spread: $shadow-spread,
+  field-border-width: $field-border-width,
+  field-border-style: $field-border-style,
+  field-border-radius: $field-border-radius,
+  line-height-ratio: $line-height-ratio,
+  field-font-size: $field-font-size,
+  field-padding-x: $field-padding-x,
+  field-padding-y: $field-padding-y,
+  field-margin-bottom: $field-margin-bottom,
+  field-height: $field-height,
+);

@@ -1,3 +1,43 @@
+/**
+Set status styles
+*/
+@mixin field-modifiers($prefix, $style-borders: true) {
+  &.disabled {
+    --#{$prefix}-field-border-color: var(--#{$prefix}-disabled-border-color);
+    --#{$prefix}-field-text-color: var(--#{$prefix}-disabled-text-color);
+    --#{$prefix}-field-placeholder-color: var(
+      --#{$prefix}-disabled-placeholder-color
+    );
+    --#{$prefix}-message-text-color: var(--#{$prefix}-disabled-text-color);
+    --#{$prefix}-message-border-color: var(--#{$prefix}-disabled-border-color);
+  }
+
+  &.success {
+    @if $style-borders {
+      --#{$prefix}-field-border-color: var(--#{$prefix}-success-color);
+    }
+  }
+
+  &.error {
+    --#{$prefix}-label-color: var(--#{$prefix}-error-color);
+    @if $style-borders {
+      --#{$prefix}-field-border-color: var(--#{$prefix}-error-color);
+    }
+  }
+
+  @content;
+}
+
+@mixin focus-state($prefix) {
+  --#{$prefix}-field-border-color: var(--#{$prefix}-field-border-color-focus);
+  box-shadow: var(--#{$prefix}-field-shadow);
+  outline-color: var(--#{$prefix}-field-border-color);
+  outline-width: var(--#{$prefix}-field-border-width);
+  outline-style: var(--#{$prefix}-field-border-style);
+
+  @content;
+}
+
 @mixin field-as-button($prefix, $btn-type) {
   &__field-wrapper {
     position: relative;
@@ -59,7 +99,7 @@
     position: relative;
     width: fit-content;
     margin-right: var(--#{$prefix}-field-widthwidth);
-    color: var(--#{$prefix}-label-color);
+    color: var(--#{$prefix}-label-text-color);
     font-size: var(--#{$prefix}-label-font-size);
     line-height: var(--#{$prefix}-label-line-height);
   }
@@ -75,7 +115,7 @@
     font-size: var(--#{$prefix}-label-font-size);
     line-height: var(--#{$prefix}-label-line-height);
     height: var(--#{$prefix}-label-height);
-    color: var(--#{$prefix}-label-color);
+    color: var(--#{$prefix}-label-text-color);
   }
 
   &__container {
@@ -124,33 +164,13 @@
       outline: none;
     }
   }
+}
 
-  &__message {
-    // TODO make message vars
+@mixin message-styles($prefix) {
+  &__message-wrapper {
     position: relative;
-    color: var(--#{$prefix}-field-text-color);
-    font-size: var(--#{$prefix}-field-font-size);
-    line-height: var(--#{$prefix}-field-font-size);
-    background-color: var(--#{$prefix}-field-background-color);
-
-    min-width: max-content;
-
-    top: -1rem;
-    padding-top: calc(var(--#{$prefix}-field-padding-y) * 3);
-    padding-bottom: var(--#{$prefix}-field-padding-y);
-    padding-left: var(--#{$prefix}-field-padding-x);
-    padding-right: var(--#{$prefix}-field-padding-x);
-
-    border-color: var(--#{$prefix}-field-border-color);
-    border-width: var(--#{$prefix}-field-border-width);
-    border-style: var(--#{$prefix}-field-border-style);
-
-    border-bottom-right-radius: var(--#{$prefix}-field-border-radius);
-    border-bottom-left-radius: var(--#{$prefix}-field-border-radius);
-    z-index: 0;
   }
 
-  // TODO Fix this
   &__success {
     color: var(--#{$prefix}-success-color);
     position: absolute;
@@ -159,8 +179,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    right: -1rem;
-    bottom: -5px;
-    transform: translateY(100%);
+    right: 0;
+    top: 0;
+    transform: translate(-50%, 25%);
+    z-index: 1;
+  }
+
+  &__message {
+    position: relative;
+    color: var(--#{$prefix}-message-text-color);
+    font-size: var(--#{$prefix}-message-font-size);
+    line-height: var(--#{$prefix}-message-line-height);
+    background-color: var(--#{$prefix}-message-background-color);
+    min-width: max-content;
+    word-wrap: normal;
+    white-space: normal;
+
+    padding-top: var(--#{$prefix}-message-padding-y);
+    padding-bottom: var(--#{$prefix}-message-padding-y);
+    padding-left: var(--#{$prefix}-message-padding-x);
+    padding-right: var(--#{$prefix}-message-padding-x);
+
+    border-color: var(--#{$prefix}-message-border-color);
+    border-width: var(--#{$prefix}-message-border-width);
+    border-style: var(--#{$prefix}-message-border-style);
+
+    border-bottom-right-radius: var(--#{$prefix}-message-border-radius);
+    border-bottom-left-radius: var(--#{$prefix}-message-border-radius);
+    z-index: 0;
+
+    .status-message {
+      display: flex;
+      align-items: center;
+      gap: rem(8);
+
+      &.error {
+        color: var(--#{$prefix}-error-color);
+      }
+    }
   }
 }

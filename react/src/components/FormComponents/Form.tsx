@@ -12,8 +12,10 @@ import {
 } from './helperComponents/FormMessages'
 import { useConfirmPasswordMatch } from './hooks/useConfirmPasswordMatch'
 import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
+import { useStyleForm } from './hooks/useStyleForm'
 import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
+import { formEvents } from './utils/formEvents'
 
 export default function Form({
   children,
@@ -27,6 +29,8 @@ export default function Form({
   formLabel,
   autoComplete = 'off',
   gap = 'md',
+  colorTheme = 'dark',
+  styleOptions,
 }: FormPropTypes): JSX.Element {
   // Handles password matching
   const {
@@ -46,6 +50,9 @@ export default function Form({
     checkFieldValidation,
     formItemValues,
   } = useFormFieldsValidation({ children })
+
+  const formRef = React.useRef()
+  useStyleForm({ formRef, styleOptions })
 
   // Set up function for handling styles
   const bem: Function = useBemify('form')
@@ -94,7 +101,8 @@ export default function Form({
       noValidate={noValidate}
       id={formGroupId}
       autoComplete={autoComplete}
-      className={bem()}
+      className={bem('', `--${colorTheme}`)}
+      ref={formRef}
     >
       <FieldLabel el="legend">{formLabel}</FieldLabel>
       <div
@@ -155,6 +163,7 @@ export default function Form({
               isTouched,
               shouldValidate,
               isRequired,
+              type,
             })
           }
 
@@ -190,7 +199,10 @@ export default function Form({
 
           // For required fields with no value, pass an error state
           const isSuccessProp: boolean =
-            !disableSuccessIndicators && isTouched && !!value && isValid
+            !disableSuccessIndicators &&
+            isTouched && //! This does not allow success to appear when using autocomplete
+            !!value &&
+            isValid
 
           const isRequiredProp: {} = {
             ...(isRequired && !value ? { hasError: formError } : {}),

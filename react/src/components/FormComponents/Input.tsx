@@ -141,12 +141,14 @@ export default function Input({
             />
           )
         ) : null}
+      </div>
+      <div className={bem('message-wrapper')}>
         <SuccessIcon
           className={bem('success')}
           isSuccess={messages && isSuccess}
         />
+        {messages}
       </div>
-      {messages}
     </div>
   )
 }

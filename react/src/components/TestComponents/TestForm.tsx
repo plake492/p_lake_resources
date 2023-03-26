@@ -1,4 +1,18 @@
 import * as React from 'react'
+import Modal from '../BaseComponents/Modal'
+
+const formStyles = {
+  shadowColor: 'green',
+  fieldBackgroundColor: 'green',
+  fieldTextColor: 'blue',
+  fieldPlaceholderTextColor: 'red',
+  fieldBorderColor: 'purple',
+  fieldBorderColorFocus: 'green',
+  labelColor: 'lime',
+  errorColor: 'yellow',
+  successColor: 'orange',
+}
+
 import Form from '../FormComponents/Form'
 import Input from '../FormComponents/Input'
 import Checkbox from '../FormComponents/Checkbox'
@@ -22,6 +36,8 @@ export default function TestForm(): JSX.Element {
   const [favoriteColor, setFavoriteColor] = React.useState<string | null>(null)
   const [movies, setGf] = React.useState(null)
   const [message, setMessage] = React.useState('')
+
+  const [openModal, setOpenModal] = React.useState(false)
 
   const [formFields, setFormFields] = React.useState({
     firstName: '',
@@ -50,7 +66,14 @@ export default function TestForm(): JSX.Element {
   ): void => setFormFields((prev) => ({ ...prev, [key]: value }))
 
   return (
-    <div className="bg-black-30 border-rounded p-lg">
+    <div className="border-rounded p-lg">
+      {/* <button onClick={() => setOpenModal(true)}>Open</button> */}
+
+      {/* <Modal
+        trigger={openModal}
+        setTrigger={() => setOpenModal(false)}
+        wrapperClasses="bg-black"
+      > */}
       <Form
         noValidate
         excludeFieldFromConfirmPassword="old-password"
@@ -60,6 +83,8 @@ export default function TestForm(): JSX.Element {
         onSubmit={(event: React.FormEvent<HTMLFormElement>, success: boolean) =>
           onSubmit(event, success)
         }
+        colorTheme="dark"
+        styleOptions={formStyles}
       >
         <Select
           id="select"
@@ -69,6 +94,7 @@ export default function TestForm(): JSX.Element {
           onChange={(v: string): void => setFavoriteColor(v)}
           value={favoriteColor}
           col={2}
+          isDisabled
         />
         <Input
           label="First Name"
@@ -79,6 +105,7 @@ export default function TestForm(): JSX.Element {
           isRequired
           onChange={(v: string) => updateFormItem('firstName', v)}
           col={5}
+          isDisabled
         />
         <Input
           label="Last Name"
@@ -98,9 +125,10 @@ export default function TestForm(): JSX.Element {
           value={formFields.address}
           isRequired
           onChange={(v: string) => updateFormItem('address', v)}
-          // col={2}
+          message={'This would be an address'}
+          col={7}
         />
-        {/* <Input
+        <Input
           label="Address Line 2"
           type="text"
           id="address-line2"
@@ -172,7 +200,7 @@ export default function TestForm(): JSX.Element {
             `This inputs validation is set to 'value === "TEST"'`,
             'This input is not required, but will be validated if there is an input',
           ]}
-        /> */}
+        />
 
         <Textarea
           label="Big Text"
@@ -206,6 +234,7 @@ export default function TestForm(): JSX.Element {
           isRequired
         />
       </Form>
+      {/* </Modal> */}
     </div>
   )
 }

@@ -1,5 +1,29 @@
 import { ChangeEventHandler, FocusEventHandler, MouseEventHandler } from 'react'
 
+export type InputTypes =
+  | 'button'
+  | 'checkbox'
+  | 'color'
+  | 'date'
+  | 'datetime-local'
+  | 'email'
+  | 'file'
+  | 'hidden'
+  | 'image'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'radio'
+  | 'range'
+  | 'reset'
+  | 'search'
+  | 'submit'
+  | 'tel'
+  | 'text'
+  | 'time'
+  | 'url'
+  | 'week'
+
 interface FormFieldEventHandlers<T> {
   onClick?: (v: string | number | boolean) => void
   onChange?: (v: string | number | boolean) => void
@@ -13,7 +37,10 @@ export interface FormPropTypes {
    * @TODO Create TextArea, Select, Option, Radio
    */
   children: React.ReactElement[] | React.ReactElement
-  onSubmit: Function
+  onSubmit: (
+    event: React.FormEvent<HTMLFormElement>,
+    isSuccess: boolean
+  ) => void
   hasError?: boolean
   isSuccess?: boolean
   noValidate?: boolean
@@ -24,6 +51,8 @@ export interface FormPropTypes {
   formLabel?: string | JSX.Element
   autoComplete?: 'on' | 'off'
   gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
+  colorTheme?: 'dark' | 'light'
+  styleOptions?: { [key: string]: string }
   /**
    *
    * A form id's with a password field that should be excluded from the
@@ -54,32 +83,11 @@ export interface FormElementTypes<T> extends FormFieldEventHandlers<T> {
   col?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   styleConfig?: { [key: string]: string }
+  events?: any
 }
 
 export interface InputPropTypes extends FormElementTypes<HTMLInputElement> {
-  type:
-    | 'button'
-    | 'checkbox'
-    | 'color'
-    | 'date'
-    | 'datetime-local'
-    | 'email'
-    | 'file'
-    | 'hidden'
-    | 'image'
-    | 'month'
-    | 'number'
-    | 'password'
-    | 'radio'
-    | 'range'
-    | 'reset'
-    | 'search'
-    | 'submit'
-    | 'tel'
-    | 'text'
-    | 'time'
-    | 'url'
-    | 'week'
+  type: InputTypes
   wrapperClasses?: string
   value?: string | number
   maxlength?: number

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useBemify } from '../../hooks/useBemify'
 import FieldLabel from './helperComponents/FieldLabel'
+import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { OptionPropTypes, SelectPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
@@ -83,7 +84,7 @@ export default function Select({
   })
 
   return (
-    <div
+    <fieldset
       className={bem(
         '',
         columnClass,
@@ -99,40 +100,40 @@ export default function Select({
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      <fieldset>
-        <FieldLabel
-          className={bem('label')}
-          isRequired={isRequired}
-          el="legend"
+      <FieldLabel className={bem('label')} isRequired={isRequired} el="legend">
+        {label}
+      </FieldLabel>
+      <div
+        className={bem(
+          'container',
+          [isReadOnly, 'readonly'],
+          [hasError, 'error']
+        )}
+      >
+        <select
+          id={selectId}
+          name={name ?? id}
+          className={bem('field', [!value, '--unselected'])}
+          {...events}
         >
-          {label}
-        </FieldLabel>
-        <div
-          className={bem(
-            'container',
-            [isReadOnly, 'readonly'],
-            [hasError, 'error']
+          {optionsList.map(
+            (option: OptionPropTypes, index: number): JSX.Element => (
+              <Option
+                key={option.label + index}
+                disabled={option.isPlaceholder && !!value}
+                {...option}
+              />
+            )
           )}
-        >
-          <select
-            id={selectId}
-            name={name ?? id}
-            className={bem('field', [!value, '--unselected'])}
-            {...events}
-          >
-            {optionsList.map(
-              (option: OptionPropTypes, index: number): JSX.Element => (
-                <Option
-                  key={option.label + index}
-                  disabled={option.isPlaceholder && !!value}
-                  {...option}
-                />
-              )
-            )}
-          </select>
-        </div>
+        </select>
+      </div>
+      <div className={bem('message-wrapper')}>
+        <SuccessIcon
+          className={bem('success')}
+          isSuccess={messages && isSuccess}
+        />
         {messages}
-      </fieldset>
-    </div>
+      </div>
+    </fieldset>
   )
 }

@@ -4,6 +4,7 @@ import { useBemify } from '../../hooks/useBemify'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { formEvents } from './utils/formEvents'
 import { CheckboxPropTypes } from './types'
+import SuccessIcon from './helperComponents/SuccessIcon'
 
 export default function Checkbox({
   id,
@@ -84,8 +85,14 @@ export default function Checkbox({
       <div className={bem('label')}>
         <FieldLabel htmlFor={checkboxId} isRequired={isRequired}>
           {label}
-          {messages}
         </FieldLabel>
+        <div className={bem('message-wrapper')}>
+          <SuccessIcon
+            className={bem('success')}
+            isSuccess={messages && isSuccess}
+          />
+          {messages}
+        </div>
       </div>
     </div>
   )

@@ -47,7 +47,6 @@
   }
 
   &__content {
-    @extend .bg-white;
     padding: var(--modal-inner-padding);
     width: 100%;
     border-radius: $border-radius;

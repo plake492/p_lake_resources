@@ -8,12 +8,14 @@ import { usePortal } from '../../hooks/usePortal'
 interface ModalPropTypes {
   trigger: boolean
   setTrigger: Function
+  wrapperClasses?: string
   children: React.ReactNode
 }
 
 export default function openModal({
   trigger,
   setTrigger,
+  wrapperClasses,
   children,
 }: ModalPropTypes) {
   // Create a ref for tracking onClickOutside
@@ -46,7 +48,7 @@ export default function openModal({
         <Portal>
           <div className={bem()}>
             <div className={bem('wrapper')}>
-              <div className={bem('content')} ref={modalRef}>
+              <div className={bem('content', wrapperClasses)} ref={modalRef}>
                 <div
                   className={bem('close-btn')}
                   onClick={() => setTrigger(false)}

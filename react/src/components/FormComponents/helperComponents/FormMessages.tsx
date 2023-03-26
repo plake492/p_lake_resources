@@ -4,13 +4,10 @@ import SvgSymbol from '../../BaseComponents/SvgSymbol'
 
 const MessageWrapper = function ({ children }: { children: React.ReactNode }) {
   return (
-    <span
-      className="d-flex gap-sm align-items-center"
-      style={{ color: 'var(--bg-red-30)' }}
-    >
+    <div className="status-message error">
       <SvgSymbol icon="error" width="16" height="16" viewBox="0 0 25 25" />
       {children}
-    </span>
+    </div>
   )
 }
 
@@ -21,13 +18,11 @@ export const IsIvalidErrorMessage = function ({
 }): JSX.Element {
   return (
     <MessageWrapper>
-      <p className="text-xs" style={{ color: 'var(--bg-red-30)' }}>
-        <i>
-          {checkIfAnyReactComponentType(label)
-            ? 'Invalid input'
-            : `${label} is invalid`}
-        </i>
-      </p>
+      <i>
+        {checkIfAnyReactComponentType(label)
+          ? 'Invalid input'
+          : `${label} is invalid`}
+      </i>
     </MessageWrapper>
   )
 }
@@ -39,13 +34,11 @@ export const RequiredFieldErrorMessage = function ({
 }): JSX.Element {
   return (
     <MessageWrapper>
-      <p className="text-xs" style={{ color: 'var(--bg-red-30)' }}>
-        <i>
-          {checkIfAnyReactComponentType(label)
-            ? 'Field is required '
-            : `${label} is required`}
-        </i>
-      </p>
+      <i>
+        {checkIfAnyReactComponentType(label)
+          ? 'Field is required '
+          : `${label} is required`}
+      </i>
     </MessageWrapper>
   )
 }
@@ -53,9 +46,7 @@ export const RequiredFieldErrorMessage = function ({
 export const PasswordMatchErrorMessage = function () {
   return (
     <MessageWrapper>
-      <p className="text-xs" style={{ color: 'var(--bg-red-30)' }}>
-        <i>Passwords do not match</i>
-      </p>
+      <i>Passwords do not match</i>
     </MessageWrapper>
   )
 }
