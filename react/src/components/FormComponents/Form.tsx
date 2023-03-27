@@ -15,7 +15,6 @@ import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
 import { useStyleForm } from './hooks/useStyleForm'
 import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
-import { formEvents } from './utils/formEvents'
 
 export default function Form({
   children,
@@ -29,6 +28,8 @@ export default function Form({
   formLabel,
   autoComplete = 'off',
   gap = 'md',
+  rowGap,
+  colGap,
   colorTheme = 'dark',
   styleOptions,
 }: FormPropTypes): JSX.Element {
@@ -95,6 +96,15 @@ export default function Form({
   // Force children to be an array
   const elements: React.ReactElement[] = forceArray(children)
 
+  const gapClass =
+    rowGap && colGap
+      ? `g-col-${colGap} g-row-${rowGap}`
+      : gap && rowGap && !colGap
+      ? `g-row-${rowGap} g-col-${gap}`
+      : gap && !rowGap && colGap
+      ? `g-col-${colGap} g-row-${gap}`
+      : `g-${gap}`
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -105,12 +115,7 @@ export default function Form({
       ref={formRef}
     >
       <FieldLabel el="legend">{formLabel}</FieldLabel>
-      <div
-        className={bem('field-wrapper', wrapperClasses, 'row', [
-          gap,
-          `g-${gap}`,
-        ])}
-      >
+      <div className={bem('field-wrapper', wrapperClasses, 'row', gapClass)}>
         {elements.map((el: JSX.Element, index: number) => {
           const {
             id,

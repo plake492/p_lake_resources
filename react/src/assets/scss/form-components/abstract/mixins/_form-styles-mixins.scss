@@ -1,5 +1,5 @@
 /**
-Set status styles
+* Set status styles
 */
 @mixin field-modifiers($prefix, $style-borders: true) {
   &.disabled {
@@ -20,6 +20,7 @@ Set status styles
 
   &.error {
     --#{$prefix}-label-color: var(--#{$prefix}-error-color);
+    --#{$prefix}-field-border-color-focus: var(--#{$prefix}-error-color);
     @if $style-borders {
       --#{$prefix}-field-border-color: var(--#{$prefix}-error-color);
     }
@@ -28,6 +29,9 @@ Set status styles
   @content;
 }
 
+/**
+* Set focus styles
+*/
 @mixin focus-state($prefix) {
   --#{$prefix}-field-border-color: var(--#{$prefix}-field-border-color-focus);
   box-shadow: var(--#{$prefix}-field-shadow);
@@ -38,12 +42,26 @@ Set status styles
   @content;
 }
 
+/**
+* Set focus styles
+*/
+@mixin hover-state($prefix) {
+  --#{$prefix}-field-border-color: var(--#{$prefix}-field-border-color-focus);
+  box-shadow: var(--#{$prefix}-field-shadow);
+
+  @content;
+}
+
+/**
+* Set button specific styles
+*/
 @mixin field-as-button($prefix, $btn-type) {
   &__field-wrapper {
     position: relative;
     width: var(--#{$prefix}-field-width);
     height: var(--#{$prefix}-field-height);
   }
+
   &__field {
     cursor: pointer;
     position: absolute;
@@ -53,9 +71,19 @@ Set status styles
     opacity: 0;
     z-index: 1;
 
-    &:focus {
+    + .#{$prefix}__#{$btn-type} {
+      transition: all 100ms ease-in-out;
+    }
+
+    &:focus:not(.readonly) {
       + .#{$prefix}__#{$btn-type} {
         @include focus-state($prefix);
+      }
+    }
+
+    &:hover:not(.readonly) {
+      + .#{$prefix}__#{$btn-type} {
+        @include hover-state($prefix);
       }
     }
 
@@ -105,6 +133,9 @@ Set status styles
   }
 }
 
+/**
+* Set text box specific styles
+*/
 @mixin field-as-box-wtih-text($prefix) {
   position: relative;
   margin-bottom: var(--#{$prefix}-margin-bottom);
@@ -126,10 +157,12 @@ Set status styles
     gap: rem(8);
 
     background-color: var(--#{$prefix}-field-background-color);
+
     border-color: var(--#{$prefix}-field-border-color);
     border-width: var(--#{$prefix}-field-border-width);
     border-style: var(--#{$prefix}-field-border-style);
     border-radius: var(--#{$prefix}-field-border-radius);
+
     padding-left: var(--#{$prefix}-field-padding-x);
     padding-right: var(--#{$prefix}-field-padding-x);
     padding-top: var(--#{$prefix}-field-padding-y);
@@ -143,13 +176,19 @@ Set status styles
     &:focus-within:not(.readonly) {
       @include focus-state($prefix);
     }
+
+    &:hover:not(.readonly) {
+      @include hover-state($prefix);
+    }
   }
 
   &__field {
+    height: var(--#{$prefix}-field-height);
+
     font-size: var(--#{$prefix}-field-font-size);
     line-height: var(--#{$prefix}-field-line-height);
     color: var(--#{$prefix}-field-text-color);
-    height: var(--#{$prefix}-field-height);
+
     background-color: unset;
     border: none;
     overflow: hidden;
@@ -166,6 +205,9 @@ Set status styles
   }
 }
 
+/**
+* Set message styles
+*/
 @mixin message-styles($prefix) {
   &__message-wrapper {
     position: relative;

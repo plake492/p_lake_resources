@@ -1,15 +1,22 @@
+/**
+* Handoff the form varibles to the specific field vars.
+* This will provid an option to globally update styles by changing the form vars,
+* or update specific field vars by updating these variables here
+*/
 @mixin base-field-vars($prefix) {
   --#{$prefix}-margin-bottom: var(--form-field-margin-bottom);
+  --#{$prefix}-shadow-color: var(--form-shadow-color);
+  --#{$prefix}-shadow-spread: var(--form-shadow-spread);
 
+  // Field
   --#{$prefix}-field-background-color: var(--form-field-background-color);
   --#{$prefix}-field-border-color: var(--form-field-border-color);
   --#{$prefix}-field-border-width: var(--form-field-border-width);
   --#{$prefix}-field-border-style: var(--form-field-border-style);
   --#{$prefix}-field-border-color-focus: var(--form-field-border-color-focus);
-  --#{$prefix}-field-placeholder-text-color: var(--form-field-placeholder-text-color);
-
-  --#{$prefix}-shadow-color: var(--form-shadow-color);
-  --#{$prefix}-shadow-spread: var(--form-shadow-spread);
+  --#{$prefix}-field-placeholder-text-color: var(
+    --form-field-placeholder-text-color
+  );
   --#{$prefix}-field-shadow: var(--form-shadow-spread) var(--form-shadow-color);
 
   // Label
@@ -44,11 +51,18 @@
   // Disabled
   --#{$prefix}-disabled-text-color: var(--form-disabled-text-color);
   --#{$prefix}-disabled-border-color: var(--form-disabled-border-color);
-  --#{$prefix}-disabled-placeholder-color: var(--form-disabled-placeholder-color);
+  --#{$prefix}-disabled-placeholder-color: var(
+    --form-disabled-placeholder-color
+  );
 
+  // Allow for additional content to be added to this mixin
   @content;
 }
 
+/**
+* Set vars specific to fields containing text inside the field,
+* Example: 'input <type = text | password | etc....>', 'select', 'textarea' 
+*/
 @mixin field-vars-with-text($prefix) {
   --#{$prefix}-field-font-size: var(--form-field-font-size);
   --#{$prefix}-field-line-height: var(--form-field-line-height);
@@ -59,6 +73,10 @@
   --#{$prefix}-field-height: var(--form-field-height);
 }
 
+/**
+* Set vars specific to fields that appear as buttons,
+* Example: 'input <type = checkbox | radio>',  
+*/
 @mixin field-vars-with-button($prefix) {
   --#{$prefix}-checked-opacity: 0;
   --#{$prefix}-field-width: var(--form-#{$prefix}-btn-width);

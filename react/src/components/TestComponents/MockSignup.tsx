@@ -21,6 +21,7 @@ export default function MockSignup(): JSX.Element {
       formId="signup-form"
       noValidate
       autoComplete="on"
+      formLabel="Signup form"
     >
       <Input
         type="text"

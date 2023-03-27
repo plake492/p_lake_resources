@@ -1,4 +1,8 @@
-/* DARK THEMES COLORS */
+/**
+**********************************************************
+DARK THEMES COLORS 
+**********************************************************
+*/
 $dark-shadow-color: #dddddd33;
 $dark-field-background: #444444;
 $dark-field-text-color: #eeeeee;
@@ -17,7 +21,11 @@ $dark-disabled-placeholder-color: #ff0000;
 $dark-error-color: #ea3e3e;
 $dark-success-color: #44ea3e;
 
-/* LIGHT THEMES COLORS */
+/**
+**********************************************************
+LIGHT THEMES COLORS 
+**********************************************************
+*/
 $light-shadow-color: #22222233;
 $light-field-background: #eeeeee;
 $light-field-text-color: #222222;
@@ -36,6 +44,11 @@ $light-disabled-placeholder-color: #ff0000aa;
 $light-error-color: #ff0031;
 $light-success-color: #61ff00;
 
+/**
+**********************************************************
+MAP OF BOTH LIGHT AND DARK COLOR VARS
+**********************************************************
+*/
 $form-color-vars-dark-and-light: (
   shadow-color: (
     dark: $dark-shadow-color,
@@ -98,29 +111,72 @@ $form-color-vars-dark-and-light: (
     light: $light-success-color,
   ),
 );
-/**/
+
+/**
+**********************************************************
+BASE FORM VARS RELATING TO SIZE AND STYLE
+**********************************************************
+*/
+$line-height-ratio: 1.5;
 $shadow-spread: 0rem 0rem 0.75rem 0.125rem;
+
 $field-border-width: 1px;
 $field-border-style: solid;
 $field-border-radius: 4px;
-
-$line-height-ratio: 1.5;
-
 $field-font-size: #{rem(22)};
 $field-padding-x: #{rem(12)};
 $field-padding-y: #{rem(16)};
 $field-margin-bottom: #{rem(24)};
 $field-height: #{rem(28)};
 
+$label-font-size: #{rem(20)};
+//? Unsure if this is needed as the font-size and line-height will determain the height
+$label-height: unset;
+
+$message-font-size: #{rem(20)};
+$message-padding-y: #{rem(8)};
+$message-padding-x: #{rem(16)};
+$message-border-width: 0px;
+$message-border-style: solid;
+$message-border-radius: 4px;
+
+// Type Radio
+$radio-btn-width: #{rem(40)};
+$radio-btn-height: #{rem(40)};
+$radio-btn-border-radius: 50%;
+// Type Checkbox
+$checkbox-btn-width: #{rem(36)};
+$checkbox-btn-height: #{rem(36)};
+$checkbox-btn-border-radius: 4px;
+
+/**
+**********************************************************
+MAP OF BASE FORM VARS
+**********************************************************
+*/
 $form-display-vars: (
+  line-height-ratio: $line-height-ratio,
   shadow-spread: $shadow-spread,
   field-border-width: $field-border-width,
   field-border-style: $field-border-style,
   field-border-radius: $field-border-radius,
-  line-height-ratio: $line-height-ratio,
   field-font-size: $field-font-size,
   field-padding-x: $field-padding-x,
   field-padding-y: $field-padding-y,
   field-margin-bottom: $field-margin-bottom,
   field-height: $field-height,
+  label-font-size: $label-font-size,
+  label-height: $label-height,
+  message-font-size: $message-font-size,
+  message-padding-y: $message-padding-y,
+  message-padding-x: $message-padding-x,
+  message-border-width: $message-border-width,
+  message-border-style: $message-border-style,
+  message-border-radius: $message-border-radius,
+  radio-btn-width: $radio-btn-width,
+  radio-btn-height: $radio-btn-height,
+  radio-btn-border-radius: $radio-btn-border-radius,
+  checkbox-btn-width: $checkbox-btn-width,
+  checkbox-btn-height: $checkbox-btn-height,
+  checkbox-btn-border-radius: $checkbox-btn-border-radius,
 );

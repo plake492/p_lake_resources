@@ -1,4 +1,5 @@
 import * as React from 'react'
+import DualForms from './components/TestComponents/DualForms'
 import MockSignup from './components/TestComponents/MockSignup'
 
 import TestForm from './components/TestComponents/TestForm'
@@ -15,6 +16,9 @@ export default function App() {
         <div className="container py-xxl">
           <MockSignup />
         </div>
+      </div>
+      <div>
+        <DualForms />
       </div>
     </main>
   )

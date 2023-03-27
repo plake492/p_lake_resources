@@ -24,6 +24,8 @@ export type InputTypes =
   | 'url'
   | 'week'
 
+export type rowSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
+
 interface FormFieldEventHandlers<T> {
   onClick?: (v: string | number | boolean) => void
   onChange?: (v: string | number | boolean) => void
@@ -50,7 +52,9 @@ export interface FormPropTypes {
   formId?: string
   formLabel?: string | JSX.Element
   autoComplete?: 'on' | 'off'
-  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
+  gap?: rowSize
+  rowGap?: rowSize
+  colGap?: rowSize
   colorTheme?: 'dark' | 'light'
   styleOptions?: { [key: string]: string }
   /**
@@ -131,14 +135,14 @@ export interface CheckboxPropTypes extends FormElementTypes<HTMLInputElement> {
 export interface RadioButtonsPropTypes
   extends FormElementTypes<HTMLInputElement> {
   value?: string | number | undefined
-  options?: { [key: string]: string | number }[]
+  options?: RadioPropTypes[]
   isVertical?: boolean
 }
 
 export interface RadioPropTypes {
-  name: string
   id: string
   label: string
+  name?: string
   value?: string | number | undefined
   checked?: string | number | undefined
   formGroupId?: string
