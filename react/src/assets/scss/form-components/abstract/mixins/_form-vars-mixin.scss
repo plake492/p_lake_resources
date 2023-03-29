@@ -14,9 +14,7 @@
   --#{$prefix}-field-border-width: var(--form-field-border-width);
   --#{$prefix}-field-border-style: var(--form-field-border-style);
   --#{$prefix}-field-border-color-focus: var(--form-field-border-color-focus);
-  --#{$prefix}-field-placeholder-text-color: var(
-    --form-field-placeholder-text-color
-  );
+  --#{$prefix}-field-placeholder-text-color: var(--form-field-placeholder-text-color);
   --#{$prefix}-field-shadow: var(--form-shadow-spread) var(--form-shadow-color);
 
   // Label
@@ -33,9 +31,6 @@
   --#{$prefix}-message-padding-y: var(--form-message-padding-y);
   --#{$prefix}-message-background-color: var(--form-message-background-color);
   --#{$prefix}-message-text-color: var(--form-message-text-color);
-  --#{$prefix}-message-placeholder-text-color: var(
-    --form-message-placeholder-text-color
-  );
   --#{$prefix}-message-border-color: var(--form-message-border-color);
   --#{$prefix}-message-border-width: var(--form-message-border-width);
   --#{$prefix}-message-border-style: var(--form-message-border-style);

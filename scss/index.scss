@@ -6,7 +6,7 @@
 
 :root {
   --form-container-width: #{rem(780)};
-  --form-gutter-width: #{$space-md};
+  --form-gutter-width: #{rem(16)};
 }
 
 body {
@@ -17,30 +17,36 @@ body {
 }
 
 button {
+  border: none;
+  padding: 0;
+  background-color: unset;
+}
+
+button[type='submit'] {
   --border-color: var(--bg-violet-40);
   border: var(--border-color) solid 3px;
-  padding: $space-sm $space-xl;
+  padding: rem(8) rem(16);
   background-color: unset;
-  border-radius: $border-radius-pill;
+  border-radius: 40px;
   cursor: pointer;
   transition: all 300ms ease-in-out;
-  @extend .text-md;
+  // @extend .text-md;
   position: relative;
 
   &:hover {
     --border-color: var(--bg-violet-80);
 
-    @extend .box-shadow;
-    @extend .shadow-violet;
-    @extend .shadow-4;
-    transform: translate(-2px, -2px);
+    // @extend .box-shadow;
+    // @extend .shadow-violet;
+    // @extend .shadow-4;
+    // transform: translate(-2px, -2px);
   }
   &:active {
     --border-color: var(--bg-violet-60);
 
-    @extend .box-shadow;
-    @extend .shadow-violet;
-    @extend .shadow-1;
+    // @extend .box-shadow;
+    // @extend .shadow-violet;
+    // @extend .shadow-1;
     transform: translate(0, 0);
   }
 

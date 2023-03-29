@@ -45,19 +45,6 @@ export default function Select({
   breakpoint,
   col = 12,
 }: SelectPropTypes) {
-  // Set up function for handling styles
-  const bem: Function = useBemify('select')
-
-  // Get messages as needed
-  const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
-
-  // Set up id with reference to form
-  const selectId: string = formGroupId ? `${formGroupId}__${id}` : id
-
-  const columnClass: string = !!breakpoint
-    ? `col-${breakpoint}-${col}`
-    : `col-${col}`
-
   // Give the placeholder a standard format
   const formatPlaceholder: string = placeholder ?? '--select--'
 
@@ -76,6 +63,18 @@ export default function Select({
       onClick(v)
     }
   }
+  // Set up function for handling styles
+  const bem: Function = useBemify('select')
+
+  // Get messages as needed
+  const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
+
+  // Set up id with reference to form
+  const selectId: string = formGroupId ? `${formGroupId}__${id}` : id
+
+  const columnClass: string = !!breakpoint
+    ? `col-${breakpoint}-${col}`
+    : `col-${col}`
 
   const events = formEvents<HTMLSelectElement>({
     onClick: handleOnClick,

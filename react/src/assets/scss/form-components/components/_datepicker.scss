@@ -1,0 +1,143 @@
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+// TODO move most of these values to SCSS vars
+.datepicker {
+  --day-width: #{rem(40)};
+  --day-border-width: 0px;
+  --day-border-color: #999;
+  --day-border-style: solid;
+  --calendar-gap: #{rem(16)};
+  --datepicker-width: calc(var(--day-width) * 7);
+  --datepicker-height: calc(var(--day-width) * 6);
+
+  background-color: #111;
+  display: inline-block;
+  border: 1px solid rgb(148, 148, 148);
+  position: absolute;
+  top: calc(100% + rem(8));
+  left: 0;
+  z-index: 100;
+  border-radius: 4px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform: rotate(45deg);
+    border-radius: 4px;
+    background-color: #111;
+    top: calc(rem(8) * -1);
+    left: rem(16);
+    z-index: -1;
+  }
+
+  &__calendar-arrow-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: rem(8) rem(16);
+    width: 100%;
+    position: absolute;
+
+    button {
+      color: #ffffff;
+      width: rem(36);
+      height: rem(24);
+      cursor: pointer;
+    }
+  }
+
+  &__calendar-wrapper {
+    display: flex;
+    gap: rem(16);
+  }
+
+  .calendar {
+    display: block;
+    width: var(--datepicker-width);
+
+    &__month-year-display {
+      @include flex-center;
+      font-size: rem(22);
+    }
+
+    &__day-name-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+    }
+
+    &__day-name {
+      @include flex-center;
+      height: 40px;
+      width: var(--day-width);
+      font-weight: 600;
+    }
+
+    &__days-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      align-content: flex-start;
+      height: var(--datepicker-height);
+    }
+
+    &__day {
+      @include flex-center;
+      height: var(--day-width);
+      width: var(--day-width);
+      border-width: var(--day-border-width);
+      border-color: var(--day-border-color);
+      border-style: var(--day-border-style);
+      border-radius: 0;
+      background: #333;
+      color: #eee;
+      position: relative;
+      cursor: pointer;
+
+      &:hover {
+        --day-border-width: 1px;
+        --day-border-color: #d9e;
+      }
+
+      &.selected {
+        background-color: blue;
+      }
+
+      &:first-child {
+        margin-left: calc(var(--day-width) * var(--first-day-of-month));
+
+        &::before {
+          content: '';
+          display: inline-block;
+          min-width: calc(
+            var(--day-width) * var(--first-day-of-month) +
+              var(--day-border-width)
+          );
+          height: calc(100% + var(--day-border-width) * 2);
+          background-color: #3336;
+          position: absolute;
+          right: 100%;
+        }
+      }
+
+      &:last-child {
+        &::after {
+          content: '';
+          display: inline-block;
+          min-width: calc(
+            var(--day-width) * (6 - var(--last-day-of-month)) +
+              var(--day-border-width)
+          );
+          height: calc(100% + var(--day-border-width) * 2);
+          background-color: #3336;
+          position: absolute;
+          left: 100%;
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,8 @@ import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
 import { useStyleForm } from './hooks/useStyleForm'
 import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
+import { useFormFieldMessages } from './hooks/useFormFieldMessages'
+import { setStyles } from './utils/styleVars'
 
 export default function Form({
   children,
@@ -114,7 +116,7 @@ export default function Form({
       className={bem('', `--${colorTheme}`)}
       ref={formRef}
     >
-      <FieldLabel el="legend">{formLabel}</FieldLabel>
+      {formLabel ? <FieldLabel el="legend">{formLabel}</FieldLabel> : null}
       <div className={bem('field-wrapper', wrapperClasses, 'row', gapClass)}>
         {elements.map((el: JSX.Element, index: number) => {
           const {
@@ -190,16 +192,16 @@ export default function Form({
               handlePasswordMatchOnBlur({ id, value })
             }
 
-            return onBlur && onBlur(e)
+            onBlur && onBlur(e)
           }
 
           // Add additional logic to onChange
-          const onChangeProp = (value: string | number): void => {
+          const onChangeProp = (value: string | number, e?: any): void => {
             // Check if password match vaidation is needed
             if (checkIfPasswordMatchIsNeeded({ id })) {
               handlePasswordsMatch({ id, value })
             }
-            return onChange && onChange(value)
+            return onChange && onChange(value, e)
           }
 
           // For required fields with no value, pass an error state

@@ -31,6 +31,7 @@ export default function MockSignup(): JSX.Element {
         id="first-name"
         isRequired
         col={6}
+        message="bob"
       />
       <Input
         type="text"

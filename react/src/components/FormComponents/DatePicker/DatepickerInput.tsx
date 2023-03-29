@@ -1,19 +1,18 @@
 import * as React from 'react'
-import { useBemify } from '../../hooks/useBemify'
-import { checkIfAnyReactComponentType } from '../../utils/detectReactComponents'
+import { useBemify } from '../../../hooks/useBemify'
 
-import SvgSymbol from '../BaseComponents/SvgSymbol'
-import FieldLabel from './helperComponents/FieldLabel'
-import SuccessIcon from './helperComponents/SuccessIcon'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { InputPropTypes } from './types'
-import { formEvents } from './utils/formEvents'
-import { setStyles } from './utils/styleVars'
+import SvgSymbol from '../../BaseComponents/SvgSymbol'
+import FieldLabel from '../helperComponents/FieldLabel'
+import SuccessIcon from '../helperComponents/SuccessIcon'
+import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
+import { formEvents } from '../utils/formEvents'
+import { setStyles } from '../utils/styleVars'
 
-export default function Input({
+export default function DatepickerInput({
   id,
   label,
   value,
+  type = 'text',
   placeholder,
   ariaLabel,
   wrapperClasses,
@@ -21,7 +20,6 @@ export default function Input({
   message,
   autocomplete,
   isRequired,
-  isBlock,
   isReadOnly,
   isDisabled,
   isSuccess,
@@ -33,22 +31,11 @@ export default function Input({
   onChange,
   onBlur,
   children,
-  type,
-  maxlength,
-  min,
-  max,
-  pattern,
-  prependedIcon,
-  prependedOnClick,
-  appendedIcon,
   appendedOnClick,
-  prependedIconSize = { width: '20', height: '20' },
   appendedIconSize = { width: '20', height: '20' },
-  breakpoint,
-  col = 12,
   styleConfig,
   forwardRef,
-}: InputPropTypes): JSX.Element {
+}: any) {
   // Set up function for handling styles
   const bem: Function = useBemify('input')
 
@@ -58,10 +45,6 @@ export default function Input({
   // Set up id with reference to form
   const inputId: string = formGroupId ? `${formGroupId}__${id}` : id
 
-  const columnClass: string = !!breakpoint
-    ? `col-${breakpoint}-${col}`
-    : `col-${col}`
-
   const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
 
   const styles = !!styleConfig && setStyles(styleConfig)
@@ -70,9 +53,8 @@ export default function Input({
     <div
       className={bem(
         '',
-        columnClass,
+        'mb-none',
         wrapperClasses,
-        [isBlock, 'block'],
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],
         [!shouldHideStatus && (hasError || !isValid), 'error'],
@@ -97,21 +79,6 @@ export default function Input({
           [hasError || !isValid, 'error']
         )}
       >
-        {prependedIcon ? (
-          checkIfAnyReactComponentType(prependedIcon) ? (
-            prependedIcon
-          ) : (
-            <SvgSymbol
-              classes={bem('prepended-icon', [
-                !!prependedOnClick,
-                '--clickable',
-              ])}
-              onClick={prependedOnClick}
-              icon={prependedIcon as string}
-              {...prependedIconSize}
-            />
-          )
-        ) : null}
         <input
           ref={forwardRef}
           className={bem('field')}
@@ -122,27 +89,17 @@ export default function Input({
           readOnly={isReadOnly}
           disabled={isDisabled}
           value={value}
-          maxLength={maxlength}
-          min={min}
-          max={max}
-          pattern={pattern}
           required={isRequired}
           autoFocus={shouldAutoFocus}
           autoComplete={autocomplete}
           {...events}
         />
-        {appendedIcon ? (
-          checkIfAnyReactComponentType(appendedIcon) ? (
-            appendedIcon
-          ) : (
-            <SvgSymbol
-              classes={bem('appended-icon', [!!appendedOnClick, '--clickable'])}
-              onClick={appendedOnClick}
-              icon={appendedIcon as string}
-              {...appendedIconSize}
-            />
-          )
-        ) : null}
+        <SvgSymbol
+          classes={bem('appended-icon', '--clickable')}
+          onClick={appendedOnClick}
+          icon="download"
+          {...appendedIconSize}
+        />
       </div>
       <div className={bem('message-wrapper')}>
         <SuccessIcon

@@ -27,8 +27,8 @@ export type InputTypes =
 export type rowSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
 
 interface FormFieldEventHandlers<T> {
-  onClick?: (v: string | number | boolean) => void
-  onChange?: (v: string | number | boolean) => void
+  onChange?: (v: string | number | boolean, e?: React.ChangeEvent) => void
+  onClick?: (v: string | number | boolean, e?: React.MouseEvent) => void
   onBlur?: React.FocusEventHandler<T>
 }
 
@@ -87,7 +87,9 @@ export interface FormElementTypes<T> extends FormFieldEventHandlers<T> {
   col?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   styleConfig?: { [key: string]: string }
-  events?: any
+  events?: any // TODO CHANGE THIS
+  forwardRef?: any // TODO CHANGE THIS
+  messages?: any // TODO CHANGE THIS
 }
 
 export interface InputPropTypes extends FormElementTypes<HTMLInputElement> {

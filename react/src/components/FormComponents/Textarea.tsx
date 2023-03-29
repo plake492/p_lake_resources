@@ -6,6 +6,7 @@ import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { TextAreaPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
+import { setStyles } from './utils/styleVars'
 
 export default function Textarea({
   id,
@@ -34,6 +35,7 @@ export default function Textarea({
   rows = 6,
   breakpoint,
   col = 12,
+  styleConfig,
 }: TextAreaPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('textarea')
@@ -54,6 +56,8 @@ export default function Textarea({
     onBlur,
   })
 
+  const styles = !!styleConfig && setStyles(styleConfig)
+
   return (
     <div
       className={bem(
@@ -69,6 +73,7 @@ export default function Textarea({
       style={{
         /* Option to set absolute width */
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
+        ...(!!styleConfig ? (styles as React.CSSProperties) : {}),
       }}
     >
       <FieldLabel

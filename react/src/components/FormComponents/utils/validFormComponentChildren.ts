@@ -4,6 +4,6 @@ export const validFormComponentChildren: string[] = [
   'RadioButtons',
   'Textarea',
   'Select',
-  'Datepicker',
+  'DatePicker',
   'FileUpload',
 ]

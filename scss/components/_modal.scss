@@ -1,56 +1,56 @@
-.modal {
-  --modal-outer-padding: #{$space-xl};
-  --modal-inner-padding: #{$space-xl};
-  --modal-width: min(78rem, calc(100vw - var(--modal-outer-padding)));
+// .modal {
+//   --modal-outer-padding: #{$space-xl};
+//   --modal-inner-padding: #{$space-xl};
+//   --modal-width: min(78rem, calc(100vw - var(--modal-outer-padding)));
 
-  position: fixed;
-  z-index: 900;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: var(--modal-width);
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+//   position: fixed;
+//   z-index: 900;
+//   left: 50%;
+//   top: 50%;
+//   transform: translate(-50%, -50%);
+//   max-width: var(--modal-width);
+//   height: 100%;
+//   width: 100%;
+//   overflow: hidden;
 
-  @include sm-size() {
-    --modal-outer-padding: #{$space-md};
-    --modal-inner-padding: #{$space-xl $space-md};
-  }
+//   @include sm-size() {
+//     --modal-outer-padding: #{$space-md};
+//     --modal-inner-padding: #{$space-xl $space-md};
+//   }
 
-  &__backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 700;
-  }
+//   &__backdrop {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     width: 100vw;
+//     height: 100vh;
+//     background-color: rgba(0, 0, 0, 0.5);
+//     z-index: 700;
+//   }
 
-  &__close-btn {
-    cursor: pointer;
-    position: absolute;
-    top: $space-md;
-    right: $space-md;
-  }
+//   &__close-btn {
+//     cursor: pointer;
+//     position: absolute;
+//     top: $space-md;
+//     right: $space-md;
+//   }
 
-  &__wrapper {
-    height: 100%;
-    width: 100%;
-    overflow: scroll;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    @include no-scrollbar;
-  }
+//   &__wrapper {
+//     height: 100%;
+//     width: 100%;
+//     overflow: scroll;
+//     position: absolute;
+//     display: flex;
+//     align-items: center;
+//     flex-wrap: wrap;
+//     @include no-scrollbar;
+//   }
 
-  &__content {
-    padding: var(--modal-inner-padding);
-    width: 100%;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    position: relative;
-  }
-}
+//   &__content {
+//     padding: var(--modal-inner-padding);
+//     width: 100%;
+//     border-radius: $border-radius;
+//     box-shadow: $box-shadow;
+//     position: relative;
+//   }
+// }
