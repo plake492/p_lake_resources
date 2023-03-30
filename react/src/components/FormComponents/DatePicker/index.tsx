@@ -62,7 +62,7 @@ export default function DatePicker({
     if (document.activeElement === iconRef.current && e.key === 'Enter') {
       setShowDatePicker(true)
     }
-    if (showDatePicker && e.key === 'Escape') {
+    if (e.key === 'Escape') {
       setShowDatePicker(false)
     }
   }
@@ -131,7 +131,6 @@ export default function DatePicker({
         {label}
       </FieldLabel>
       <div
-        ref={iconRef}
         className={bem(
           'container',
           'position-relative',
@@ -154,7 +153,7 @@ export default function DatePicker({
           autoComplete={autocomplete}
           {...events}
         />
-        <div tabIndex={0}>
+        <div ref={iconRef} tabIndex={0}>
           <SvgSymbol
             classes={bem('appended-icon', '--clickable')}
             onClick={() => setShowDatePicker((prev) => !prev)}

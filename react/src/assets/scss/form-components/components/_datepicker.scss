@@ -33,7 +33,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
     border: 1px solid rgb(148, 148, 148);
     position: absolute;
     top: calc(100% + rem(8));
-    left: calc(var(--datepicker-field-border-width) * -1);
+    right: calc(var(--datepicker-field-border-width) * -1);
     z-index: 100;
     border-radius: 4px;
     border-radius: 8px;
@@ -47,7 +47,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
       border-radius: 4px;
       background-color: #111;
       top: calc(rem(8) * -1);
-      left: rem(16);
+      right: rem(16);
       z-index: -1;
     }
 
