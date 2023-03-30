@@ -15,7 +15,6 @@ import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
 import { useStyleForm } from './hooks/useStyleForm'
 import { FormPropTypes, InputPropTypes } from './types'
 import { validFormComponentChildren } from './utils/validFormComponentChildren'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { setStyles } from './utils/styleVars'
 
 export default function Form({
@@ -130,6 +129,9 @@ export default function Form({
             onChange,
             onBlur,
             validationType,
+            col = 12,
+            breakpoint,
+            styleConfig,
           }: InputPropTypes = el.props
 
           /**
@@ -242,9 +244,21 @@ export default function Form({
               : {}),
           }
 
+          // Set up id with reference to form
+          const fieldId: string = formGroupId ? `${formGroupId}__${id}` : id
+
+          const columnClass: string = !!breakpoint
+            ? `col-${breakpoint}-${col} col-12`
+            : `col-${col}`
+
+          const styles = !!styleConfig && setStyles(styleConfig)
+
           const props = {
+            columnClass,
+            fieldId,
             formGroupId,
             isValid,
+            styles,
             isSuccess: isSuccessProp,
             onBlur: onBlurProp,
             onChange: onChangeProp,

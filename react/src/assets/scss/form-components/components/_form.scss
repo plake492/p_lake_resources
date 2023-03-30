@@ -1,4 +1,31 @@
+@use 'sass:map';
+
 .form {
   max-width: calc(var(--form-container-width) + var(--form-gutter-width));
   margin: 0 auto;
+
+  @each $key, $value in $form-color-vars-dark-and-light {
+    &--dark {
+      --form-#{$key}: #{map.get($value, 'dark')};
+    }
+    &--light {
+      --form-#{$key}: #{map.get($value, 'light')};
+    }
+  }
+
+  @each $key, $value in $form-display-vars {
+    --form-#{$key}: #{$value};
+  }
+
+  --form-field-line-height: calc(
+    var(--form-field-font-size) * var(--form-line-height-ratio)
+  );
+
+  --form-label-line-height: calc(
+    var(--form-label-font-size) * var(--form-line-height-ratio)
+  );
+
+  --form-message-line-height: calc(
+    var(--form-message-font-size) * var(--form-line-height-ratio)
+  );
 }

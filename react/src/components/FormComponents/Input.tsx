@@ -8,16 +8,13 @@ import SuccessIcon from './helperComponents/SuccessIcon'
 import { useFormFieldMessages } from './hooks/useFormFieldMessages'
 import { InputPropTypes } from './types'
 import { formEvents } from './utils/formEvents'
-import { setStyles } from './utils/styleVars'
 
 export default function Input({
-  id,
   label,
   value,
   placeholder,
   ariaLabel,
   wrapperClasses,
-  formGroupId,
   message,
   autocomplete,
   isRequired,
@@ -44,10 +41,11 @@ export default function Input({
   appendedOnClick,
   prependedIconSize = { width: '20', height: '20' },
   appendedIconSize = { width: '20', height: '20' },
-  breakpoint,
-  col = 12,
+  columnClass,
+  fieldId,
   styleConfig,
   forwardRef,
+  styles,
 }: InputPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('input')
@@ -55,16 +53,9 @@ export default function Input({
   // Get messages as needed
   const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
 
-  // Set up id with reference to form
-  const inputId: string = formGroupId ? `${formGroupId}__${id}` : id
-
-  const columnClass: string = !!breakpoint
-    ? `col-${breakpoint}-${col}`
-    : `col-${col}`
-
   const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
 
-  const styles = !!styleConfig && setStyles(styleConfig)
+  // const styles = !!styleConfig && setStyles(styleConfig)
 
   return (
     <div
@@ -85,7 +76,7 @@ export default function Input({
     >
       <FieldLabel
         className={bem('label')}
-        htmlFor={inputId}
+        htmlFor={fieldId}
         isRequired={isRequired}
       >
         {label}
@@ -116,7 +107,7 @@ export default function Input({
           ref={forwardRef}
           className={bem('field')}
           type={type}
-          id={inputId}
+          id={fieldId}
           aria-label={ariaLabel ?? placeholder}
           placeholder={placeholder}
           readOnly={isReadOnly}

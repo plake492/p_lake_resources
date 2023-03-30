@@ -1,3 +1,5 @@
+$prefix: datepicker;
+
 input[type='date']::-webkit-inner-spin-button,
 input[type='date']::-webkit-calendar-picker-indicator {
   display: none;
@@ -6,46 +8,71 @@ input[type='date']::-webkit-calendar-picker-indicator {
 // TODO move most of these values to SCSS vars
 .datepicker {
   --day-width: #{rem(40)};
-  --day-border-width: 0px;
+  --day-border-width: 1px;
   --day-border-color: #999;
   --day-border-style: solid;
   --calendar-gap: #{rem(16)};
   --datepicker-width: calc(var(--day-width) * 7);
   --datepicker-height: calc(var(--day-width) * 6);
 
-  background-color: #111;
-  display: inline-block;
-  border: 1px solid rgb(148, 148, 148);
-  position: absolute;
-  top: calc(100% + rem(8));
-  left: 0;
-  z-index: 100;
-  border-radius: 4px;
+  @include base-field-vars($prefix);
+  @include field-vars-with-text($prefix);
+  @include field-modifiers($prefix);
+  @include field-as-box-wtih-text($prefix);
+  @include message-styles($prefix);
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    transform: rotate(45deg);
-    border-radius: 4px;
+  &__appended-icon {
+    &--clickable {
+      cursor: pointer;
+    }
+  }
+
+  &__wrapper {
     background-color: #111;
-    top: calc(rem(8) * -1);
-    left: rem(16);
-    z-index: -1;
+    display: inline-block;
+    border: 1px solid rgb(148, 148, 148);
+    position: absolute;
+    top: calc(100% + rem(8));
+    left: calc(var(--datepicker-field-border-width) * -1);
+    z-index: 100;
+    border-radius: 4px;
+    border-radius: 8px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      transform: rotate(45deg);
+      border-radius: 4px;
+      background-color: #111;
+      top: calc(rem(8) * -1);
+      left: rem(16);
+      z-index: -1;
+    }
+
+    &.top {
+      top: unset;
+      bottom: calc(100% + rem(8));
+
+      &::after {
+        top: unset;
+        bottom: calc(rem(8) * -1);
+      }
+    }
   }
 
   &__calendar-arrow-wrapper {
     display: flex;
     justify-content: space-between;
-    padding: rem(8) rem(16);
+    padding: rem(16) rem(8);
     width: 100%;
     position: absolute;
 
     button {
       color: #ffffff;
-      width: rem(36);
-      height: rem(24);
+      width: rem(24);
+      height: rem(18);
       cursor: pointer;
     }
   }
@@ -61,7 +88,12 @@ input[type='date']::-webkit-calendar-picker-indicator {
 
     &__month-year-display {
       @include flex-center;
-      font-size: rem(22);
+      padding: rem(8) 0;
+
+      p {
+        font-size: rem(24);
+        line-height: calc(rem(24) * 1.5);
+      }
     }
 
     &__day-name-wrapper {
@@ -75,6 +107,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
       height: 40px;
       width: var(--day-width);
       font-weight: 600;
+      margin-bottom: 0;
     }
 
     &__days-wrapper {
@@ -94,6 +127,8 @@ input[type='date']::-webkit-calendar-picker-indicator {
       border-style: var(--day-border-style);
       border-radius: 0;
       background: #333;
+      border-radius: 8px;
+
       color: #eee;
       position: relative;
       cursor: pointer;

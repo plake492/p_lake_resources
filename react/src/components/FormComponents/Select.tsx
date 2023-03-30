@@ -20,12 +20,10 @@ const Option = function ({
 }
 
 export default function Select({
-  id,
   label,
   value,
   placeholder,
   wrapperClasses,
-  formGroupId,
   message,
   name,
   width,
@@ -42,8 +40,8 @@ export default function Select({
   children,
   options,
   removePlaceholder,
-  breakpoint,
-  col = 12,
+  fieldId,
+  columnClass,
 }: SelectPropTypes) {
   // Give the placeholder a standard format
   const formatPlaceholder: string = placeholder ?? '--select--'
@@ -68,13 +66,6 @@ export default function Select({
 
   // Get messages as needed
   const messages: JSX.Element = useFormFieldMessages({ children, message, bem })
-
-  // Set up id with reference to form
-  const selectId: string = formGroupId ? `${formGroupId}__${id}` : id
-
-  const columnClass: string = !!breakpoint
-    ? `col-${breakpoint}-${col}`
-    : `col-${col}`
 
   const events = formEvents<HTMLSelectElement>({
     onClick: handleOnClick,
@@ -110,8 +101,8 @@ export default function Select({
         )}
       >
         <select
-          id={selectId}
-          name={name ?? id}
+          id={fieldId}
+          name={name ?? fieldId}
           className={bem('field', [!value, '--unselected'])}
           {...events}
         >

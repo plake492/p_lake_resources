@@ -84,7 +84,7 @@ export default function TestForm(): JSX.Element {
           onSubmit(event, success)
         }
         colorTheme="dark"
-        // styleOptions={formStyles}
+        styleOptions={formStyles}
       >
         <Select
           id="select"

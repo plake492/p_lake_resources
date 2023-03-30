@@ -87,9 +87,11 @@ export interface FormElementTypes<T> extends FormFieldEventHandlers<T> {
   col?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   styleConfig?: { [key: string]: string }
+  columnClass?: string
+  fieldId?: string
+  styles?: { [key: string]: string }
   events?: any // TODO CHANGE THIS
   forwardRef?: any // TODO CHANGE THIS
-  messages?: any // TODO CHANGE THIS
 }
 
 export interface InputPropTypes extends FormElementTypes<HTMLInputElement> {

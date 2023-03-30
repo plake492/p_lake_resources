@@ -7,13 +7,12 @@ import { CheckboxPropTypes } from './types'
 import SuccessIcon from './helperComponents/SuccessIcon'
 
 export default function Checkbox({
-  id,
+  type = 'checkbox',
   label,
   value,
   placeholder,
   ariaLabel,
   wrapperClasses,
-  formGroupId,
   message,
   isRequired,
   isBlock,
@@ -27,9 +26,9 @@ export default function Checkbox({
   onChange,
   onBlur,
   children,
-  breakpoint,
-  col,
-  type = 'checkbox',
+  columnClass,
+  fieldId,
+  styles,
 }: CheckboxPropTypes) {
   // Set up function for handling styles
   const bem: Function = useBemify('checkbox')
@@ -42,35 +41,26 @@ export default function Checkbox({
     forceMessageClass: true,
   })
 
-  // Set up id with reference to form
-  const checkboxId: string = formGroupId ? `${formGroupId}__${id}` : id
-
   const events = formEvents<HTMLInputElement>({ onChange, onClick, onBlur })
-
-  const colClass =
-    col && breakpoint
-      ? `col-${breakpoint}-${col}`
-      : col
-      ? `col-${col}`
-      : 'col-12'
 
   return (
     <div
       className={bem(
         '',
         wrapperClasses,
-        colClass,
+        columnClass,
         [isBlock, 'block'],
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],
         [isSuccess, 'success'],
         [!shouldHideStatus && hasError, 'error']
       )}
+      style={{ ...(!!styles ? (styles as React.CSSProperties) : {}) }}
     >
       <div className={bem('field-wrapper')}>
         <input
           type={type}
-          id={checkboxId}
+          id={fieldId}
           className={bem('field')}
           aria-label={ariaLabel || placeholder}
           placeholder={placeholder}
@@ -83,7 +73,7 @@ export default function Checkbox({
         <div className={bem('box')}></div>
       </div>
       <div className={bem('label')}>
-        <FieldLabel htmlFor={checkboxId} isRequired={isRequired}>
+        <FieldLabel htmlFor={fieldId} isRequired={isRequired}>
           {label}
         </FieldLabel>
         <div className={bem('message-wrapper')}>

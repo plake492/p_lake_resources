@@ -4,7 +4,7 @@ export const setStyles = ({
   width,
   style,
   radius,
-}: any) => {
+}: any): { [key: string]: string } => {
   return {
     [`--${label}-field-border-color`]: color,
     [`--${label}-field-border-width`]: width,

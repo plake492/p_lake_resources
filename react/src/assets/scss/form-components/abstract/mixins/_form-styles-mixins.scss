@@ -5,7 +5,9 @@
   &.disabled {
     --#{$prefix}-field-border-color: var(--#{$prefix}-disabled-border-color);
     --#{$prefix}-field-text-color: var(--#{$prefix}-disabled-text-color);
-    --#{$prefix}-field-placeholder-color: var(--#{$prefix}-disabled-placeholder-color);
+    --#{$prefix}-field-placeholder-color: var(
+      --#{$prefix}-disabled-placeholder-color
+    );
     --#{$prefix}-message-text-color: var(--#{$prefix}-disabled-text-color);
     --#{$prefix}-message-border-color: var(--#{$prefix}-disabled-border-color);
   }
@@ -166,7 +168,6 @@
     padding-top: var(--#{$prefix}-field-padding-y);
     padding-bottom: var(--#{$prefix}-field-padding-y);
 
-    overflow: scroll;
     transition: all 100ms ease-in-out;
     position: relative;
     z-index: 1;

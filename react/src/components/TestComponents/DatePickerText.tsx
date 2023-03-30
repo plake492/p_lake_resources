@@ -24,7 +24,8 @@ export default function DatePickerText() {
           validationType="date-mm/dd/yyyy"
           shouldValidate
           isRequired
-          col={6}
+          col={9}
+          breakpoint="xl"
           showTwoMonths
           message="A message"
           placeholder="04/04/1992"

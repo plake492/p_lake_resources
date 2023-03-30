@@ -23,10 +23,15 @@ interface SelectedDateObj {
   dayOfMonth: null | number
 }
 
-export default function Calender({ date, selectedDay, onChange }: CalendarProps) {
-  const [numberOfDaysInMonth, setNumberOfDaysInMonth] = React.useState<number>(0)
+export default function Calender({
+  date,
+  selectedDay,
+  onChange,
+}: CalendarProps) {
   const [firstDayOfMonth, setFirstDayOfMonth] = React.useState<number>(null)
   const [lastOfMonth, setLastOfMonth] = React.useState<number>(null)
+  const [numberOfDaysInMonth, setNumberOfDaysInMonth] =
+    React.useState<number>(0)
 
   const [month, setMonth] = React.useState<number>(getMonth(date))
   const [year, setYear] = React.useState<number>(getDate(date))
@@ -41,9 +46,9 @@ export default function Calender({ date, selectedDay, onChange }: CalendarProps)
 
   React.useEffect((): void => {
     setSelectedDate({
-      year: getYear(selectedDay as Date),
-      month: getMonth(selectedDay as Date),
-      dayOfMonth: getDate(selectedDay as Date),
+      year: getYear(new Date(selectedDay)),
+      month: getMonth(new Date(selectedDay)),
+      dayOfMonth: getDate(new Date(selectedDay)),
     })
   }, [selectedDay])
 
@@ -59,7 +64,8 @@ export default function Calender({ date, selectedDay, onChange }: CalendarProps)
     setYear(getYear(date))
   }, [date])
 
-  const isMonthAndYear: boolean = selectedDate.year === year && selectedDate.month == month
+  const isMonthAndYear: boolean =
+    selectedDate.year === year && selectedDate.month == month
 
   return (
     <section
@@ -85,11 +91,16 @@ export default function Calender({ date, selectedDay, onChange }: CalendarProps)
         {numberOfDaysInMonth &&
           [...Array(numberOfDaysInMonth)].map((_, index) => {
             const date = new Date(year, month, index + 1)
-            const isSelectedDate = isMonthAndYear && index + 1 === selectedDate.dayOfMonth
+            const isSelectedDate =
+              isMonthAndYear && index + 1 === selectedDate.dayOfMonth
 
             return (
               <span
+                tabIndex={0}
                 onClick={() => onChange(date)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLSpanElement>) =>
+                  e.key === 'Enter' && onChange(date)
+                }
                 className={bem('day', [isSelectedDate, 'selected'])}
               >
                 {index + 1}

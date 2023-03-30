@@ -47,7 +47,6 @@ const Radio = function ({
 }
 
 export default function RadioButtons({
-  id,
   label,
   value,
   options,
@@ -64,6 +63,8 @@ export default function RadioButtons({
   onChange,
   onClick,
   onBlur,
+  fieldId,
+  styles,
   children,
 }: RadioButtonsPropTypes): JSX.Element {
   // Set up function for handling styles
@@ -76,9 +77,6 @@ export default function RadioButtons({
     bem,
     forceMessageClass: true,
   })
-
-  // Set up id with reference to form
-  const radioGroupId: string = formGroupId ? `${formGroupId}__${id}` : id
 
   // Renaming value allows the Form wrapper to stil
   // recieve a value prop to this child component
@@ -100,6 +98,9 @@ export default function RadioButtons({
         [isReadOnly, 'readonly'],
         [!shouldHideStatus && hasError, 'error']
       )}
+      style={{
+        ...(!!styles ? (styles as React.CSSProperties) : {}),
+      }}
     >
       <FieldLabel className={bem('label')} isRequired={isRequired} el="legend">
         {label}
@@ -111,7 +112,7 @@ export default function RadioButtons({
             id={id}
             label={label}
             value={value}
-            name={radioGroupId}
+            name={fieldId}
             checked={checked}
             formGroupId={formGroupId}
             isDisabled={isDisabled}
