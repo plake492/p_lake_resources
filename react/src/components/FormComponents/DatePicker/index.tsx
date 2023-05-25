@@ -1,22 +1,13 @@
 import * as React from 'react'
-import { format, addMonths, subMonths } from 'date-fns'
-
-import Calender from './Calender'
-import SvgSymbol from '../../BaseComponents/SvgSymbol'
 import FadeInComponent from '../../BaseComponents/FadeInComponent'
 
 import { useBemify } from '../../../hooks/useBemify'
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside'
 import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
 import { formEvents } from '../utils/formEvents'
 import SuccessIcon from '../helperComponents/SuccessIcon'
 import FieldLabel from '../helperComponents/FieldLabel'
-
-interface DatePickerProps {
-  showTwoMonths?: boolean
-  onChange?: (selectedDay: string) => void
-  startDate?: Date
-}
+import CalendarWrapper from './CalendarWrapper'
+import { DatePickerTypes } from '../types'
 
 export default function DatePicker({
   startDate = new Date(),
@@ -45,17 +36,13 @@ export default function DatePicker({
   forwardRef,
   children,
   styles,
-}: any): JSX.Element {
+  monthAndYearAreSelectable,
+  hideLabel,
+}: DatePickerTypes): JSX.Element {
   const [showDatePicker, setShowDatePicker] = React.useState<boolean>(false)
-  const [calendarPosition, setCalendarPosition] = React.useState<
-    'top' | 'bottom'
-  >('bottom')
-  const [currentFocusedDate, setCurrentFocusedDate] =
-    React.useState<Date>(startDate)
 
   const bem: Function = useBemify('datepicker')
 
-  const calendarRef = React.useRef<HTMLDivElement>()
   const iconRef = React.useRef<HTMLDivElement>()
 
   const handleKeydown = (e: KeyboardEvent) => {
@@ -66,14 +53,6 @@ export default function DatePicker({
       setShowDatePicker(false)
     }
   }
-
-  React.useEffect(() => {
-    if (
-      calendarRef.current?.getBoundingClientRect().bottom > window.outerHeight
-    ) {
-      setCalendarPosition('top')
-    }
-  }, [showDatePicker])
 
   React.useEffect(() => {
     window.addEventListener('keydown', handleKeydown)
@@ -93,23 +72,10 @@ export default function DatePicker({
     onBlur,
   })
 
-  useOnClickOutside({
-    handler: () => {
-      if (showDatePicker) {
-        setShowDatePicker(false)
-      }
-    },
-    reference: calendarRef,
-    exception: iconRef,
-  })
-
-  const numCalendarsToDisplay: 1 | 2 = showTwoMonths ? 2 : 1
-
   return (
     <div
       className={bem(
         '',
-
         columnClass,
         wrapperClasses,
         [showDatePicker, 'z-2'],
@@ -123,13 +89,16 @@ export default function DatePicker({
         ...(!!styles ? (styles as React.CSSProperties) : {}),
       }}
     >
-      <FieldLabel
-        className={bem('label')}
-        htmlFor={fieldId}
-        isRequired={isRequired}
-      >
-        {label}
-      </FieldLabel>
+      <div className={bem('label-wrapper', [hideLabel, '--hidden'])}>
+        <FieldLabel
+          className={bem('label')}
+          htmlFor={fieldId}
+          isRequired={isRequired}
+        >
+          {label}
+        </FieldLabel>
+        <SuccessIcon className={bem('success')} isSuccess={isSuccess} />
+      </div>
       <div
         className={bem(
           'container',
@@ -153,70 +122,39 @@ export default function DatePicker({
           autoComplete={autocomplete}
           {...events}
         />
-        <div ref={iconRef} tabIndex={0}>
-          <SvgSymbol
-            classes={bem('appended-icon', '--clickable')}
+        <div
+          className={bem('appended-icon-wrapper')}
+          ref={iconRef}
+          tabIndex={0}
+        >
+          <svg
+            className={bem('appended-icon', '--clickable')}
+            id="calendar"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
             onClick={() => setShowDatePicker((prev) => !prev)}
-            icon="download"
             {...appendedIconSize}
-          />
-        </div>
-        {/* CALENDAR */}
-        <FadeInComponent trigger={showDatePicker}>
-          <div
-            className={bem('wrapper', calendarPosition)}
-            style={
-              {
-                '--num-of-months-displayed': numCalendarsToDisplay,
-              } as React.CSSProperties
-            }
-            ref={calendarRef}
           >
-            <div className={bem('calendar-arrow-wrapper')}>
-              {[
-                { dir: 'left', func: subMonths },
-                { dir: 'right', func: addMonths },
-              ].map(({ dir, func }) => (
-                <button
-                  type="button"
-                  key={dir}
-                  onClick={() => setCurrentFocusedDate((prev) => func(prev, 1))}
-                >
-                  <SvgSymbol
-                    viewBox="0 0 20 14"
-                    width="100%"
-                    height="100%"
-                    icon={`arrow-${dir}`}
-                  />
-                </button>
-              ))}
-            </div>
-
-            <div className={bem('calendar-wrapper')}>
-              {[...Array(numCalendarsToDisplay)].map(
-                (_: null, index: number): JSX.Element => (
-                  <Calender
-                    key={index}
-                    date={addMonths(currentFocusedDate, index)}
-                    onChange={(v: Date): void =>
-                      onChange(format(v, 'MM/dd/yyyy'))
-                    }
-                    selectedDay={value}
-                  />
-                )
-              )}
-            </div>
-          </div>
+            <path d="M5 4.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 1 0v2a.5.5 0 0 1-.5.5zM11 4.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 1 0v2a.5.5 0 0 1-.5.5z"></path>
+            <path d="M13 14.5H3c-.827 0-1.5-.673-1.5-1.5V4c0-.827.673-1.5 1.5-1.5h10c.827 0 1.5.673 1.5 1.5v9c0 .827-.673 1.5-1.5 1.5zM3 3.5a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5H3z"></path>
+            <path d="M14 6.5H2a.5.5 0 0 1 0-1h12a.5.5 0 0 1 0 1zM5.5 7.5h1v1h-1zM7.5 7.5h1v1h-1zM9.5 7.5h1v1h-1zM11.5 7.5h1v1h-1zM3.5 9.5h1v1h-1zM5.5 9.5h1v1h-1zM7.5 9.5h1v1h-1zM9.5 9.5h1v1h-1zM11.5 9.5h1v1h-1zM3.5 11.5h1v1h-1zM5.5 11.5h1v1h-1zM7.5 11.5h1v1h-1z"></path>
+          </svg>
+        </div>
+        <FadeInComponent trigger={showDatePicker} timeout={200}>
+          <CalendarWrapper
+            showDatePicker={showDatePicker}
+            setShowDatePicker={setShowDatePicker}
+            iconRef={iconRef}
+            showTwoMonths={showTwoMonths}
+            startDate={startDate}
+            value={value}
+            onChange={onChange}
+            monthAndYearAreSelectable={monthAndYearAreSelectable}
+          />
         </FadeInComponent>
-        {/* END OF CALENDAR */}
       </div>
-      <div className={bem('message-wrapper')}>
-        <SuccessIcon
-          className={bem('success')}
-          isSuccess={messages && isSuccess}
-        />
-        {messages}
-      </div>
+      <div className={bem('message-wrapper')}>{messages}</div>
     </div>
   )
 }

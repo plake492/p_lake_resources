@@ -14,10 +14,11 @@ export const useOnClickOutside = ({
   useEffect(() => {
     const listener = (event: MouseEvent): void => {
       // Do nothing if clicking reference's element or descendent elements
+
       if (
         !reference.current ||
-        reference.current.contains(event.target as Node) ||
-        (exception && exception.current.contains(event.target as Node))
+        reference.current?.contains(event.target as Node) ||
+        (exception && exception.current?.contains(event.target as Node))
       ) {
         return
       }

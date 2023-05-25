@@ -1,10 +1,20 @@
-import { ChangeEventHandler, FocusEventHandler, MouseEventHandler } from 'react'
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  MouseEventHandler,
+  ChangeEvent,
+  MouseEvent,
+  ReactElement,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+  MutableRefObject,
+} from 'react'
 
 export type InputTypes =
   | 'button'
   | 'checkbox'
   | 'color'
-  | 'date'
   | 'datetime-local'
   | 'email'
   | 'file'
@@ -26,10 +36,18 @@ export type InputTypes =
 
 export type rowSize = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl'
 
+type dateValidation =
+  | 'date-mm/dd/yyyy'
+  | 'date-dd/mm/yyyy'
+  | 'yyyy/mm/dd'
+  | 'yy/mm/dd'
+
+type textValidationTypes = 'email' | 'password' | 'text' | Function
+
 interface FormFieldEventHandlers<T> {
-  onChange?: (v: string | number | boolean, e?: React.ChangeEvent) => void
-  onClick?: (v: string | number | boolean, e?: React.MouseEvent) => void
-  onBlur?: React.FocusEventHandler<T>
+  onChange?: (v: string | number | boolean, e?: ChangeEvent) => void
+  onClick?: (v: string | number | boolean, e?: MouseEvent) => void
+  onBlur?: FocusEventHandler<T>
 }
 
 export interface FormPropTypes {
@@ -38,11 +56,8 @@ export interface FormPropTypes {
    * A group of form elements
    * @TODO Create TextArea, Select, Option, Radio
    */
-  children: React.ReactElement[] | React.ReactElement
-  onSubmit: (
-    event: React.FormEvent<HTMLFormElement>,
-    isSuccess: boolean
-  ) => void
+  children: ReactElement[] | ReactElement
+  onSubmit: (event: FormEvent<HTMLFormElement>, isSuccess: boolean) => void
   hasError?: boolean
   isSuccess?: boolean
   noValidate?: boolean
@@ -90,7 +105,7 @@ export interface FormElementTypes<T> extends FormFieldEventHandlers<T> {
   columnClass?: string
   fieldId?: string
   styles?: { [key: string]: string }
-  events?: any // TODO CHANGE THIS
+  hideLabel?: boolean
   forwardRef?: any // TODO CHANGE THIS
 }
 
@@ -106,14 +121,14 @@ export interface InputPropTypes extends FormElementTypes<HTMLInputElement> {
   width?: string
   isBlock?: boolean
   prependedIcon?: string | JSX.Element
-  prependedOnClick?: React.MouseEventHandler
+  prependedOnClick?: MouseEventHandler
   appendedIcon?: string | JSX.Element
-  appendedOnClick?: React.MouseEventHandler
+  appendedOnClick?: MouseEventHandler
   prependedIconSize?: { width: string; height: string }
   appendedIconSize?: { width: string; height: string }
   shouldValidate?: boolean
   isValid?: boolean
-  validationType?: 'email' | 'password' | 'text' | Function
+  validationType?: textValidationTypes
 }
 
 export interface TextAreaPropTypes
@@ -126,7 +141,7 @@ export interface TextAreaPropTypes
   isBlock?: boolean
   shouldValidate?: boolean
   isValid?: boolean
-  validationType?: 'email' | 'password' | 'text' | Function
+  validationType?: textValidationTypes
   rows?: number
 }
 
@@ -138,8 +153,8 @@ export interface CheckboxPropTypes extends FormElementTypes<HTMLInputElement> {
 
 export interface RadioButtonsPropTypes
   extends FormElementTypes<HTMLInputElement> {
+  options: RadioPropTypes[]
   value?: string | number | undefined
-  options?: RadioPropTypes[]
   isVertical?: boolean
 }
 
@@ -174,6 +189,7 @@ export interface SelectPropTypes extends FormElementTypes<HTMLSelectElement> {
   placeholder?: string
   removePlaceholder?: boolean
   value?: string
+  forDatePicker?: boolean
 }
 
 export interface OptionPropTypes {
@@ -182,4 +198,27 @@ export interface OptionPropTypes {
   disabled?: boolean
   selected?: boolean
   isPlaceholder?: boolean
+}
+
+export interface DatePickerTypes extends FormElementTypes<HTMLInputElement> {
+  startDate?: Date
+  showTwoMonths?: boolean
+  value?: string
+  autocomplete?: 'off' | 'on'
+  isValid?: boolean
+  appendedIconSize?: { width: string; height: string }
+  validationType?: dateValidation
+  shouldValidate?: boolean
+  monthAndYearAreSelectable?: boolean
+}
+
+export interface CalendarWrapperProps {
+  showDatePicker: boolean
+  setShowDatePicker: Dispatch<SetStateAction<boolean>>
+  iconRef: MutableRefObject<HTMLDivElement>
+  showTwoMonths?: boolean
+  startDate: Date
+  value?: string
+  onChange?: FormFieldEventHandlers<HTMLInputElement>['onChange']
+  monthAndYearAreSelectable?: boolean
 }

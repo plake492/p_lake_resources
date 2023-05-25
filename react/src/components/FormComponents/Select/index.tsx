@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { useBemify } from '../../hooks/useBemify'
-import FieldLabel from './helperComponents/FieldLabel'
-import SuccessIcon from './helperComponents/SuccessIcon'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { OptionPropTypes, SelectPropTypes } from './types'
-import { formEvents } from './utils/formEvents'
+import { useBemify } from '../../../hooks/useBemify'
+import FieldLabel from '../helperComponents/FieldLabel'
+import SuccessIcon from '../helperComponents/SuccessIcon'
+import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
+import { OptionPropTypes, SelectPropTypes } from '../types'
+import { formEvents } from '../utils/formEvents'
 
 const Option = function ({
   value,
@@ -42,6 +42,8 @@ export default function Select({
   removePlaceholder,
   fieldId,
   columnClass,
+  forDatePicker,
+  hideLabel,
 }: SelectPropTypes) {
   // Give the placeholder a standard format
   const formatPlaceholder: string = placeholder ?? '--select--'
@@ -83,16 +85,24 @@ export default function Select({
         [isDisabled, 'disabled'],
         [isReadOnly, 'readonly'],
         [!shouldHideStatus && hasError, 'error'],
-        [!shouldHideStatus && isSuccess, 'success']
+        [!shouldHideStatus && isSuccess, 'success'],
+        [forDatePicker, '--date-picker']
       )}
       style={{
         /* Option to set absolute width */
         ...(width ? ({ '--input-width': width } as React.CSSProperties) : {}),
       }}
     >
-      <FieldLabel className={bem('label')} isRequired={isRequired} el="legend">
-        {label}
-      </FieldLabel>
+      <div className={bem('label-wrapper', [hideLabel, '--hidden'])}>
+        <FieldLabel
+          className={bem('label')}
+          isRequired={isRequired}
+          el="legend"
+        >
+          {label}
+        </FieldLabel>
+        <SuccessIcon className={bem('success')} isSuccess={isSuccess} />
+      </div>
       <div
         className={bem(
           'container',
@@ -117,13 +127,7 @@ export default function Select({
           )}
         </select>
       </div>
-      <div className={bem('message-wrapper')}>
-        <SuccessIcon
-          className={bem('success')}
-          isSuccess={messages && isSuccess}
-        />
-        {messages}
-      </div>
+      <div className={bem('message-wrapper')}>{messages}</div>
     </fieldset>
   )
 }

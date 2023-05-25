@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { useBemify } from '../../hooks/useBemify'
-import FieldLabel from './helperComponents/FieldLabel'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { formEvents } from './utils/formEvents'
-import { RadioButtonsPropTypes, RadioPropTypes } from './types'
-import SuccessIcon from './helperComponents/SuccessIcon'
+import { useBemify } from '../../../hooks/useBemify'
+import FieldLabel from '../helperComponents/FieldLabel'
+import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
+import { formEvents } from '../utils/formEvents'
+import { RadioButtonsPropTypes, RadioPropTypes } from '../types'
 
 const Radio = function ({
   name,
@@ -66,6 +65,7 @@ export default function RadioButtons({
   fieldId,
   styles,
   children,
+  columnClass,
 }: RadioButtonsPropTypes): JSX.Element {
   // Set up function for handling styles
   const bem: Function = useBemify('radio-buttons')
@@ -93,6 +93,7 @@ export default function RadioButtons({
       className={bem(
         '',
         wrapperClasses,
+        columnClass,
         [isDisabled, 'disabled'],
         [isSuccess, 'success'],
         [isReadOnly, 'readonly'],
@@ -120,10 +121,7 @@ export default function RadioButtons({
           />
         ))}
       </div>
-      <div className={bem('message-wrapper')}>
-        <SuccessIcon className={bem('success')} isSuccess={isSuccess} />
-        {messages}
-      </div>
+      <div className={bem('message-wrapper')}>{messages}</div>
     </fieldset>
   )
 }

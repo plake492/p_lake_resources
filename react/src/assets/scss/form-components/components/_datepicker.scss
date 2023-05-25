@@ -21,6 +21,15 @@ input[type='date']::-webkit-calendar-picker-indicator {
   @include field-as-box-wtih-text($prefix);
   @include message-styles($prefix);
 
+  &__field {
+    @include input-placeholder {
+      color: var(--datepicker-field-placeholder-text-color);
+    }
+  }
+
+  &__appended-icon-wrapper {
+    display: contents;
+  }
   &__appended-icon {
     &--clickable {
       cursor: pointer;

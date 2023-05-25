@@ -141,6 +141,17 @@
   margin-bottom: var(--#{$prefix}-margin-bottom);
   color: var(--#{$prefix}-field-text-color);
 
+  &__label-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: rem(8);
+
+    &--hidden {
+      @include visually-hidden;
+    }
+  }
+
   &__label {
     display: block;
     font-size: var(--#{$prefix}-label-font-size);
@@ -214,15 +225,12 @@
 
   &__success {
     color: var(--#{$prefix}-success-color);
-    position: absolute;
-    width: 24px;
-    height: 24px;
+    width: var(--#{$prefix}-label-font-size);
+    height: var(--#{$prefix}-label-font-size);
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 0;
-    top: 0;
-    transform: translate(-50%, 25%);
+
     z-index: 1;
   }
 

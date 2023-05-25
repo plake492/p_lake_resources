@@ -10,11 +10,16 @@ import {
 } from 'date-fns'
 import { dayNamesLetter } from '../utils/dateHelpers'
 import { useBemify } from '../../../hooks/useBemify'
+import Select from '../Select'
+import { monthsShort } from '../utils/dateHelpers'
+import MonthAndYearSelection from './MonthAndYearSelection'
 
 interface CalendarProps {
   date: Date
   selectedDay: Date | string
   onChange: (v: Date) => void
+  setCurrentFocusedDate: React.Dispatch<React.SetStateAction<Date>>
+  monthAndYearAreSelectable?: boolean
 }
 
 interface SelectedDateObj {
@@ -27,6 +32,8 @@ export default function Calender({
   date,
   selectedDay,
   onChange,
+  setCurrentFocusedDate,
+  monthAndYearAreSelectable,
 }: CalendarProps) {
   const [firstDayOfMonth, setFirstDayOfMonth] = React.useState<number>(null)
   const [lastOfMonth, setLastOfMonth] = React.useState<number>(null)
@@ -78,7 +85,14 @@ export default function Calender({
       }
     >
       <div className={bem('month-year-display')}>
-        <p>{format(date, 'MMM yyyy')}</p>
+        {monthAndYearAreSelectable ? (
+          <MonthAndYearSelection
+            date={date}
+            setCurrentFocusedDate={setCurrentFocusedDate}
+          />
+        ) : (
+          <>{`${format(date, 'MMM')} ${format(date, 'yyyy')}`}</>
+        )}
       </div>
       <div className={bem('day-name-wrapper')}>
         {dayNamesLetter.map((day, index) => (

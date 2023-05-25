@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { useBemify } from '../../hooks/useBemify'
+import { useBemify } from '../../../hooks/useBemify'
 
-import FieldLabel from './helperComponents/FieldLabel'
-import SuccessIcon from './helperComponents/SuccessIcon'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { TextAreaPropTypes } from './types'
-import { formEvents } from './utils/formEvents'
+import FieldLabel from '../helperComponents/FieldLabel'
+import SuccessIcon from '../helperComponents/SuccessIcon'
+import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
+import { TextAreaPropTypes } from '../types'
+import { formEvents } from '../utils/formEvents'
 
 export default function Textarea({
   label,
@@ -64,13 +64,16 @@ export default function Textarea({
         ...(!!styles ? (styles as React.CSSProperties) : {}),
       }}
     >
-      <FieldLabel
-        className={bem('label')}
-        htmlFor={fieldId}
-        isRequired={isRequired}
-      >
-        {label}
-      </FieldLabel>
+      <div className={bem('label-wrapper')}>
+        <FieldLabel
+          className={bem('label')}
+          htmlFor={fieldId}
+          isRequired={isRequired}
+        >
+          {label}
+        </FieldLabel>
+        <SuccessIcon className={bem('success')} isSuccess={isSuccess} />
+      </div>
       <div
         className={bem(
           'container',
@@ -93,13 +96,7 @@ export default function Textarea({
           {...events}
         />
       </div>
-      <div className={bem('message-wrapper')}>
-        <SuccessIcon
-          className={bem('success')}
-          isSuccess={messages && isSuccess}
-        />
-        {messages}
-      </div>
+      <div className={bem('message-wrapper')}>{messages}</div>
     </div>
   )
 }

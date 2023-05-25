@@ -5,6 +5,9 @@
   margin: 0 auto;
 
   @each $key, $value in $form-color-vars-dark-and-light {
+    // Default to light mode vars
+    --form-#{$key}: #{map.get($value, 'light')};
+
     &--dark {
       --form-#{$key}: #{map.get($value, 'dark')};
     }

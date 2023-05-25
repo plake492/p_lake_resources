@@ -18,7 +18,6 @@ export default function DatePickerText() {
         <DatePicker
           label="date"
           id="date"
-          appendedIcon="download"
           value={date}
           onChange={(v: string) => setDate(v)}
           validationType="date-mm/dd/yyyy"
@@ -42,7 +41,6 @@ export default function DatePickerText() {
         <DatePicker
           label="date"
           id="date"
-          appendedIcon="download"
           value={date2}
           onChange={(v: string) => setDate2(v)}
           validationType="date-mm/dd/yyyy"

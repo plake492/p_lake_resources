@@ -1,21 +1,21 @@
-import '../../assets/scss/form-components/index.scss'
+import '../../../assets/scss/form-components/index.scss'
 
 import * as React from 'react'
-import { useBemify } from '../../hooks/useBemify'
-import { isDOMTypeElement } from '../../utils/detectReactComponents'
-import { forceArray } from '../../utils/helpers'
-import FieldLabel from './helperComponents/FieldLabel'
+import { useBemify } from '../../../hooks/useBemify'
+import { isDOMTypeElement } from '../../../utils/detectReactComponents'
+import { forceArray } from '../../../utils/helpers'
+import FieldLabel from '../helperComponents/FieldLabel'
 import {
   IsIvalidErrorMessage,
   PasswordMatchErrorMessage,
   RequiredFieldErrorMessage,
-} from './helperComponents/FormMessages'
-import { useConfirmPasswordMatch } from './hooks/useConfirmPasswordMatch'
-import { useFormFieldsValidation } from './hooks/useFormFieldsValidation'
-import { useStyleForm } from './hooks/useStyleForm'
-import { FormPropTypes, InputPropTypes } from './types'
-import { validFormComponentChildren } from './utils/validFormComponentChildren'
-import { setStyles } from './utils/styleVars'
+} from '../helperComponents/FormMessages'
+import { useConfirmPasswordMatch } from '../hooks/useConfirmPasswordMatch'
+import { useFormFieldsValidation } from '../hooks/useFormFieldsValidation'
+import { useStyleForm } from '../hooks/useStyleForm'
+import { FormPropTypes, InputPropTypes } from '../types'
+import { validFormComponentChildren } from '../utils/validFormComponentChildren'
+import { setStyles } from '../utils/styleVars'
 
 export default function Form({
   children,

@@ -1,10 +1,9 @@
 import * as React from 'react'
-import FieldLabel from './helperComponents/FieldLabel'
-import { useBemify } from '../../hooks/useBemify'
-import { useFormFieldMessages } from './hooks/useFormFieldMessages'
-import { formEvents } from './utils/formEvents'
-import { CheckboxPropTypes } from './types'
-import SuccessIcon from './helperComponents/SuccessIcon'
+import FieldLabel from '../helperComponents/FieldLabel'
+import { useBemify } from '../../../hooks/useBemify'
+import { useFormFieldMessages } from '../hooks/useFormFieldMessages'
+import { formEvents } from '../utils/formEvents'
+import { CheckboxPropTypes } from '../types'
 
 export default function Checkbox({
   type = 'checkbox',
@@ -76,13 +75,7 @@ export default function Checkbox({
         <FieldLabel htmlFor={fieldId} isRequired={isRequired}>
           {label}
         </FieldLabel>
-        <div className={bem('message-wrapper')}>
-          <SuccessIcon
-            className={bem('success')}
-            isSuccess={messages && isSuccess}
-          />
-          {messages}
-        </div>
+        <div className={bem('message-wrapper')}>{messages}</div>
       </div>
     </div>
   )

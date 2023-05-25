@@ -122,14 +122,14 @@ $shadow-spread: 0rem 0rem 0.75rem 0.125rem;
 
 $field-border-width: 1px;
 $field-border-style: solid;
-$field-border-radius: 4px;
-$field-font-size: #{rem(22)};
-$field-padding-x: #{rem(12)};
-$field-padding-y: #{rem(16)};
+$field-border-radius: 2px;
+$field-font-size: #{rem(20)};
+$field-padding-x: #{rem(8)};
+$field-padding-y: #{rem(8)};
 $field-margin-bottom: #{rem(24)};
 $field-height: #{rem(28)};
 
-$label-font-size: #{rem(20)};
+$label-font-size: #{rem(18)};
 //? Unsure if this is needed as the font-size and line-height will determain the height
 $label-height: unset;
 

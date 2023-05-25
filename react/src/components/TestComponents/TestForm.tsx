@@ -2,15 +2,24 @@ import * as React from 'react'
 import Modal from '../BaseComponents/Modal'
 
 const formStyles = {
-  shadowColor: 'green',
-  fieldBackgroundColor: 'green',
-  fieldTextColor: 'blue',
-  fieldPlaceholderTextColor: 'red',
-  fieldBorderColor: 'purple',
-  fieldBorderColorFocus: 'green',
-  labelColor: 'lime',
-  errorColor: 'yellow',
+  shadowColor: 'grey',
+  fieldFontSize: '16px',
+  fieldBackgroundColor: 'blueviolet',
+  disabledTextColor: 'whitesmoke',
+  fieldTextColor: 'darkblue',
+  fieldPlaceholderTextColor: 'cornflower',
+  fieldBorderColor: 'indego',
+  fieldBorderColorFocus: 'orange',
+  fieldBorderRadius: '40px',
+  fieldPaddingX: '20px',
+  fieldPaddingY: '10px',
+  labelHeight: '40px',
+  messageBackgroundColor: '#0000',
+  messageBorderRadius: '50px',
+  labelTextColor: 'lime',
+  errorColor: '#829efd',
   successColor: 'orange',
+  fieldMarginBottom: '2px',
 }
 
 import Form from '../FormComponents/Form'
